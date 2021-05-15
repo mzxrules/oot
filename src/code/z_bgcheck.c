@@ -1,5 +1,13 @@
 #include "global.h"
 #include "vt.h"
+//#include "z_bgcheck_log.h"
+
+GlobalContext* game;
+s32 logCheck = false;
+s32 calls = 0;
+s32 printLine = 0;
+u32 lastUpdate = 0;
+GfxPrint gfxPrint;
 
 #define SS_NULL 0xFFFF
 
@@ -944,6 +952,12 @@ s32 func_8003A5B8(SSList* ssList, CollisionContext* colCtx, u16 xpFlags1, u16 xp
         curPoly = &polyList[polyId];
         minY = CollisionPoly_GetMinY(curPoly, colCtx->colHeader->vtxList);
         if (posA->y < minY && posB->y < minY) {
+            if (logCheck) {
+                GfxPrint_SetPos(&gfxPrint, 3, printLine++);
+                GfxPrint_Printf(&gfxPrint, "%d MinY %d SSLIST %X", result, (s16)minY, ssList);
+                GfxPrint_SetPos(&gfxPrint, 3, printLine++);
+                GfxPrint_Printf(&gfxPrint, " %5.4f %5.4f", posA->y, posB->y);
+            }
             break;
         }
         if (CollisionPoly_LineVsPoly(curPoly, colCtx->colHeader->vtxList, posA, posB, &polyIntersect,
@@ -1841,8 +1855,8 @@ f32 BgCheck_EntityRaycastFloor9(CollisionContext* colCtx, CollisionPoly** outPol
  * `checkHeight` is the positive height above posNext to perform certain checks
  * returns true if a collision is detected, else false
  * `outPoly` returns the closest poly detected, while `outBgId` returns the poly owner
- */
-s32 BgCheck_SphVsWallImpl(CollisionContext* colCtx, u16 xpFlags, Vec3f* posResult, Vec3f* posNext, Vec3f* posPrev,
+ */ 
+s32 BgCheck_SphVsWallImpl2(CollisionContext* colCtx, u16 xpFlags, Vec3f* posResult, Vec3f* posNext, Vec3f* posPrev,
                           f32 radius, CollisionPoly** outPoly, s32* outBgId, Actor* actor, f32 checkHeight, u8 argA) {
     StaticLookup* lookupTbl;
     f32 temp_f0;
@@ -1885,8 +1899,19 @@ s32 BgCheck_SphVsWallImpl(CollisionContext* colCtx, u16 xpFlags, Vec3f* posResul
     // if there's movement on the xz plane, and argA flag is 0,
     if ((dx != 0.0f || dz != 0.0f) && (argA & 1) == 0) {
         if ((checkHeight + dy) < 5.0f) {
+            if (logCheck)
+            {
+                GfxPrint_SetPos(&gfxPrint, 3, printLine++);
+                GfxPrint_Printf(&gfxPrint, "POS %5.4f %5.4f %5.4f", posPrev->x, posPrev->y, posPrev->z);
+                GfxPrint_SetPos(&gfxPrint, 3, printLine++);
+                GfxPrint_Printf(&gfxPrint, "NEXT %5.4f %5.4f %5.4f", posNext->x, posNext->y, posNext->z);
+            }
             result = BgCheck_LineTestImpl(colCtx, xpFlags, COLPOLY_IGNORE_NONE, posPrev, posNext, &posIntersect, &poly,
                                           &bgId, actor, 1.0f, BGCHECK_CHECK_ALL & ~BGCHECK_CHECK_CEILING);
+            if (logCheck) {
+                GfxPrint_SetPos(&gfxPrint, 3, printLine++);
+                GfxPrint_Printf(&gfxPrint, "SphVsWall LineTest %d", !!result);
+            }
             if (result) {
                 ny = COLPOLY_GET_NORMAL(poly->normal.y);
                 // if poly is floor, push result underneath the floor
@@ -1986,6 +2011,62 @@ s32 BgCheck_SphVsWallImpl(CollisionContext* colCtx, u16 xpFlags, Vec3f* posResul
             }
         }
     }
+    return result;
+}
+
+s32 BgCheck_SphVsWallImpl(CollisionContext* colCtx, u16 xpFlags, Vec3f* posResult, Vec3f* posNext, Vec3f* posPrev,
+    f32 radius, CollisionPoly** outPoly, s32* outBgId, Actor* actor, f32 checkHeight, u8 argA) {
+    
+    s32 result;
+    GlobalContext* globalCtx = game;
+    Player* p = PLAYER;
+    GraphicsContext* gfxCtx = globalCtx->state.gfxCtx;
+    Gfx* start; //78
+    Gfx* end; //7C
+    Gfx* next; //tempRet
+
+    if (game->state.frames != lastUpdate)
+    {
+        calls = 0;
+        lastUpdate = game->state.frames;
+    }
+    logCheck = (actor == &p->actor) && (calls < 3);
+    if (!logCheck)
+    {
+        result = BgCheck_SphVsWallImpl2(colCtx, xpFlags, posResult, posNext, posPrev,
+            radius, outPoly, outBgId, actor, checkHeight, argA);
+    }
+    else
+    {
+        calls++;
+        printLine = 8;
+
+        OPEN_DISPS(gfxCtx, __FILE__, __LINE__);
+        GfxPrint_Init(&gfxPrint);
+        start = POLY_OPA_DISP;
+        next = Graph_GfxPlusOne(POLY_OPA_DISP);
+        gSPDisplayList(OVERLAY_DISP++, next);
+        GfxPrint_Open(&gfxPrint, next);
+        GfxPrint_SetColor(&gfxPrint, 0, 128, 128, 128);
+        result = BgCheck_SphVsWallImpl2(colCtx, xpFlags, posResult, posNext, posPrev,
+            radius, outPoly, outBgId, actor, checkHeight, argA);
+
+        if (result)
+        {
+            GfxPrint_SetPos(&gfxPrint, 3, printLine++);
+            GfxPrint_Printf(&gfxPrint, "Poly %d %X", *outBgId, outPoly);
+        }
+
+        end = GfxPrint_Close(&gfxPrint);
+        gSPEndDisplayList(end++);
+        Graph_BranchDlist(start, end);
+        POLY_OPA_DISP = end;
+        CLOSE_DISPS(gfxCtx, __FILE__, __LINE__);
+
+        GfxPrint_Destroy(&gfxPrint);
+    }
+
+    logCheck = false;
     return result;
 }
 
@@ -2402,6 +2483,7 @@ void SSNodeList_Initialize(SSNodeList* this) {
  * numPolys is the number of polygons defined within the CollisionHeader
  */
 void SSNodeList_Alloc(GlobalContext* globalCtx, SSNodeList* this, s32 tblMax, s32 numPolys) {
+    game = globalCtx;
     this->max = tblMax;
     this->count = 0;
     this->tbl = THA_AllocEndAlign(&globalCtx->state.tha, tblMax * sizeof(SSNode), -2);
