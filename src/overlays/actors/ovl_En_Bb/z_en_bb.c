@@ -5,6 +5,7 @@
  */
 
 #include "z_en_bb.h"
+#include "overlays/actors/ovl_En_Bom/z_en_bom.h"
 #include "objects/gameplay_keep/gameplay_keep.h"
 
 #define FLAGS 0x01000015
@@ -248,6 +249,10 @@ void EnBb_SetupAction(EnBb* this, EnBbActionFunc actionFunc) {
 }
 
 Actor* EnBb_FindExplosive(GlobalContext* globalCtx, EnBb* this, f32 range) {
+    //! @bug
+    //! This function assumes that `ACTORCAT_EXPLOSIVE` only contains `EnBom` and `EnBombf` instances, when it can also contain
+    //! `EnBomChu` instances as well. Returning a pointer to an `EnBomChu` instance leads to a use after free bug
+    //! elsewhere in the file.
     Actor* explosive = globalCtx->actorCtx.actorLists[ACTORCAT_EXPLOSIVE].head;
     f32 dist;
 
@@ -602,11 +607,19 @@ void EnBb_Blue(EnBb* this, GlobalContext* globalCtx) {
         } else if (this->actor.xzDistToPlayer < 200.0f) {
             this->vMoveAngleY = this->actor.yawTowardsPlayer;
         }
+        //! @bug
+        //! Blue Bubbles expect `explosive` / `this->targetActor` to be an instance of `EnBom` or `EnBombf`. It checks `params` to
+        //! determine if the explosive is being detonated, at which point it stops following and NULLs `this->targetActor`
+        //! before the explosive instance is killed. However, `EnBb_FindExplosive` can return `EnBomChu` instances. Since
+        //! `EnBomChu`'s params is always 0, this->targetActor won't be NULLed before the bombchu instance is killed,
+        //! resulting in a use after free bug that can crash the game.
         if (this->targetActor == NULL) {
             explosive = EnBb_FindExplosive(globalCtx, this, 300.0f);
         } else if (this->targetActor->params == 0) {
+            // Explosive is in it's "lit fuse" state
             explosive = this->targetActor;
         } else {
+            // Explosive is in it's "detonation" state
             explosive = NULL;
         }
         if (explosive != NULL) {

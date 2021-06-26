@@ -6,6 +6,7 @@
 
 #include "vt.h"
 #include "z_item_shield.h"
+#include "objects/object_link_child/object_link_child.h"
 
 #define FLAGS 0x00000010
 
@@ -18,8 +19,6 @@ void ItemShield_Draw(Actor* thisx, GlobalContext* globalCtx);
 
 void func_80B86F68(ItemShield* this, GlobalContext* globalCtx);
 void func_80B86BC8(ItemShield* this, GlobalContext* globalCtx);
-
-extern Gfx D_060224F8[];
 
 static ColliderCylinderInit sCylinderInit = {
     {
@@ -226,7 +225,12 @@ void ItemShield_Draw(Actor* thisx, GlobalContext* globalCtx) {
         func_80093D18(globalCtx->state.gfxCtx);
         gSPMatrix(POLY_OPA_DISP++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_item_shield.c", 460),
                   G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-        gSPDisplayList(POLY_OPA_DISP++, SEGMENTED_TO_VIRTUAL(D_060224F8));
+        //! @bug:
+        //! gLinkChildDekuShieldDL branches to segment 0x0C, which isn't initialized.
+        //! This usually doesn't crash as ACTOR_PLAYER initializes segment 0x0C to gCullBackDList, and few actors
+        //! override it. But in Tower Collapse, burning the Deku Shield will crash the game as ACTOR_EN_ZL3 uses
+        //! segment 0x0C to store a series of matrices.
+        gSPDisplayList(POLY_OPA_DISP++, SEGMENTED_TO_VIRTUAL(gLinkChildDekuShieldDL));
         CLOSE_DISPS(globalCtx->state.gfxCtx, "../z_item_shield.c", 465);
     }
 }
