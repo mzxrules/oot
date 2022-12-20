@@ -186,8 +186,8 @@
  * Stops a sequence at the specified time.
  */
 //! NOTE: Same as CS_MISC
-#define CS_STOP_BGM(cmd, startFrame, endFrame, posX, posY, posZ) \
-    CS_ACTOR_CUE(cmd, startFrame, endFrame, 0, 0, 0, posX, posY, posZ, posX, posY, posZ, 0, 0, 0)
+#define CS_STOP_BGM(action, startFrame, endFrame, posX, posY, posZ) \
+    CS_ACTOR_CUE(action, startFrame, endFrame, 0, 0, 0, posX, posY, posZ, posX, posY, posZ, 0, 0, 0)
 
 /**
  * Declares a list of `CS_FADE_OUT_SEQ` entries.
@@ -200,8 +200,8 @@
  * @see `CutsceneFadeOutSeqPlayer`
  */
 //! NOTE: Same as CS_MISC
-#define CS_FADE_OUT_SEQ(cmd, startFrame, endFrame, posX, posY, posZ) \
-    CS_ACTOR_CUE(cmd, startFrame, endFrame, 0, 0, 0, posX, posY, posZ, posX, posY, posZ, 0, 0, 0)
+#define CS_FADE_OUT_SEQ(action, startFrame, endFrame, posX, posY, posZ) \
+    CS_ACTOR_CUE(action, startFrame, endFrame, 0, 0, 0, posX, posY, posZ, posX, posY, posZ, 0, 0, 0)
 
 /**
  * Declares a list of `CS_TIME` entries.
@@ -213,8 +213,8 @@
  * Sets the time of day.
  * Both the day time and skybox time are set by this command.
  */
-//! TODO: Eliminate unused0, unused2 from macro
-#define CS_TIME(unused0, startFrame, endFrame, hour, min, unused2) \
+//! TODO: Eliminate action, unused2 from macro
+#define CS_TIME(action, startFrame, endFrame, hour, min, unused2) \
     CMD_HH(0x0001, startFrame), \
     CMD_HBB(endFrame, hour, min), \
     0x00000000

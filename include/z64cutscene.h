@@ -378,6 +378,16 @@ typedef struct {
     /* 0x06 */ u8 unused_06[0x2];
 } CsCmdGenericDeleted; // size = 0x8
 
+typedef struct {
+    /* 0x00 */ u16 id; // "dousa"
+    /* 0x02 */ u16 startFrame;
+    /* 0x04 */ u16 endFrame;
+    /* 0x06 */ Vec3us rot;
+    /* 0x0C */ Vec3i startPos;
+    /* 0x18 */ Vec3i endPos;
+    /* 0x18 */ Vec3f unknown;
+} CsCmdCommonCue; // size = 0x30
+
 typedef union {
     struct {
         /* 0x00 */ u16 type;
@@ -385,6 +395,7 @@ typedef union {
         /* 0x04 */ u16 endFrame;
     };
     s32 _words[12];
+    CsCmdCommonCue full;
 } CsCmdMisc; // size = 0x30
 
 typedef union {
@@ -395,6 +406,7 @@ typedef union {
         /* 0x04 */ u16 endFrame;
     };
     s32 _words[12];
+    CsCmdCommonCue full;
 } CsCmdLightSetting; // size = 0x30
 
 typedef union {
@@ -404,6 +416,7 @@ typedef union {
         /* 0x04 */ u16 endFrame;
     };
     s32 _words[12];
+    CsCmdCommonCue full;
 } CsCmdStartSeq; // size = 0x30
 
 typedef union {
@@ -413,6 +426,7 @@ typedef union {
         /* 0x04 */ u16 endFrame;
     };
     s32 _words[12];
+    CsCmdCommonCue full;
 } CsCmdStopSeq; // size = 0x30
 
 typedef union {
@@ -422,11 +436,12 @@ typedef union {
         /* 0x04 */ u16 endFrame;
     };
     s32 _words[12];
+    CsCmdCommonCue full;
 } CsCmdFadeOutSeq; // size = 0x30
 
 typedef union {
     struct {
-        /* 0x00 */ u16 action; // always 1
+        /* 0x00 */ u16 action;
         /* 0x02 */ u16 startFrame;
         /* 0x04 */ u16 endFrame;
         /* 0x06 */ u8  sourceStrength;
@@ -489,6 +504,7 @@ typedef union {
         /* 0x18 */ Vec3i endPos;
     };
     s32 _words[12];
+    CsCmdCommonCue full;
 } CsCmdActorCue; // size = 0x30
 
 typedef union {
