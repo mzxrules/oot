@@ -88,16 +88,22 @@ public:
 	uint32_t word0 = 0;
 	uint32_t word1 = 0;
 
-	uint32_t unused1 = 0;
-	uint32_t unused2 = 0;
-	uint32_t unused3 = 0;
-	uint32_t unused4 = 0;
-	uint32_t unused5 = 0;
-	uint32_t unused6 = 0;
-	uint32_t unused7 = 0;
-	uint32_t unused8 = 0;
-	uint32_t unused9 = 0;
-	uint32_t unused10 = 0;
+
+	uint16_t rotX, rotY, rotZ;
+	int32_t startPosX, startPosY, startPosZ;
+	int32_t endPosX, endPosY, endPosZ;
+	float normalX, normalY, normalZ;
+
+	// uint32_t unused1 = 0;
+	// uint32_t unused2 = 0;
+	// uint32_t unused3 = 0;
+	// uint32_t unused4 = 0;
+	// uint32_t unused5 = 0;
+	// uint32_t unused6 = 0;
+	// uint32_t unused7 = 0;
+	// uint32_t unused8 = 0;
+	// uint32_t unused9 = 0;
+	// uint32_t unused10 = 0;
 
 	CutsceneSubCommandEntry_GenericCmd(const std::vector<uint8_t>& rawData, offset_t rawDataIndex,
 	                                   CutsceneCommands cmdId);

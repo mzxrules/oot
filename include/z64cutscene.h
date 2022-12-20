@@ -215,7 +215,7 @@ typedef enum {
 } CutsceneTextType;
 
 typedef enum {
-    /* 0x03 */ CS_FADE_OUT_FANFARE = 3, 
+    /* 0x03 */ CS_FADE_OUT_FANFARE = 3,
     /* 0x04 */ CS_FADE_OUT_BGM_MAIN
 } CutsceneFadeOutSeqPlayer;
 
@@ -359,7 +359,11 @@ typedef enum {
 } CutsceneDestination;
 
 typedef struct {
-    /* 0x00 */ u16 base;
+    //! NOTE: Possibly re-introduce CsCmdGeneric as a 6 byte struct if necessary,
+    //! have separate CsCmdCam, CsCmdDestination etc. commands
+    //!
+    //! All commmands now follow this pattern, ignoring unused_06
+    /* 0x00 */ u16 action;
     /* 0x02 */ u16 startFrame;
     /* 0x04 */ u16 endFrame;
     /* 0x06 */ u8 unused_06[0x2];
@@ -376,27 +380,28 @@ typedef union {
 
 typedef union {
     struct {
-        /* 0x00 */ u8 unused_00[0x1];
-        /* 0x01 */ u8 settingPlusOne;
-        /* 0x02 */ u16 frame;
+        //! NOTE: u8 -> u16 for all conly introduces 3 casts
+        /* 0x00 */ u16 settingPlusOne; // value range 0x00-0xFF
+        /* 0x02 */ u16 startFrame;
+        /* 0x04 */ u16 endFrame;
     };
     s32 _words[12];
 } CsCmdLightSetting; // size = 0x30
 
 typedef union {
     struct {
-        /* 0x00 */ u8 unused_00[0x1];
-        /* 0x01 */ u8 seqIdPlusOne;
-        /* 0x02 */ u16 frame;
+        /* 0x00 */ u16 seqIdPlusOne; // value range 0x00-0xFF
+        /* 0x02 */ u16 startFrame;
+        /* 0x04 */ u16 endFrame;
     };
     s32 _words[12];
 } CsCmdStartSeq; // size = 0x30
 
 typedef union {
     struct {
-        /* 0x00 */ u8 unused_00[0x1];
-        /* 0x01 */ u8 seqIdPlusOne;
-        /* 0x02 */ u16 frame;
+        /* 0x00 */ u16 seqIdPlusOne; // value range 0x00-0xFF
+        /* 0x02 */ u16 startFrame;
+        /* 0x04 */ u16 endFrame;
     };
     s32 _words[12];
 } CsCmdStopSeq; // size = 0x30
@@ -412,9 +417,9 @@ typedef union {
 
 typedef union {
     struct {
-        /* 0x00 */ u8 unused_00[0x2];
-        /* 0x02 */ u16 frame;
-        /* 0x04 */ u8 unused_04[0x2];
+        /* 0x00 */ u16 action; // always 1
+        /* 0x02 */ u16 startFrame;
+        /* 0x04 */ u16 endFrame;
         /* 0x06 */ u8  sourceStrength;
         /* 0x07 */ u8  duration;
         /* 0x08 */ u8  decreaseRate;
@@ -424,9 +429,9 @@ typedef union {
 
 typedef union {
     struct {
-        /* 0x00 */ u8 unused_00[0x2];
-        /* 0x02 */ u16 frame;
-        /* 0x04 */ u8 unused_04[0x2];
+        /* 0x00 */ u16 action; // always 1
+        /* 0x02 */ u16 startFrame;
+        /* 0x04 */ u16 endFrame;
         /* 0x06 */ u8  hour;
         /* 0x07 */ u8  minute;
     };
@@ -436,7 +441,8 @@ typedef union {
 typedef union {
     struct {
         /* 0x00 */ u16 destination;
-        /* 0x02 */ u16 frame;
+        /* 0x02 */ u16 startFrame;
+        /* 0x04 */ u16 endFrame;
     };
     s32 _words[2];
 } CsCmdDestination; // size = 0x8
