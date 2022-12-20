@@ -57,7 +57,7 @@
  * This feature is not used in the final game and lacks polish, it is recommended to use splines in all cases.
  */
 #define CS_CAM_EYE(startFrame, endFrame) \
-    CS_CMD_CAM_EYE, CMD_HH(1, startFrame), CMD_HH(endFrame, 0)
+    CS_CMD_CAM_EYE, CMD_HH(0x0001, startFrame), CMD_HH(endFrame, 0x0000)
 
 /**
  * Declares a single `at` point that will be set on the specified frame, without any interpolation.
@@ -65,7 +65,7 @@
  * This feature is not used in the final game and lacks polish, it is recommended to use splines in all cases.
  */
 #define CS_CAM_AT(startFrame, endFrame) \
-    CS_CMD_CAM_AT, CMD_HH(1, startFrame), CMD_HH(endFrame, 0)
+    CS_CMD_CAM_AT, CMD_HH(0x0001, startFrame), CMD_HH(endFrame, 0x0000)
 
 /**
  * Declares a list of `CS_ACTOR_CUE` entries.

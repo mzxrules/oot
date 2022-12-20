@@ -358,6 +358,15 @@ typedef enum {
     /* 0x77 */ CS_DEST_ZELDAS_COURTYARD_RECEIVE_LETTER
 } CutsceneDestination;
 
+typedef union {
+    struct {
+        /* 0x00 */ u16 action;
+        /* 0x02 */ u16 startFrame;
+        /* 0x04 */ u16 endFrame;
+    };
+    s32 _words[2];
+} CsCmdCam; // size = 0x8
+
 typedef struct {
     //! NOTE: Possibly re-introduce CsCmdGeneric as a 6 byte struct if necessary,
     //! have separate CsCmdCam, CsCmdDestination etc. commands
@@ -367,7 +376,7 @@ typedef struct {
     /* 0x02 */ u16 startFrame;
     /* 0x04 */ u16 endFrame;
     /* 0x06 */ u8 unused_06[0x2];
-} CsCmdGeneric; // size = 0x8
+} CsCmdGenericDeleted; // size = 0x8
 
 typedef union {
     struct {
@@ -481,7 +490,6 @@ typedef union {
     };
     s32 _words[12];
 } CsCmdActorCue; // size = 0x30
-
 
 typedef union {
     struct {
