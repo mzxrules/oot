@@ -42,7 +42,7 @@
         G_IM_SIZ_8b_LINE_BYTES,                       \
         G_IM_SIZ_16b_LINE_BYTES,                      \
         G_IM_SIZ_32b_LINE_BYTES,                      \
-    };
+    }
 
 #define gDPLoadTextureBlock_Runtime(pkt, timg, fmt, siz, width, height, pal, cms, cmt, masks, maskt, shifts, shiftt)   \
     _DW({                                                                                                              \
