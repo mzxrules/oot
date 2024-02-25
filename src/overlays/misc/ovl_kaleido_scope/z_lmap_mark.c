@@ -1,5 +1,6 @@
 #include "z_kaleido_scope.h"
 #include "assets/textures/parameter_static/parameter_static.h"
+#include "gDPLoadTextureBlock_Runtime.h"
 
 typedef struct {
     /* 0x00 */ void* texture;
@@ -13,14 +14,13 @@ typedef struct {
     /* 0x20 */ u32 dtdy;
 } MapMarkInfo; // size = 0x24
 
-#define TEST
-#include "gDPLoadTextureBlock_Runtime.inc.c"
+gDPLoadTextureBlock_Runtime_INIT_ONCE(static const)
 
-static MapMarkInfo sMapMarkInfoTable[] = {
-    // Same data as z_map_mark.c, could just be part of prev inc.c
-    { gMapChestIconTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 8, 32, 32, 1 << 10, 1 << 10 },
-    { gMapBossIconTex, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 8, 32, 32, 1 << 10, 1 << 10 },
-};
+    static MapMarkInfo sMapMarkInfoTable[] = {
+        // Same data as z_map_mark.c, could just be part of prev inc.c
+        { gMapChestIconTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 8, 32, 32, 1 << 10, 1 << 10 },
+        { gMapBossIconTex, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 8, 32, 32, 1 << 10, 1 << 10 },
+    };
 
 extern PauseMapMarksData gPauseMapMarkDataTable[];
 

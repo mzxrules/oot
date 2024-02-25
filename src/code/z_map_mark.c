@@ -1,6 +1,7 @@
 #include "global.h"
 #include "terminal.h"
 #include "assets/textures/parameter_static/parameter_static.h"
+#include "gDPLoadTextureBlock_Runtime.h"
 
 typedef struct {
     /* 0x00 */ void* texture;
@@ -23,13 +24,13 @@ typedef struct {
     /* 0x14 */ void* vramTable;
 } MapMarkDataOverlay; // size = 0x18
 
-#include "gDPLoadTextureBlock_Runtime.inc.c"
+gDPLoadTextureBlock_Runtime_INIT_ONCE(static)
 
-MapMarkInfo sMapMarkInfoTable[] = {
-    // // Same data as z_lmap_mark.c, could just be part of prev inc.c
-    { gMapChestIconTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 8, 32, 32, 1 << 10, 1 << 10 }, // Chest Icon
-    { gMapBossIconTex, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 8, 32, 32, 1 << 10, 1 << 10 },     // Boss Skull Icon
-};
+    MapMarkInfo sMapMarkInfoTable[] = {
+        // // Same data as z_lmap_mark.c, could just be part of prev inc.c
+        { gMapChestIconTex, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 8, 32, 32, 1 << 10, 1 << 10 }, // Chest Icon
+        { gMapBossIconTex, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 8, 32, 32, 1 << 10, 1 << 10 },     // Boss Skull Icon
+    };
 
 static MapMarkDataOverlay sMapMarkDataOvl = {
     NULL,
