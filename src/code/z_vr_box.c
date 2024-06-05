@@ -502,6 +502,9 @@ void Skybox_Setup(PlayState* play, SkyboxContext* skyboxCtx, s16 skyboxId) {
             DMA_REQUEST_SYNC(skyboxCtx->staticSegments[1], gNormalSkyFiles[skybox2Index].file.vromStart, size,
                              "../z_vr_box.c", 1064);
 
+            // Allocates skybox bank such that...
+            // the night, sunrise, day, sunset cycle will never overlap during clear weather or cloudy weather sky
+            // the clear weather and cloudy weather skyboxes don't overlap when going from same time of day skybox
             if ((skybox1Index & 1) ^ ((skybox1Index & 4) >> 2)) {
                 size = gNormalSkyFiles[skybox1Index].palette.vromEnd - gNormalSkyFiles[skybox1Index].palette.vromStart;
 

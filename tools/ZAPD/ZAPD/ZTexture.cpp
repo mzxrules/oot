@@ -808,8 +808,8 @@ Declaration* ZTexture::DeclareVar(const std::string& prefix,
 	if (parent->makeDefines)
 	{
 		decl = parent->AddDeclarationIncludeArray(rawDataIndex, incStr, GetRawDataSize(),
-		                                          GetSourceTypeName(), auxName, GetHeaderDefines(),
-		                                          GetRawDataSize() / texSizeDivisor);
+		                                          GetSourceTypeName(), auxName,
+		                                          GetRawDataSize() / texSizeDivisor, GetHeaderDefines());
 	}
 	else
 	{

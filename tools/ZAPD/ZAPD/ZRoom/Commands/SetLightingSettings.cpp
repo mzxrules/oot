@@ -29,7 +29,7 @@ void SetLightingSettings::DeclareReferences(const std::string& prefix)
 		for (size_t i = 0; i < settings.size(); i++)
 		{
 			declaration +=
-				StringHelper::Sprintf("\t{ %s },", settings.at(i).GetBodySourceCode().c_str());
+				StringHelper::Sprintf("\t/* %2d */\n\t{ %s },", i, settings.at(i).GetBodySourceCode().c_str());
 			if (i + 1 < settings.size())
 				declaration += "\n";
 		}
@@ -103,8 +103,8 @@ LightingSettings::LightingSettings(const std::vector<uint8_t>& rawData, uint32_t
 std::string LightingSettings::GetBodySourceCode() const
 {
 	return StringHelper::Sprintf(
-		"0x%02X, 0x%02X, 0x%02X, 0x%02X, 0x%02X, 0x%02X, 0x%02X, 0x%02X, 0x%02X, 0x%02X, 0x%02X, "
-		"0x%02X, 0x%02X, 0x%02X, 0x%02X, 0x%02X, 0x%02X, 0x%02X, 0x%04X, 0x%04X",
+		"{ 0x%02X, 0x%02X, 0x%02X }, { 0x%02X, 0x%02X, 0x%02X }, { 0x%02X, 0x%02X, 0x%02X }, { 0x%02X, 0x%02X, "
+		"0x%02X }, { 0x%02X, 0x%02X, 0x%02X }, { 0x%02X, 0x%02X, 0x%02X }, 0x%04X, 0x%04X",
 		ambientClrR, ambientClrG, ambientClrB, diffuseClrA_R, diffuseClrA_G, diffuseClrA_B,
 		diffuseDirA_X, diffuseDirA_Y, diffuseDirA_Z, diffuseClrB_R, diffuseClrB_G, diffuseClrB_B,
 		diffuseDirB_X, diffuseDirB_Y, diffuseDirB_Z, fogClrR, fogClrG, fogClrB, unk, drawDistance);

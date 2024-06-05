@@ -111,30 +111,14 @@ public:
 	/// declared as.</param> <param name="declName">The C variable name this declaration will be
 	/// declared as.</param> <param name="declBody">The contents of the C variable
 	/// declaration.</param> <param name="declArrayItemCnt">The number of items in the
-	/// array.</param> <param name="isDeclExternal">(Optional) Is this declaration from another
+	/// array.</param> <param name="declArrayItemCntStr">The string to be put in the C array's
+	/// size inbetween the brackets.</param>
+	/// <param name="isDeclExternal">(Optional) Is this declaration from another
 	/// segment?</param> <returns></returns>
 	static Declaration* CreateArray(offset_t declAddr, DeclarationAlignment declAlign,
 	                                size_t declSize, const std::string& declType,
 	                                const std::string& declName, const std::string& declBody,
-	                                size_t declArrayItemCnt = 0, bool isDeclExternal = false);
-
-	/// <summary>
-	/// Creates an array declaration who's size in the C code uses a custom string.
-	/// </summary>
-	/// <param name="declAddr">The address inside a binary file this declaration will be in when
-	/// compiled.</param> <param name="declAlign">The alignment of this declaration in the compiled
-	/// binary file.</param> <param name="declSize">The size of this declaration when it is compiled
-	/// to binary data.</param> <param name="declType">The C variable type this declaration will be
-	/// declared as.</param> <param name="declName">The C variable name this declaration will be
-	/// declared as.</param> <param name="declBody">The contents of the C variable
-	/// declaration.</param> <param name="declArrayItemCntStr">The string to be put in the C array's
-	/// size inbetween the brackets.</param> <param name="isDeclExternal">(Optional) Is this
-	/// declaration from another segment?</param> <returns></returns>
-	static Declaration* CreateArray(offset_t declAddr, DeclarationAlignment declAlign,
-	                                size_t declSize, const std::string& declType,
-	                                const std::string& declName, const std::string& declBody,
-	                                const std::string& declArrayItemCntStr,
-	                                bool isDeclExternal = false);
+	                                size_t declArrayItemCnt, const std::string& declArrayItemCntStr, bool isDeclExternal = false);
 
 	/// <summary>
 	/// Creates a declaration who's body uses a #include to include another file

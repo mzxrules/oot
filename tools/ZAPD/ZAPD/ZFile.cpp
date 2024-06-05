@@ -470,7 +470,8 @@ Declaration* ZFile::AddDeclaration(offset_t address, DeclarationAlignment alignm
 
 Declaration* ZFile::AddDeclarationArray(offset_t address, DeclarationAlignment alignment,
                                         size_t size, const std::string& varType,
-                                        const std::string& varName, size_t arrayItemCnt,
+                                        const std::string& varName,
+										size_t arrayItemCnt, const std::string& arrayItemCntStr,
                                         const std::string& body)
 {
 	bool validOffset = DeclarationSanityChecks(address, varName);
@@ -481,7 +482,7 @@ Declaration* ZFile::AddDeclarationArray(offset_t address, DeclarationAlignment a
 	if (decl == nullptr)
 	{
 		decl = Declaration::CreateArray(address, alignment, size, varType, varName, body,
-		                                arrayItemCnt);
+		                                arrayItemCnt, arrayItemCntStr);
 
 		declarations[address] = decl;
 	}
@@ -495,6 +496,7 @@ Declaration* ZFile::AddDeclarationArray(offset_t address, DeclarationAlignment a
 		decl->declType = varType;
 		decl->isArray = true;
 		decl->arrayItemCnt = arrayItemCnt;
+		decl->arrayItemCntStr = arrayItemCntStr;
 		decl->declBody = body;
 	}
 
@@ -503,32 +505,18 @@ Declaration* ZFile::AddDeclarationArray(offset_t address, DeclarationAlignment a
 
 Declaration* ZFile::AddDeclarationArray(offset_t address, DeclarationAlignment alignment,
                                         size_t size, const std::string& varType,
+                                        const std::string& varName, size_t arrayItemCnt,
+                                        const std::string& body)
+{
+	return AddDeclarationArray(address, alignment, size, varType, varName, arrayItemCnt, std::string(), body);
+}
+
+Declaration* ZFile::AddDeclarationArray(offset_t address, DeclarationAlignment alignment,
+                                        size_t size, const std::string& varType,
                                         const std::string& varName,
                                         const std::string& arrayItemCntStr, const std::string& body)
 {
-	bool validOffset = DeclarationSanityChecks(address, varName);
-	if (!validOffset)
-		return nullptr;
-
-	Declaration* decl = GetDeclaration(address);
-	if (decl == nullptr)
-	{
-		decl = Declaration::CreateArray(address, alignment, size, varType, varName, body,
-		                                arrayItemCntStr);
-
-		declarations[address] = decl;
-	}
-	else
-	{
-		decl->alignment = alignment;
-		decl->size = size;
-		decl->declType = varType;
-		decl->declName = varName;
-		decl->isArray = true;
-		decl->arrayItemCntStr = arrayItemCntStr;
-		decl->declBody = body;
-	}
-	return decl;
+	return AddDeclarationArray(address, alignment, size, varType, varName, 0, arrayItemCntStr, body);
 }
 
 Declaration* ZFile::AddDeclarationPlaceholder(offset_t address, const std::string& varName)
@@ -572,10 +560,17 @@ Declaration* ZFile::AddDeclarationInclude(offset_t address, const std::string& i
 	}
 	return decl;
 }
-
 Declaration* ZFile::AddDeclarationIncludeArray(offset_t address, std::string& includePath,
                                                size_t size, const std::string& varType,
                                                const std::string& varName, size_t arrayItemCnt)
+{
+	return AddDeclarationIncludeArray(address, includePath, size, varType, varName, arrayItemCnt, std::string());
+}
+
+Declaration* ZFile::AddDeclarationIncludeArray(offset_t address, std::string& includePath,
+                                               size_t size, const std::string& varType,
+                                               const std::string& varName, size_t arrayItemCnt,
+                                               const std::string& defines)
 {
 	bool validOffset = DeclarationSanityChecks(address, varName);
 	if (!validOffset)
@@ -590,42 +585,6 @@ Declaration* ZFile::AddDeclarationIncludeArray(offset_t address, std::string& in
 	if (decl == nullptr)
 	{
 		decl = Declaration::CreateInclude(address, includePath, size, varType, varName);
-
-		decl->isArray = true;
-		decl->arrayItemCnt = arrayItemCnt;
-
-		declarations[address] = decl;
-	}
-	else
-	{
-		decl->includePath = includePath;
-		decl->declType = varType;
-		decl->declName = varName;
-		decl->size = size;
-		decl->isArray = true;
-		decl->arrayItemCnt = arrayItemCnt;
-	}
-	return decl;
-}
-
-Declaration* ZFile::AddDeclarationIncludeArray(offset_t address, std::string& includePath,
-                                               size_t size, const std::string& varType,
-                                               const std::string& varName,
-                                               const std::string& defines, size_t arrayItemCnt)
-{
-	bool validOffset = DeclarationSanityChecks(address, varName);
-	if (!validOffset)
-		return nullptr;
-
-	if (StringHelper::StartsWith(includePath, "assets/extracted/"))
-		includePath = "assets/" + StringHelper::Split(includePath, "assets/extracted/")[1];
-	if (StringHelper::StartsWith(includePath, "assets/custom/"))
-		includePath = "assets/" + StringHelper::Split(includePath, "assets/custom/")[1];
-
-	Declaration* decl = GetDeclaration(address);
-	if (decl == nullptr)
-	{
-		decl = Declaration::CreateInclude(address, includePath, size, varType, varName, defines);
 
 		decl->isArray = true;
 		decl->arrayItemCnt = arrayItemCnt;

@@ -71,6 +71,24 @@ typedef enum {
 } WeatherMode;
 
 typedef enum {
+    SKYBOX_INDEX_CLEAR_SUNRISE,
+    SKYBOX_INDEX_CLEAR_DAY,
+    SKYBOX_INDEX_CLEAR_SUNSET,
+    SKYBOX_INDEX_CLEAR_NIGHT,
+
+    SKYBOX_INDEX_CLOUDY_SUNRISE,
+    SKYBOX_INDEX_CLOUDY_DAY,
+    SKYBOX_INDEX_CLOUDY_SUNSET,
+    SKYBOX_INDEX_CLOUDY_NIGHT,
+
+    SKYBOX_INDEX_8,
+    SKYBOX_INDEX_9,
+    SKYBOX_INDEX_10,
+    SKYBOX_INDEX_11
+
+} SkyboxIndex;
+
+typedef enum {
     /* 0 */ CHANGE_SKYBOX_INACTIVE,
     /* 1 */ CHANGE_SKYBOX_REQUESTED,
     /* 2 */ CHANGE_SKYBOX_WAIT,
@@ -126,6 +144,8 @@ typedef struct {
     /* 0x04 */ u8 flashAlphaTarget;
     /* 0x08 */ f32 delayTimer;
 } LightningStrike; // size = 0xC
+
+
 
 typedef struct {
     /* 0x00 */ u16 startTime;

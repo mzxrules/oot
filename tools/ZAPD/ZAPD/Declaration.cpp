@@ -28,28 +28,14 @@ Declaration* Declaration::Create(offset_t declAddr, DeclarationAlignment declAli
 Declaration* Declaration::CreateArray(offset_t declAddr, DeclarationAlignment declAlign,
                                       size_t declSize, const std::string& declType,
                                       const std::string& declName, const std::string& declBody,
-                                      size_t declArrayItemCnt, bool isDeclExternal)
+                                      size_t declArrayItemCnt, const std::string& declArrayItemCntStr,
+									  bool isDeclExternal)
 {
 	Declaration* decl = new Declaration(declAddr, declAlign, declSize, declBody);
 
 	decl->declName = declName;
 	decl->declType = declType;
 	decl->arrayItemCnt = declArrayItemCnt;
-	decl->isExternal = isDeclExternal;
-	decl->isArray = true;
-
-	return decl;
-}
-
-Declaration* Declaration::CreateArray(offset_t declAddr, DeclarationAlignment declAlign,
-                                      size_t declSize, const std::string& declType,
-                                      const std::string& declName, const std::string& declBody,
-                                      const std::string& declArrayItemCntStr, bool isDeclExternal)
-{
-	Declaration* decl = new Declaration(declAddr, declAlign, declSize, declBody);
-
-	decl->declName = declName;
-	decl->declType = declType;
 	decl->arrayItemCntStr = declArrayItemCntStr;
 	decl->isExternal = isDeclExternal;
 	decl->isArray = true;

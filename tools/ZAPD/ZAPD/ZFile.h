@@ -61,6 +61,11 @@ public:
 	                            const std::string& varType, const std::string& varName,
 	                            const std::string& body);
 
+	Declaration* AddDeclarationArray(offset_t address, DeclarationAlignment alignment,
+                                     size_t size, const std::string& varType,
+                                     const std::string& varName,
+                                     size_t arrayItemCnt, const std::string& arrayItemCntStr,
+                                     const std::string& body);
 	Declaration* AddDeclarationArray(offset_t address, DeclarationAlignment alignment, size_t size,
 	                                 const std::string& varType, const std::string& varName,
 	                                 size_t arrayItemCnt, const std::string& body);
@@ -78,7 +83,7 @@ public:
 	                                        size_t arrayItemCnt);
 	Declaration* AddDeclarationIncludeArray(offset_t address, std::string& includePath, size_t size,
 	                                        const std::string& varType, const std::string& varName,
-	                                        const std::string& defines, size_t arrayItemCnt);
+	                                        size_t arrayItemCnt, const std::string& defines);
 
 	bool GetDeclarationPtrName(segptr_t segAddress, const std::string& expectedType,
 	                           std::string& declName) const;

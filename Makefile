@@ -19,7 +19,7 @@ COMPILER := ido
 #   gc-eu-mq-dbg   GameCube Europe/PAL Master Quest Debug (default)
 # The following versions are work-in-progress and not yet matching:
 #   gc-eu          GameCube Europe/PAL
-VERSION := gc-eu-mq-dbg
+VERSION := gc-eu-mq
 # Number of threads to extract and compress with
 N_THREADS := $(shell nproc)
 # Check code syntax with host compiler
@@ -133,7 +133,7 @@ OBJCOPY := $(MIPS_BINUTILS_PREFIX)objcopy
 OBJDUMP := $(MIPS_BINUTILS_PREFIX)objdump
 NM      := $(MIPS_BINUTILS_PREFIX)nm
 
-N64_EMULATOR ?= 
+N64_EMULATOR ?=
 
 INC := -Iinclude -Iinclude/libc -Isrc -I$(BUILD_DIR) -I. -I$(EXTRACTED_DIR)
 
