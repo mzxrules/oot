@@ -50,11 +50,7 @@ void PadMgr_Init(PadMgr* padMgr, OSMesgQueue* serialEventQueue, IrqMgr* irqMgr, 
 
 // Fetching inputs
 
-// This function cannot be prototyped here without AVOID_UB because it is called incorrectly in fault.c (see bug in
-// `Fault_PadCallback`)
-#ifdef AVOID_UB
-void PadMgr_RequestPadData(PadMgr* padmgr, Input* inputs, s32 gameRequest);
-#endif
+void PadMgr_RequestPadData(PadMgr* padMgr, Input* inputs, s32 gameRequest);
 
 // For internal use by Controller Pak systems
 

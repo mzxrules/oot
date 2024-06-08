@@ -294,11 +294,7 @@ const char* DmaMgr_FindFileName(uintptr_t vrom) {
         iter++;
         name++;
     }
-    //! @bug Since there is no return, in case the file isn't found, the return value will be a pointer to the end
-    // of gDmaDataTable
-#ifdef AVOID_UB
     return "";
-#endif
 #else
     return NULL;
 #endif
@@ -482,8 +478,8 @@ s32 DmaMgr_RequestAsync(DmaRequest* req, void* ram, uintptr_t vrom, size_t size,
     static s32 sDmaMgrQueueFullLogged = 0;
 
 #if OOT_DEBUG
-    if ((ram == NULL) || (osMemSize < OS_K0_TO_PHYSICAL(ram) + size) || (vrom & 1) || (vrom > 0x4000000) ||
-        (size == 0) || (size & 1)) {
+    if ((ram == NULL) || (u32)ram < (0x80000000) || (osMemSize < OS_K0_TO_PHYSICAL(ram) + size) || (vrom & 1) ||
+        (vrom > 0x4000000) || (size == 0) || (size & 1)) {
         // The line numbers for `DMA_ERROR` are only used in retail builds, but this usage was removed so
         // its line number is unknown.
         //! @bug `req` is passed to `DMA_ERROR` without rom, ram and size being set

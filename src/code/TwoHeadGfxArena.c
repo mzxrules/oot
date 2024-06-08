@@ -57,15 +57,6 @@ Gfx* THGA_AllocGfx(TwoHeadGfxArena* thga) {
 }
 
 /**
- * Identical to `THGA_AllocGfx`
- *
- * @see THGA_AllocGfx
- */
-Gfx* THGA_AllocGfx2(TwoHeadGfxArena* thga) {
-    return THGA_AllocGfx(thga);
-}
-
-/**
  * Allocates to the end of the Two Head Gfx Arena. Intended for data complementary to the display lists such as
  * matrices and vertices that are only needed for a single graphics task.
  */

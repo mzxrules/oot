@@ -12,22 +12,21 @@ void DynaPolyActor_UpdateCarriedActorPos(CollisionContext* colCtx, s32 bgId, Act
     Vec3f tempPos;
 
     if (DynaPoly_IsBgIdBgActor(bgId)) {
+        BgActor* bgActor = &colCtx->dyna.bgActors[bgId];
 
-        SkinMatrix_SetTranslateRotateYXZScale(
-            &prevTransform, colCtx->dyna.bgActors[bgId].prevTransform.scale.x,
-            colCtx->dyna.bgActors[bgId].prevTransform.scale.y, colCtx->dyna.bgActors[bgId].prevTransform.scale.z,
-            colCtx->dyna.bgActors[bgId].prevTransform.rot.x, colCtx->dyna.bgActors[bgId].prevTransform.rot.y,
-            colCtx->dyna.bgActors[bgId].prevTransform.rot.z, colCtx->dyna.bgActors[bgId].prevTransform.pos.x,
-            colCtx->dyna.bgActors[bgId].prevTransform.pos.y, colCtx->dyna.bgActors[bgId].prevTransform.pos.z);
+        SkinMatrix_SetTranslateRotateYXZScale(&prevTransform, bgActor->prevTransform.scale.x,
+                                              bgActor->prevTransform.scale.y, bgActor->prevTransform.scale.z,
+                                              bgActor->prevTransform.rot.x, bgActor->prevTransform.rot.y,
+                                              bgActor->prevTransform.rot.z, bgActor->prevTransform.pos.x,
+                                              bgActor->prevTransform.pos.y, bgActor->prevTransform.pos.z);
 
         if (SkinMatrix_Invert(&prevTransform, &prevTransformInv) != 2) {
 
-            SkinMatrix_SetTranslateRotateYXZScale(
-                &curTransform, colCtx->dyna.bgActors[bgId].curTransform.scale.x,
-                colCtx->dyna.bgActors[bgId].curTransform.scale.y, colCtx->dyna.bgActors[bgId].curTransform.scale.z,
-                colCtx->dyna.bgActors[bgId].curTransform.rot.x, colCtx->dyna.bgActors[bgId].curTransform.rot.y,
-                colCtx->dyna.bgActors[bgId].curTransform.rot.z, colCtx->dyna.bgActors[bgId].curTransform.pos.x,
-                colCtx->dyna.bgActors[bgId].curTransform.pos.y, colCtx->dyna.bgActors[bgId].curTransform.pos.z);
+            SkinMatrix_SetTranslateRotateYXZScale(&curTransform, bgActor->curTransform.scale.x,
+                                                  bgActor->curTransform.scale.y, bgActor->curTransform.scale.z,
+                                                  bgActor->curTransform.rot.x, bgActor->curTransform.rot.y,
+                                                  bgActor->curTransform.rot.z, bgActor->curTransform.pos.x,
+                                                  bgActor->curTransform.pos.y, bgActor->curTransform.pos.z);
 
             // Apply the movement of the dynapoly actor `bgId` over the last frame to the `carriedActor` position
             // pos = curTransform * prevTransformInv * pos

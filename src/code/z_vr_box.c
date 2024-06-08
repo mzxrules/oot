@@ -456,8 +456,8 @@ void Skybox_Setup(PlayState* play, SkyboxContext* skyboxCtx, s16 skyboxId) {
     s16 i;
     u8 skybox1Index;
     u8 skybox2Index;
-    s32 pad;
     s32 skyboxConfig;
+    TimeBasedSkyboxEntry* timeConfig;
 
     switch (skyboxId) {
         case SKYBOX_NORMAL_SKY:
@@ -468,22 +468,20 @@ void Skybox_Setup(PlayState* play, SkyboxContext* skyboxCtx, s16 skyboxId) {
             }
 
             for (i = 0; i < ARRAY_COUNT(gTimeBasedSkyboxConfigs[skyboxConfig]); i++) {
-                if (gSaveContext.skyboxTime >= gTimeBasedSkyboxConfigs[skyboxConfig][i].startTime &&
-                    (gSaveContext.skyboxTime < gTimeBasedSkyboxConfigs[skyboxConfig][i].endTime ||
-                     gTimeBasedSkyboxConfigs[skyboxConfig][i].endTime == 0xFFFF)) {
-                    play->envCtx.skybox1Index = skybox1Index = gTimeBasedSkyboxConfigs[skyboxConfig][i].skybox1Index;
-                    play->envCtx.skybox2Index = skybox2Index = gTimeBasedSkyboxConfigs[skyboxConfig][i].skybox2Index;
-                    if (gTimeBasedSkyboxConfigs[skyboxConfig][i].changeSkybox) {
-                        play->envCtx.skyboxBlend =
-                            Environment_LerpWeight(gTimeBasedSkyboxConfigs[skyboxConfig][i].endTime,
-                                                   gTimeBasedSkyboxConfigs[skyboxConfig][i].startTime,
-                                                   ((void)0, gSaveContext.skyboxTime)) *
-                            255.0f;
-                    } else {
-                        play->envCtx.skyboxBlend = 0;
-                    }
+                timeConfig = &gTimeBasedSkyboxConfigs[skyboxConfig][i];
+                if (gSaveContext.skyboxTime >= timeConfig->startTime &&
+                    (gSaveContext.skyboxTime < timeConfig->endTime || timeConfig->endTime == 0xFFFF)) {
                     break;
                 }
+            }
+            play->envCtx.skybox1Index = skybox1Index = timeConfig->skybox1Index;
+            play->envCtx.skybox2Index = skybox2Index = timeConfig->skybox2Index;
+            if (timeConfig->changeSkybox) {
+                play->envCtx.skyboxBlend = Environment_LerpWeight(timeConfig->endTime, timeConfig->startTime,
+                                                                  ((void)0, gSaveContext.skyboxTime)) *
+                                           255.0f;
+            } else {
+                play->envCtx.skyboxBlend = 0;
             }
 
             size = gNormalSkyFiles[skybox1Index].file.vromEnd - gNormalSkyFiles[skybox1Index].file.vromStart;
@@ -502,31 +500,25 @@ void Skybox_Setup(PlayState* play, SkyboxContext* skyboxCtx, s16 skyboxId) {
             DMA_REQUEST_SYNC(skyboxCtx->staticSegments[1], gNormalSkyFiles[skybox2Index].file.vromStart, size,
                              "../z_vr_box.c", 1064);
 
-            // Allocates skybox bank such that...
-            // the night, sunrise, day, sunset cycle will never overlap during clear weather or cloudy weather sky
-            // the clear weather and cloudy weather skyboxes don't overlap when going from same time of day skybox
-            if ((skybox1Index & 1) ^ ((skybox1Index & 4) >> 2)) {
-                size = gNormalSkyFiles[skybox1Index].palette.vromEnd - gNormalSkyFiles[skybox1Index].palette.vromStart;
+            size = gNormalSkyFiles[skybox1Index].palette.vromEnd - gNormalSkyFiles[skybox1Index].palette.vromStart;
+            skyboxCtx->palettes = GAME_STATE_ALLOC(&play->state, size * 2, "../z_vr_box.c", __LINE__);
+            ASSERT(skyboxCtx->palettes != NULL, "vr_box->vr_box_staticSegment[2] != NULL", "../z_vr_box.c", __LINE__);
 
-                skyboxCtx->palettes = GAME_STATE_ALLOC(&play->state, size * 2, "../z_vr_box.c", 1072);
-
-                ASSERT(skyboxCtx->palettes != NULL, "vr_box->vr_box_staticSegment[2] != NULL", "../z_vr_box.c", 1073);
-
-                DMA_REQUEST_SYNC(skyboxCtx->palettes, gNormalSkyFiles[skybox1Index].palette.vromStart, size,
-                                 "../z_vr_box.c", 1075);
-                DMA_REQUEST_SYNC((u8*)skyboxCtx->palettes + size, gNormalSkyFiles[skybox2Index].palette.vromStart, size,
-                                 "../z_vr_box.c", 1077);
-            } else {
-                size = gNormalSkyFiles[skybox1Index].palette.vromEnd - gNormalSkyFiles[skybox1Index].palette.vromStart;
-
-                skyboxCtx->palettes = GAME_STATE_ALLOC(&play->state, size * 2, "../z_vr_box.c", 1085);
-
-                ASSERT(skyboxCtx->palettes != NULL, "vr_box->vr_box_staticSegment[2] != NULL", "../z_vr_box.c", 1086);
-
-                DMA_REQUEST_SYNC(skyboxCtx->palettes, gNormalSkyFiles[skybox2Index].palette.vromStart, size,
-                                 "../z_vr_box.c", 1088);
-                DMA_REQUEST_SYNC((u8*)skyboxCtx->palettes + size, gNormalSkyFiles[skybox1Index].palette.vromStart, size,
-                                 "../z_vr_box.c", 1090);
+            {
+                uintptr_t paletteSegmentA;
+                uintptr_t paletteSegmentB;
+                // Allocates skybox bank such that...
+                // the night, sunrise, day, sunset cycle will never overlap during clear weather or cloudy weather sky
+                // the clear weather and cloudy weather skyboxes don't overlap when going from same time of day skybox
+                if (GET_NORMAL_SKY_SEGMENT_INDEX(skybox1Index)) {
+                    paletteSegmentA = gNormalSkyFiles[skybox1Index].palette.vromStart;
+                    paletteSegmentB = gNormalSkyFiles[skybox2Index].palette.vromStart;
+                } else {
+                    paletteSegmentA = gNormalSkyFiles[skybox2Index].palette.vromStart;
+                    paletteSegmentB = gNormalSkyFiles[skybox1Index].palette.vromStart;
+                }
+                DMA_REQUEST_SYNC(skyboxCtx->palettes, paletteSegmentA, size, "../z_vr_box.c", __LINE__);
+                DMA_REQUEST_SYNC((u8*)skyboxCtx->palettes + size, paletteSegmentB, size, "../z_vr_box.c", __LINE__);
             }
             break;
 

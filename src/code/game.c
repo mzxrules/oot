@@ -510,7 +510,7 @@ void* GameState_Alloc(GameState* gameState, size_t size, const char* file, int l
                THA_GetRemaining(&gameState->tha));
         ret = NULL;
     } else {
-        ret = THA_AllocTailAlign16(&gameState->tha, size);
+        ret = THA_AllocTail(&gameState->tha, size);
         if (THA_IsCrash(&gameState->tha)) {
             PRINTF("ハイラルは滅亡してしまった\n"); // "Hyrule has been destroyed"
             ret = NULL;
@@ -525,7 +525,7 @@ void* GameState_Alloc(GameState* gameState, size_t size, const char* file, int l
 }
 
 void* GameState_AllocEndAlign16(GameState* gameState, size_t size) {
-    return THA_AllocTailAlign16(&gameState->tha, size);
+    return THA_AllocTail(&gameState->tha, size);
 }
 #endif
 

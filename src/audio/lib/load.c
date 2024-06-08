@@ -1128,25 +1128,7 @@ void AudioLoad_Init(void* heap, u32 heapSize) {
 
     gAudioCustomUpdateFunction = NULL;
     gAudioCtx.resetTimer = 0;
-
-    {
-        s32 i;
-        u8* audioContextPtr = (u8*)&gAudioCtx;
-
-#ifndef AVOID_UB
-        //! @bug This clearing loop sets one extra byte to 0 following gAudioCtx.
-        //! In practice this is harmless as it would set the most significant byte in gAudioCustomUpdateFunction to 0,
-        //! which was just reset to NULL above.
-        for (i = sizeof(gAudioCtx); i >= 0; i--) {
-            *audioContextPtr++ = 0;
-        }
-#else
-        // Avoid out-of-bounds variable access
-        for (i = sizeof(gAudioCtx); i > 0; i--) {
-            *audioContextPtr++ = 0;
-        }
-#endif
-    }
+    bzero(&gAudioCtx, sizeof(gAudioCtx));
 
     // 1000 is a conversion from seconds to milliseconds
     switch (osTvType) {

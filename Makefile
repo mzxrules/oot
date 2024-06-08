@@ -9,7 +9,7 @@ SHELL = /bin/bash
 # If COMPARE is 1, check the output md5sum after building
 COMPARE := 1
 # If NON_MATCHING is 1, define the NON_MATCHING C flag when building
-NON_MATCHING := 0
+NON_MATCHING := 1
 # If ORIG_COMPILER is 1, compile with QEMU_IRIX and the original compiler
 ORIG_COMPILER := 0
 # If COMPILER is "gcc", compile with GCC instead of IDO.
@@ -48,7 +48,7 @@ MIPS_BINUTILS_PREFIX := mips-linux-gnu-
 ifeq ($(NON_MATCHING),1)
   CFLAGS += -DNON_MATCHING -DAVOID_UB
   CPPFLAGS += -DNON_MATCHING -DAVOID_UB
-  COMPARE := 0
+  COMPARE := 1
 endif
 
 # Version-specific settings

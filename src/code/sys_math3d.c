@@ -130,7 +130,7 @@ void Math3D_LineClosestToPoint(InfiniteLine* line, Vec3f* pos, Vec3f* closestPoi
         PRINTF("cross = pos を返します。\n"); // "Returns cross = pos."
         PRINTF(VT_RST);
         Math_Vec3f_Copy(closestPoint, pos);
-        //! @bug Missing early return
+        return;
     }
 
     t = (((pos->x - line->point.x) * line->dir.x) + ((pos->y - line->point.y) * line->dir.y) +
@@ -688,9 +688,11 @@ s32 Math3D_LineVsCube(Vec3f* min, Vec3f* max, Vec3f* a, Vec3f* b) {
     triVtx0.x = min->x;
     triVtx0.y = min->y;
     triVtx0.z = min->z;
+
     triVtx1.x = min->x;
     triVtx1.y = min->y;
     triVtx1.z = max->z;
+
     triVtx2.x = min->x;
     triVtx2.y = max->y;
     triVtx2.z = max->z;
@@ -701,9 +703,11 @@ s32 Math3D_LineVsCube(Vec3f* min, Vec3f* max, Vec3f* a, Vec3f* b) {
     triVtx0.x = min->x;
     triVtx0.y = min->y;
     triVtx0.z = min->z;
+
     triVtx1.x = min->x;
     triVtx1.y = max->y;
     triVtx1.z = max->z;
+
     triVtx2.x = min->x;
     triVtx2.y = max->y;
     triVtx2.z = min->z;
@@ -715,9 +719,11 @@ s32 Math3D_LineVsCube(Vec3f* min, Vec3f* max, Vec3f* a, Vec3f* b) {
     triVtx0.x = min->x;
     triVtx0.y = max->y;
     triVtx0.z = max->z;
+
     triVtx1.x = min->x;
     triVtx1.y = min->y;
     triVtx1.z = max->z;
+
     triVtx2.x = max->x;
     triVtx2.y = max->y;
     triVtx2.z = max->z;
@@ -727,12 +733,13 @@ s32 Math3D_LineVsCube(Vec3f* min, Vec3f* max, Vec3f* a, Vec3f* b) {
     triVtx0.x = max->x;
     triVtx0.y = max->y;
     triVtx0.z = max->z;
+
     triVtx1.x = min->x;
     triVtx1.y = min->y;
     triVtx1.z = max->z;
+
     triVtx2.x = max->x;
-    //! @bug trVtx1.y should be triVtx2.y, prevents a tri on the cube from being checked.
-    triVtx1.y = min->y;
+    triVtx2.y = min->y; // previously bugged
     triVtx2.z = max->z;
     if (Math3D_TriLineIntersect(&triVtx0, &triVtx1, &triVtx2, 0.0f, 0.0f, 1.0f, -max->z, a, b, &intersectPoint, 0)) {
         return true;
@@ -742,9 +749,11 @@ s32 Math3D_LineVsCube(Vec3f* min, Vec3f* max, Vec3f* a, Vec3f* b) {
     triVtx0.x = max->x;
     triVtx0.y = max->y;
     triVtx0.z = max->z;
+
     triVtx1.x = min->x;
     triVtx1.y = max->y;
     triVtx1.z = min->z;
+
     triVtx2.x = min->x;
     triVtx2.y = max->y;
     triVtx2.z = max->z;
@@ -754,9 +763,11 @@ s32 Math3D_LineVsCube(Vec3f* min, Vec3f* max, Vec3f* a, Vec3f* b) {
     triVtx0.x = max->x;
     triVtx0.y = max->y;
     triVtx0.z = max->z;
+
     triVtx1.x = max->x;
     triVtx1.y = max->y;
     triVtx1.z = min->z;
+
     triVtx2.x = min->x;
     triVtx2.y = max->y;
     triVtx2.z = min->z;
@@ -768,9 +779,11 @@ s32 Math3D_LineVsCube(Vec3f* min, Vec3f* max, Vec3f* a, Vec3f* b) {
     triVtx0.x = min->x;
     triVtx0.y = min->y;
     triVtx0.z = min->z;
+
     triVtx1.x = min->x;
     triVtx1.y = max->y;
     triVtx1.z = min->z;
+
     triVtx2.x = max->x;
     triVtx2.y = max->y;
     triVtx2.z = min->z;
@@ -780,9 +793,11 @@ s32 Math3D_LineVsCube(Vec3f* min, Vec3f* max, Vec3f* a, Vec3f* b) {
     triVtx0.x = min->x;
     triVtx0.y = min->y;
     triVtx0.z = min->z;
+
     triVtx1.x = max->x;
     triVtx1.y = max->y;
     triVtx1.z = min->z;
+
     triVtx2.x = max->x;
     triVtx2.y = min->y;
     triVtx2.z = min->z;
@@ -794,9 +809,11 @@ s32 Math3D_LineVsCube(Vec3f* min, Vec3f* max, Vec3f* a, Vec3f* b) {
     triVtx0.x = min->x;
     triVtx0.y = min->y;
     triVtx0.z = min->z;
+
     triVtx1.x = max->x;
     triVtx1.y = min->y;
     triVtx1.z = min->z;
+
     triVtx2.x = max->x;
     triVtx2.y = min->y;
     triVtx2.z = max->z;
@@ -806,9 +823,11 @@ s32 Math3D_LineVsCube(Vec3f* min, Vec3f* max, Vec3f* a, Vec3f* b) {
     triVtx0.x = min->x;
     triVtx0.y = min->y;
     triVtx0.z = min->z;
+
     triVtx1.x = max->x;
     triVtx1.y = min->y;
     triVtx1.z = max->z;
+
     triVtx2.x = min->x;
     triVtx2.y = min->y;
     triVtx2.z = max->z;
@@ -820,9 +839,11 @@ s32 Math3D_LineVsCube(Vec3f* min, Vec3f* max, Vec3f* a, Vec3f* b) {
     triVtx0.x = max->x;
     triVtx0.y = max->y;
     triVtx0.z = max->z;
+
     triVtx1.x = max->x;
     triVtx1.y = min->y;
     triVtx1.z = min->z;
+
     triVtx2.x = max->x;
     triVtx2.y = max->y;
     triVtx2.z = min->z;
@@ -832,9 +853,11 @@ s32 Math3D_LineVsCube(Vec3f* min, Vec3f* max, Vec3f* a, Vec3f* b) {
     triVtx0.x = max->x;
     triVtx0.y = max->y;
     triVtx0.z = max->z;
+
     triVtx1.x = max->x;
     triVtx1.y = min->y;
     triVtx1.z = max->z;
+
     triVtx2.x = max->x;
     triVtx2.y = min->y;
     triVtx2.z = min->z;

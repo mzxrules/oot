@@ -17,8 +17,6 @@ void* THA_GetTail(TwoHeadArena* tha);
 void* THA_AllocHead(TwoHeadArena* tha, size_t size);
 void* THA_AllocHeadByte(TwoHeadArena* tha);
 void* THA_AllocTail(TwoHeadArena* tha, size_t size);
-void* THA_AllocTailAlign16(TwoHeadArena* tha, size_t size);
-void* THA_AllocTailAlign(TwoHeadArena* tha, size_t size, uintptr_t mask);
 s32 THA_GetRemaining(TwoHeadArena* tha);
 u32 THA_IsCrash(TwoHeadArena* tha);
 void THA_Reset(TwoHeadArena* tha);

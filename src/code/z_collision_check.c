@@ -1179,39 +1179,6 @@ s32 CollisionCheck_SetAT(PlayState* play, CollisionCheckContext* colChkCtx, Coll
     return index;
 }
 
-/**
- * Unused. Sets collider as an AT (attack) for the current frame, which will be checked against ACs (attack colliders).
- * If CollisionCheck_SAC is enabled, the collider will be inserted into the list at the specified index, otherwise it
- * will be inserted into the next slot
- */
-s32 CollisionCheck_SetAT_SAC(PlayState* play, CollisionCheckContext* colChkCtx, Collider* collider, s32 index) {
-    ASSERT(collider->shape < COLSHAPE_MAX, "pcl_obj->data_type <= CL_DATA_LBL_SWRD", "../z_collision_check.c", 3037);
-    if (FrameAdvance_IsEnabled(play) == true) {
-        return -1;
-    }
-    sATResetFuncs[collider->shape](play, collider);
-    if (collider->actor != NULL && collider->actor->update == NULL) {
-        return -1;
-    }
-    if (colChkCtx->sacFlags & SAC_ENABLE) {
-        if (!(index < colChkCtx->colATCount)) {
-            // "You are trying to register a location that is larger than the total number of data."
-            PRINTF("CollisionCheck_setAT_SAC():全データ数より大きいところに登録しようとしている。\n");
-            return -1;
-        }
-        colChkCtx->colAT[index] = collider;
-    } else {
-        if (!(colChkCtx->colATCount < COLLISION_CHECK_AT_MAX)) {
-            // "Index exceeded and cannot add more"
-            PRINTF("CollisionCheck_setAT():インデックスがオーバーして追加不能\n");
-            return -1;
-        }
-        index = colChkCtx->colATCount;
-        colChkCtx->colAT[colChkCtx->colATCount++] = collider;
-    }
-    return index;
-}
-
 static ColChkResetFunc sACResetFuncs[] = {
     Collider_ResetJntSphAC,
     Collider_ResetCylinderAC,
@@ -1244,39 +1211,6 @@ s32 CollisionCheck_SetAC(PlayState* play, CollisionCheckContext* colChkCtx, Coll
     }
     index = colChkCtx->colACCount;
     colChkCtx->colAC[colChkCtx->colACCount++] = collider;
-    return index;
-}
-
-/**
- * Unused. Sets collider as an AC (attack collider) for the current frame, allowing it to detect ATs (attacks).
- * If CollisionCheck_SAC is enabled, the collider will be inserted into the list at the specified index, otherwise it
- * will be inserted into the next slot
- */
-s32 CollisionCheck_SetAC_SAC(PlayState* play, CollisionCheckContext* colChkCtx, Collider* collider, s32 index) {
-    ASSERT(collider->shape < COLSHAPE_MAX, "pcl_obj->data_type <= CL_DATA_LBL_SWRD", "../z_collision_check.c", 3153);
-    if (FrameAdvance_IsEnabled(play) == true) {
-        return -1;
-    }
-    sACResetFuncs[collider->shape](play, collider);
-    if (collider->actor != NULL && collider->actor->update == NULL) {
-        return -1;
-    }
-    if (colChkCtx->sacFlags & SAC_ENABLE) {
-        if (!(index < colChkCtx->colACCount)) {
-            // "You are trying to register a location that is larger than the total number of data."
-            PRINTF("CollisionCheck_setAC_SAC():全データ数より大きいところに登録しようとしている。\n");
-            return -1;
-        }
-        colChkCtx->colAC[index] = collider;
-    } else {
-        if (!(colChkCtx->colACCount < COLLISION_CHECK_AC_MAX)) {
-            // "Index exceeded and cannot add more"
-            PRINTF("CollisionCheck_setAC():インデックスがオーバして追加不能\n");
-            return -1;
-        }
-        index = colChkCtx->colACCount;
-        colChkCtx->colAC[colChkCtx->colACCount++] = collider;
-    }
     return index;
 }
 
@@ -1314,40 +1248,6 @@ s32 CollisionCheck_SetOC(PlayState* play, CollisionCheckContext* colChkCtx, Coll
     }
     index = colChkCtx->colOCCount;
     colChkCtx->colOC[colChkCtx->colOCCount++] = collider;
-    return index;
-}
-
-/**
- * Unused. Sets collider as an OC (object collider) for the current frame, allowing it to detect other OCs
- * If CollisionCheck_SAC is enabled, the collider will be inserted into the list at the specified index, otherwise it
- * will be inserted into the next slot
- */
-s32 CollisionCheck_SetOC_SAC(PlayState* play, CollisionCheckContext* colChkCtx, Collider* collider, s32 index) {
-    if (FrameAdvance_IsEnabled(play) == true) {
-        return -1;
-    }
-    ASSERT(collider->shape < COLSHAPE_MAX, "pcl_obj->data_type <= CL_DATA_LBL_SWRD", "../z_collision_check.c", 3274);
-    sOCResetFuncs[collider->shape](play, collider);
-    if (collider->actor != NULL && collider->actor->update == NULL) {
-        return -1;
-    }
-    if (colChkCtx->sacFlags & SAC_ENABLE) {
-        if (!(index < colChkCtx->colOCCount)) {
-            // "You are trying to register a location that is larger than the total number of data."
-            PRINTF("CollisionCheck_setOC_SAC():全データ数より大きいところに登録しようとしている。\n");
-            return -1;
-        }
-        //! @bug Should be colOC
-        colChkCtx->colAT[index] = collider;
-    } else {
-        if (!(colChkCtx->colOCCount < COLLISION_CHECK_OC_MAX)) {
-            // "Index exceeded and cannot add more"
-            PRINTF("CollisionCheck_setOC():インデックスがオーバして追加不能\n");
-            return -1;
-        }
-        index = colChkCtx->colOCCount;
-        colChkCtx->colOC[colChkCtx->colOCCount++] = collider;
-    }
     return index;
 }
 

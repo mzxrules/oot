@@ -145,7 +145,7 @@ void DynaSSNodeList_Initialize(PlayState* play, DynaSSNodeList* nodeList) {
  * Initialize DynaSSNodeList tbl
  */
 void DynaSSNodeList_Alloc(PlayState* play, DynaSSNodeList* nodeList, s32 max) {
-    nodeList->tbl = THA_AllocTailAlign(&play->state.tha, max * sizeof(SSNode), ALIGNOF_MASK(SSNode));
+    nodeList->tbl = THA_AllocTail(&play->state.tha, max * sizeof(SSNode));
 
     ASSERT(nodeList->tbl != NULL, "psst->tbl != NULL", "../z_bgcheck.c", 1811);
 
@@ -196,24 +196,18 @@ void BgCheck_Vec3fToVec3s(Vec3s* dst, Vec3f* src) {
  * Get CollisionPoly's lowest y point
  */
 s16 CollisionPoly_GetMinY(CollisionPoly* poly, Vec3s* vtxList) {
-    //! @bug Due to rounding errors, some polys with a slight slope have a y normal of 1.0f/-1.0f. As such, this
-    //! optimization returns the wrong minimum y for a subset of these polys.
-    if (poly->normal.y == COLPOLY_SNORMAL(1.0f) || poly->normal.y == COLPOLY_SNORMAL(-1.0f)) {
-        return vtxList[COLPOLY_VTX_INDEX(poly->flags_vIA)].y;
-    } else {
-        s32 a = COLPOLY_VTX_INDEX(poly->flags_vIA);
-        s32 b = COLPOLY_VTX_INDEX(poly->flags_vIB);
-        s32 c = poly->vIC;
-        s16 min = vtxList[a].y;
+    s32 a = COLPOLY_VTX_INDEX(poly->flags_vIA);
+    s32 b = COLPOLY_VTX_INDEX(poly->flags_vIB);
+    s32 c = poly->vIC;
+    s16 min = vtxList[a].y;
 
-        if (min > vtxList[b].y) {
-            min = vtxList[b].y;
-        }
-        if (min < vtxList[c].y) {
-            return min;
-        }
-        return vtxList[c].y;
+    if (min > vtxList[b].y) {
+        min = vtxList[b].y;
     }
+    if (min < vtxList[c].y) {
+        return min;
+    }
+    return vtxList[c].y;
 }
 
 /**
@@ -311,8 +305,8 @@ void CollisionPoly_GetVerticesByBgId(CollisionPoly* poly, s32 bgId, CollisionCon
         PRINTF(VT_RST);
 
         if (dest != NULL) {
-            //! @bug: dest[2] x and y are not set to 0
-            dest[0].x = dest[0].y = dest[0].z = dest[1].x = dest[1].y = dest[1].z = dest[2].z = 0.0f;
+            dest[0].x = dest[0].y = dest[0].z = dest[1].x = dest[1].y = dest[1].z = dest[2].x = dest[2].y = dest[2].z =
+                0.0f;
         }
     } else {
         if (bgId == BGCHECK_SCENE) {
@@ -1608,10 +1602,8 @@ void BgCheck_Allocate(CollisionContext* colCtx, PlayState* play, CollisionHeader
             colCtx->subdivAmount.z = 16;
         }
     }
-    colCtx->lookupTbl = THA_AllocTailAlign(&play->state.tha,
-                                           colCtx->subdivAmount.x * sizeof(StaticLookup) * colCtx->subdivAmount.y *
-                                               colCtx->subdivAmount.z,
-                                           ALIGNOF_MASK(StaticLookup));
+    colCtx->lookupTbl = THA_AllocTail(&play->state.tha, colCtx->subdivAmount.x * sizeof(StaticLookup) *
+                                                            colCtx->subdivAmount.y * colCtx->subdivAmount.z);
     if (colCtx->lookupTbl == NULL) {
         LogUtils_HungupThread("../z_bgcheck.c", 4176);
     }
@@ -2516,7 +2508,7 @@ void SSNodeList_Initialize(SSNodeList* this) {
 void SSNodeList_Alloc(PlayState* play, SSNodeList* this, s32 tblMax, s32 numPolys) {
     this->max = tblMax;
     this->count = 0;
-    this->tbl = THA_AllocTailAlign(&play->state.tha, tblMax * sizeof(SSNode), ALIGNOF_MASK(SSNode));
+    this->tbl = THA_AllocTail(&play->state.tha, tblMax * sizeof(SSNode));
 
     ASSERT(this->tbl != NULL, "this->short_slist_node_tbl != NULL", "../z_bgcheck.c", 5975);
 
@@ -2651,7 +2643,7 @@ void DynaPoly_NullPolyList(CollisionPoly** polyList) {
  * Allocate dyna.polyList
  */
 void DynaPoly_AllocPolyList(PlayState* play, CollisionPoly** polyList, s32 numPolys) {
-    *polyList = THA_AllocTailAlign(&play->state.tha, numPolys * sizeof(CollisionPoly), ALIGNOF_MASK(CollisionPoly));
+    *polyList = THA_AllocTail(&play->state.tha, numPolys * sizeof(CollisionPoly));
     ASSERT(*polyList != NULL, "ptbl->pbuf != NULL", "../z_bgcheck.c", 6247);
 }
 
@@ -2666,7 +2658,7 @@ void DynaPoly_NullVtxList(Vec3s** vtxList) {
  * Allocate dyna.vtxList
  */
 void DynaPoly_AllocVtxList(PlayState* play, Vec3s** vtxList, s32 numVtx) {
-    *vtxList = THA_AllocTailAlign(&play->state.tha, numVtx * sizeof(Vec3s), ALIGNOF_MASK(Vec3s));
+    *vtxList = THA_AllocTail(&play->state.tha, numVtx * sizeof(Vec3s));
     ASSERT(*vtxList != NULL, "ptbl->pbuf != NULL", "../z_bgcheck.c", 6277);
 }
 

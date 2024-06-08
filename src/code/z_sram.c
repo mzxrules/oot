@@ -328,6 +328,16 @@ static s16 sDungeonEntrances[] = {
     ENTR_INSIDE_GANONS_CASTLE_0,           // SCENE_INSIDE_GANONS_CASTLE
     ENTR_GANONS_TOWER_COLLAPSE_INTERIOR_0, // SCENE_GANONS_TOWER_COLLAPSE_INTERIOR
     ENTR_INSIDE_GANONS_CASTLE_COLLAPSE_0,  // SCENE_INSIDE_GANONS_CASTLE_COLLAPSE
+
+    ENTR_TREASURE_BOX_SHOP_0, // 16,
+    ENTR_DEKU_TREE_0,
+    ENTR_DODONGOS_CAVERN_0,
+    ENTR_JABU_JABU_0,
+    ENTR_FOREST_TEMPLE_0,
+    ENTR_FIRE_TEMPLE_0,
+    ENTR_WATER_TEMPLE_0,
+    ENTR_SPIRIT_TEMPLE_0,
+    ENTR_SHADOW_TEMPLE_0,
 };
 
 /**
@@ -370,39 +380,16 @@ void Sram_OpenSave(SramContext* sramCtx) {
         case SCENE_GERUDO_TRAINING_GROUND:
         case SCENE_THIEVES_HIDEOUT:
         case SCENE_INSIDE_GANONS_CASTLE:
-            gSaveContext.save.entranceIndex = sDungeonEntrances[gSaveContext.save.info.playerData.savedSceneId];
-            break;
 
         case SCENE_DEKU_TREE_BOSS:
-            gSaveContext.save.entranceIndex = ENTR_DEKU_TREE_0;
-            break;
-
         case SCENE_DODONGOS_CAVERN_BOSS:
-            gSaveContext.save.entranceIndex = ENTR_DODONGOS_CAVERN_0;
-            break;
-
         case SCENE_JABU_JABU_BOSS:
-            gSaveContext.save.entranceIndex = ENTR_JABU_JABU_0;
-            break;
-
         case SCENE_FOREST_TEMPLE_BOSS:
-            gSaveContext.save.entranceIndex = ENTR_FOREST_TEMPLE_0;
-            break;
-
         case SCENE_FIRE_TEMPLE_BOSS:
-            gSaveContext.save.entranceIndex = ENTR_FIRE_TEMPLE_0;
-            break;
-
         case SCENE_WATER_TEMPLE_BOSS:
-            gSaveContext.save.entranceIndex = ENTR_WATER_TEMPLE_0;
-            break;
-
         case SCENE_SPIRIT_TEMPLE_BOSS:
-            gSaveContext.save.entranceIndex = ENTR_SPIRIT_TEMPLE_0;
-            break;
-
         case SCENE_SHADOW_TEMPLE_BOSS:
-            gSaveContext.save.entranceIndex = ENTR_SHADOW_TEMPLE_0;
+            gSaveContext.save.entranceIndex = sDungeonEntrances[gSaveContext.save.info.playerData.savedSceneId];
             break;
 
         case SCENE_GANONS_TOWER_COLLAPSE_INTERIOR:
@@ -414,12 +401,15 @@ void Sram_OpenSave(SramContext* sramCtx) {
             break;
 
         default:
-            if (gSaveContext.save.info.playerData.savedSceneId != SCENE_LINKS_HOUSE) {
-                gSaveContext.save.entranceIndex =
-                    (LINK_AGE_IN_YEARS == YEARS_CHILD) ? ENTR_LINKS_HOUSE_0 : ENTR_TEMPLE_OF_TIME_7;
-            } else {
-                gSaveContext.save.entranceIndex = ENTR_LINKS_HOUSE_0;
-            }
+            /*
+                if (gSaveContext.save.info.playerData.savedSceneId != SCENE_LINKS_HOUSE) {
+                    gSaveContext.save.entranceIndex =
+                        (LINK_AGE_IN_YEARS == YEARS_CHILD) ? ENTR_LINKS_HOUSE_0 : ENTR_TEMPLE_OF_TIME_7;
+                } else {
+                    gSaveContext.save.entranceIndex = ENTR_LINKS_HOUSE_0;
+                }
+            */
+            gSaveContext.save.entranceIndex = ENTR_HYRULE_FIELD_0;
             break;
     }
 
@@ -608,16 +598,13 @@ void Sram_VerifyAndLoadAllSaves(FileSelectState* fileSelect, SramContext* sramCt
             if (newChecksum != oldChecksum) {
                 // backup save didnt work, make new save
                 PRINTF("ＥＲＲＯＲ！！！ ＝ %x(%d+3)\n", gSramSlotOffsets[slotNum + 3], slotNum);
-                bzero(&gSaveContext.save.entranceIndex, sizeof(s32));
-                bzero(&gSaveContext.save.linkAge, sizeof(s32));
-                bzero(&gSaveContext.save.cutsceneIndex, sizeof(s32));
-                //! @bug gSaveContext.save.dayTime is a u16 but is cleared as a 32-bit value. This is harmless as-is
-                //! since it is followed by nightFlag which is also reset here, but can become an issue if the save
-                //! layout is changed.
-                bzero(&gSaveContext.save.dayTime, sizeof(s32));
-                bzero(&gSaveContext.save.nightFlag, sizeof(s32));
-                bzero(&gSaveContext.save.totalDays, sizeof(s32));
-                bzero(&gSaveContext.save.bgsDayCount, sizeof(s32));
+                bzero(&gSaveContext.save.entranceIndex, sizeof(gSaveContext.save.entranceIndex));
+                bzero(&gSaveContext.save.linkAge, sizeof(gSaveContext.save.linkAge));
+                bzero(&gSaveContext.save.cutsceneIndex, sizeof(gSaveContext.save.cutsceneIndex));
+                bzero(&gSaveContext.save.dayTime, sizeof(gSaveContext.save.dayTime));
+                bzero(&gSaveContext.save.nightFlag, sizeof(gSaveContext.save.nightFlag));
+                bzero(&gSaveContext.save.totalDays, sizeof(gSaveContext.save.totalDays));
+                bzero(&gSaveContext.save.bgsDayCount, sizeof(gSaveContext.save.bgsDayCount));
 
 #if OOT_DEBUG
                 if (!slotNum) {

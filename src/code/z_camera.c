@@ -7325,12 +7325,12 @@ s32 Camera_Special9(Camera* camera) {
             camera->stateFlags &= ~(CAM_STATE_CHECK_WATER | CAM_STATE_CHECK_BG);
             camera->animState++;
 
-            //! @bug The angle passed to ABS should be cast to s16.
+            //! @bug FIXED The angle passed to ABS should be cast to s16.
             //! The lack of a cast means that a door which has an angle of around 0x8000 will calculate an incorrect
             //! angle and use an incorrect `targetYaw`.
             //! In-game, this means if the player opens a susceptible door at a slanted angle, the camera will not
             //! appear correctly on the other side after the player has walked through the door.
-            rwData->targetYaw = ABS(playerPosRot->rot.y - referencePosRot.rot.y) >= 0x4000
+            rwData->targetYaw = ABS((s16)(playerPosRot->rot.y - referencePosRot.rot.y)) >= 0x4000
                                     ? referencePosRot.rot.y - 0x7FFF
                                     : referencePosRot.rot.y;
             FALLTHROUGH;

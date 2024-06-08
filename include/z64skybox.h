@@ -65,6 +65,7 @@ typedef struct {
 } SkyboxFile; // size = 0x10
 
 extern SkyboxFile gNormalSkyFiles[];
+#define GET_NORMAL_SKY_SEGMENT_INDEX(skyboxIndex) ((skyboxIndex & 1) ^ ((skyboxIndex & 4) >> 2))
 
 void Skybox_Init(struct GameState* state, SkyboxContext* skyboxCtx, s16 skyboxId);
 Mtx* Skybox_UpdateMatrix(SkyboxContext* skyboxCtx, f32 x, f32 y, f32 z);

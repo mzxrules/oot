@@ -809,11 +809,9 @@ s16 EnGo2_UpdateTalkState(PlayState* play, Actor* thisx) {
         case GORON_MARKET_BAZAAR:
             return EnGo2_UpdateTalkStateGoronMarketBazaar(play, this);
     }
-#ifdef AVOID_UB
     // The v0 register isn't set in this function, the last value in v0 is the return value of Actor_TalkOfferAccepted
     // called in the function below, which must be false for this function to be called
-    return false;
-#endif
+    return NPC_TALK_STATE_IDLE;
 }
 
 s32 func_80A44790(EnGo2* this, PlayState* play) {

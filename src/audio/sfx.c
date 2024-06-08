@@ -90,7 +90,7 @@ void Audio_PlaySfxGeneral(u16 sfxId, Vec3f* pos, u8 token, f32* freqScale, f32* 
                         gSfxRequestWriteIndex++;
                         req = &sSfxRequests[gSfxRequestWriteIndex];
                     }
-                    i = 10; // "break;"
+                    break;
                 }
             }
         }

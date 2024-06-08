@@ -226,7 +226,7 @@ extern struct GraphicsContext* __gfxCtx;
 #define MATRIX_CHECK_FLOATS(mtx, file, line) (mtx)
 #define DMA_REQUEST_SYNC(ram, vrom, size, file, line) DmaMgr_RequestSync(ram, vrom, size)
 #define DMA_REQUEST_ASYNC(req, ram, vrom, size, unk5, queue, msg, file, line) DmaMgr_RequestAsync(req, ram, vrom, size, unk5, queue, msg)
-#define GAME_STATE_ALLOC(gameState, size, file, line) THA_AllocTailAlign16(&(gameState)->tha, size)
+#define GAME_STATE_ALLOC(gameState, size, file, line) THA_AllocTail(&(gameState)->tha, size)
 #define DEBUG_ARENA_MALLOC(size, file, line) DebugArena_Malloc(size)
 #define DEBUG_ARENA_MALLOC_R(size, file, line) DebugArena_MallocR(size)
 #define DEBUG_ARENA_FREE(size, file, line) DebugArena_Free(size)
