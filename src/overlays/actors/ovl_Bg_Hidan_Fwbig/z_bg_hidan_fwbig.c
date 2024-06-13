@@ -254,9 +254,9 @@ void BgHidanFwbig_Draw(Actor* thisx, PlayState* play) {
 
     Gfx_SetupDL_25Xlu(play->state.gfxCtx);
 
-    gSPSegment(POLY_XLU_DISP++, 0x09, SEGMENTED_TO_VIRTUAL(gEffUnknown4Tex));
+    gSPSegment(POLY_XLU_DISP++, 0x09, SEGMENTED_TO_VIRTUAL(gEffFlameWallTex));
 
-    gSPSegment(POLY_XLU_DISP++, 0x0A, SEGMENTED_TO_VIRTUAL(gEffUnknown5Tex));
+    gSPSegment(POLY_XLU_DISP++, 0x0A, SEGMENTED_TO_VIRTUAL(gEffFlameWallMaskTex));
 
     height = thisx->scale.y * 2400.0f;
     gDPSetPrimColor(POLY_XLU_DISP++, 0x80, 0x80, 255, 220, 0,
