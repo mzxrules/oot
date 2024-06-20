@@ -22,7 +22,7 @@ DUNGEON_NAMES = [
 ]
 
 HEADER = """\
-#include "global.h"
+#include "z64map_mark.h"
 """
 
 def RamToOff(vram):

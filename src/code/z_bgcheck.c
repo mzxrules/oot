@@ -1,4 +1,5 @@
 #include "global.h"
+#include "macros.h"
 #include "terminal.h"
 
 u16 DynaSSNodeList_GetNextNodeIdx(DynaSSNodeList* nodeList);

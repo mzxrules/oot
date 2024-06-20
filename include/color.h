@@ -1,6 +1,8 @@
 #ifndef COLOR_H
 #define COLOR_H
 
+#include "ultra64.h"
+
 typedef struct {
     u8 r, g, b;
 } Color_RGB8;

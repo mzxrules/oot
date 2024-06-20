@@ -1,10 +1,15 @@
 #ifndef Z64EFFECT_H
 #define Z64EFFECT_H
 
+#include "ultra64.h"
+#include "romfile.h"
 #include "color.h"
+#include "z64math.h"
+#include "z64light.h"
 
 struct GraphicsContext;
 struct PlayState;
+struct Actor;
 
 /* Effects */
 
@@ -218,7 +223,7 @@ typedef struct EffectSs {
     /* 0x28 */ EffectSsDrawFunc draw;
     /* 0x2C */ Vec3f vec; // usage specific per effect
     /* 0x38 */ void* gfx; // mostly used for display lists, sometimes textures
-    /* 0x3C */ Actor* actor; // interfacing actor, usually the actor that spawned the effect
+    /* 0x3C */ struct Actor* actor; // interfacing actor, usually the actor that spawned the effect
     /* 0x40 */ s16 regs[13]; // specific per effect
     /* 0x5A */ u16 flags;
     /* 0x5C */ s16 life; // -1 means this entry is free
@@ -257,5 +262,22 @@ typedef enum {
 
 #undef DEFINE_EFFECT_SS
 #undef DEFINE_EFFECT_SS_UNSET
+
+
+void EffectBlure_AddVertex(EffectBlure* this, Vec3f* p1, Vec3f* p2);
+void EffectBlure_AddSpace(EffectBlure* this);
+void EffectBlure_Init1(void* thisx, void* initParamsx);
+void EffectBlure_Init2(void* thisx, void* initParamsx);
+void EffectBlure_Destroy(void* thisx);
+s32 EffectBlure_Update(void* thisx);
+void EffectBlure_Draw(void* thisx, struct GraphicsContext* gfxCtx);
+void EffectShieldParticle_Init(void* thisx, void* initParamsx);
+void EffectShieldParticle_Destroy(void* thisx);
+s32 EffectShieldParticle_Update(void* thisx);
+void EffectShieldParticle_Draw(void* thisx, struct GraphicsContext* gfxCtx);
+void EffectSpark_Init(void* thisx, void* initParamsx);
+void EffectSpark_Destroy(void* thisx);
+s32 EffectSpark_Update(void* thisx);
+void EffectSpark_Draw(void* thisx, struct GraphicsContext* gfxCtx);
 
 #endif

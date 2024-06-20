@@ -148,4 +148,12 @@ extern Vec3f gSfxDefaultPos;
 extern f32 gSfxDefaultFreqAndVolScale;
 extern s8 gSfxDefaultReverb;
 
+extern SfxBankEntry D_8016BAD0[9];
+extern SfxBankEntry D_8016BC80[12];
+extern SfxBankEntry D_8016BEC0[22];
+extern SfxBankEntry D_8016C2E0[20];
+extern SfxBankEntry D_8016C6A0[8];
+extern SfxBankEntry D_8016C820[3];
+extern SfxBankEntry D_8016C8B0[5];
+
 #endif

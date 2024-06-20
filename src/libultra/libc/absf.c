@@ -1,4 +1,4 @@
-#include "global.h"
+#include "math.h"
 
 float absf(float n) {
 #ifndef __GNUC__

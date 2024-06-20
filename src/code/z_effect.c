@@ -1,3 +1,5 @@
+#include "z64effect.h"
+#include "macros.h"
 #include "global.h"
 
 EffectContext sEffectContext;
@@ -33,7 +35,7 @@ EffectInfo sEffectInfoTable[] = {
     },
 };
 
-PlayState* Effect_GetPlayState(void) {
+struct PlayState* Effect_GetPlayState(void) {
     return sEffectContext.play;
 }
 
@@ -77,7 +79,7 @@ void Effect_InitStatus(EffectStatus* status) {
     status->unk_02 = 0;
 }
 
-void Effect_InitContext(PlayState* play) {
+void Effect_InitContext(struct PlayState* play) {
     s32 i;
 
     for (i = 0; i < SPARK_COUNT; i++) {
@@ -96,7 +98,7 @@ void Effect_InitContext(PlayState* play) {
     sEffectContext.play = play;
 }
 
-void Effect_Add(PlayState* play, s32* pIndex, s32 type, u8 arg3, u8 arg4, void* initParams) {
+void Effect_Add(struct PlayState* play, s32* pIndex, s32 type, u8 arg3, u8 arg4, void* initParams) {
     s32 i;
     u32 slotFound;
     void* effect = NULL;
@@ -156,7 +158,7 @@ void Effect_Add(PlayState* play, s32* pIndex, s32 type, u8 arg3, u8 arg4, void* 
     }
 }
 
-void Effect_DrawAll(GraphicsContext* gfxCtx) {
+void Effect_DrawAll(struct GraphicsContext* gfxCtx) {
     s32 i;
 
     for (i = 0; i < SPARK_COUNT; i++) {
@@ -181,7 +183,7 @@ void Effect_DrawAll(GraphicsContext* gfxCtx) {
     }
 }
 
-void Effect_UpdateAll(PlayState* play) {
+void Effect_UpdateAll(struct PlayState* play) {
     s32 i;
 
     for (i = 0; i < SPARK_COUNT; i++) {
@@ -209,7 +211,7 @@ void Effect_UpdateAll(PlayState* play) {
     }
 }
 
-void Effect_Delete(PlayState* play, s32 index) {
+void Effect_Delete(struct PlayState* play, s32 index) {
     if (index == TOTAL_EFFECT_COUNT) {
         return;
     }
@@ -235,7 +237,7 @@ void Effect_Delete(PlayState* play, s32 index) {
     }
 }
 
-void Effect_DeleteAll(PlayState* play) {
+void Effect_DeleteAll(struct PlayState* play) {
     s32 i;
 
     PRINTF("エフェクト総て解放\n"); // "All effect release"

@@ -219,13 +219,6 @@ extern volatile OSTime gRSPOtherTimeAcc;
 extern volatile OSTime D_8016A578;
 extern volatile OSTime gRDPTimeAcc;
 
-extern SfxBankEntry D_8016BAD0[9];
-extern SfxBankEntry D_8016BC80[12];
-extern SfxBankEntry D_8016BEC0[22];
-extern SfxBankEntry D_8016C2E0[20];
-extern SfxBankEntry D_8016C6A0[8];
-extern SfxBankEntry D_8016C820[3];
-extern SfxBankEntry D_8016C8B0[5];
 extern ActiveSfx gActiveSfx[7][MAX_CHANNELS_PER_BANK]; // total size = 0xA8
 extern u8 gSfxBankMuted[];
 extern u16 gAudioSfxSwapSource[10];

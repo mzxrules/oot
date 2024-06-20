@@ -1,5 +1,7 @@
-#include "global.h"
+#include "z64message.h"
 #include "message_data_static.h"
+#include "segment_symbols.h"
+#include "z64.h"
 
 void func_8006EE50(Font* font, u16 arg1, u16 arg2) {
 }

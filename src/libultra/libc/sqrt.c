@@ -1,4 +1,4 @@
-#include "global.h"
+#include "math.h"
 
 double sqrt(double f) {
 #ifndef __GNUC__
