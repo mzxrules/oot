@@ -1160,8 +1160,9 @@ void Play_Draw(PlayState* this) {
             Gfx* tempGfxDisp;
             Gfx* lockedGfxDisp;
 
-            tempGfxDisp = Gfx_Open(lockedGfxDisp = POLY_OPA_DISP);
-            gSPDisplayList(OVERLAY_DISP++, tempGfxDisp);
+            // tempGfxDisp = Gfx_Open(lockedGfxDisp = POLY_OPA_DISP);
+            // gSPDisplayList(OVERLAY_DISP++, tempGfxDisp);
+            GRAPH_ALLOC_OPEN(tempGfxDisp, OVERLAY_DISP);
 
             if ((this->transitionMode == TRANS_MODE_INSTANCE_RUNNING) ||
                 (this->transitionMode == TRANS_MODE_INSTANCE_WAIT) || (this->transitionCtx.transitionType >= 56)) {
@@ -1188,9 +1189,10 @@ void Play_Draw(PlayState* this) {
                 VisMono_Draw(&gPlayVisMono, &tempGfxDisp);
             }
 
-            gSPEndDisplayList(tempGfxDisp++);
-            Gfx_Close(lockedGfxDisp, tempGfxDisp);
-            POLY_OPA_DISP = tempGfxDisp;
+            // gSPEndDisplayList(tempGfxDisp++);
+            // Gfx_Close(lockedGfxDisp, tempGfxDisp);
+            // POLY_OPA_DISP = tempGfxDisp;
+            GRAPH_ALLOC_CLOSE(tempGfxDisp);
         }
 
         if (gTransitionTileState == TRANS_TILE_READY) {

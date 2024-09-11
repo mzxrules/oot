@@ -77,8 +77,9 @@ void FlagSet_Update(PlayState* play) {
         GfxPrint printer;
         s32 pad;
 
-        tempGfxDisp = Gfx_Open(lockedGfxDisp = POLY_OPA_DISP);
-        gSPDisplayList(OVERLAY_DISP++, tempGfxDisp);
+        // tempGfxDisp = Gfx_Open(lockedGfxDisp = POLY_OPA_DISP);
+        // gSPDisplayList(OVERLAY_DISP++, tempGfxDisp);
+        GRAPH_ALLOC_OPEN(tempGfxDisp, OVERLAY_DISP);
 
         GfxPrint_Init(&printer);
         GfxPrint_Open(&printer, tempGfxDisp);
@@ -169,12 +170,13 @@ void FlagSet_Update(PlayState* play) {
         tempGfxDisp = GfxPrint_Close(&printer);
         GfxPrint_Destroy(&printer);
 
-        gSPEndDisplayList(tempGfxDisp++);
-        Gfx_Close(lockedGfxDisp, tempGfxDisp);
-        POLY_OPA_DISP = tempGfxDisp;
+        // gSPEndDisplayList(tempGfxDisp++);
+        // Gfx_Close(lockedGfxDisp, tempGfxDisp);
+        // POLY_OPA_DISP = tempGfxDisp;
+        GRAPH_ALLOC_CLOSE(tempGfxDisp);
     }
 
-    if (CHECK_BTN_ALL(input->press.button, BTN_L)) {
+if (CHECK_BTN_ALL(input->press.button, BTN_L)) {
         play->pauseCtx.debugState = 0;
     }
 

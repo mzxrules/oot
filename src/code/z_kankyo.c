@@ -977,13 +977,15 @@ void Environment_Update(PlayState* play, EnvironmentContext* envCtx, LightContex
 
             OPEN_DISPS(play->state.gfxCtx, "../z_kankyo.c", 1682);
 
-            tempGfxDisp = Gfx_Open(lockedGfxDisp = POLY_OPA_DISP);
-            gSPDisplayList(OVERLAY_DISP++, tempGfxDisp);
+            // tempGfxDisp = Gfx_Open(lockedGfxDisp = POLY_OPA_DISP);
+            // gSPDisplayList(OVERLAY_DISP++, tempGfxDisp);
+            GRAPH_ALLOC_OPEN(tempGfxDisp, OVERLAY_DISP);
             Environment_PrintDebugInfo(play, &tempGfxDisp);
 
-            gSPEndDisplayList(tempGfxDisp++);
-            Gfx_Close(lockedGfxDisp, tempGfxDisp);
-            POLY_OPA_DISP = tempGfxDisp;
+            // gSPEndDisplayList(tempGfxDisp++);
+            // Gfx_Close(lockedGfxDisp, tempGfxDisp);
+            // POLY_OPA_DISP = tempGfxDisp;
+            GRAPH_ALLOC_CLOSE(tempGfxDisp);
 
             CLOSE_DISPS(play->state.gfxCtx, "../z_kankyo.c", 1690);
         }

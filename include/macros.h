@@ -209,6 +209,15 @@
 #define LANGUAGE_ARRAY(jpn, eng, ger, fra) { eng, ger, fra }
 #endif
 
+#define GRAPH_ALLOC_OPEN(handle, disp)                  \
+    handle = Gfx_Open(lockedGfxDisp = POLY_OPA_DISP);   \
+    gSPDisplayList(disp++, handle)
+
+#define GRAPH_ALLOC_CLOSE(handle)       \
+    gSPEndDisplayList(handle++);        \
+    Gfx_Close(lockedGfxDisp, handle);   \
+    POLY_OPA_DISP = handle
+
 /**
  * `x` vertex x
  * `y` vertex y

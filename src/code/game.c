@@ -168,8 +168,9 @@ void GameState_Draw(GameState* gameState, GraphicsContext* gfxCtx) {
 
     OPEN_DISPS(gfxCtx, "../game.c", 746);
 
-    tempGfxDisp = Gfx_Open(lockedGfxDisp = POLY_OPA_DISP);
-    gSPDisplayList(OVERLAY_DISP++, tempGfxDisp);
+    //tempGfxDisp = Gfx_Open(lockedGfxDisp = POLY_OPA_DISP);
+    //gSPDisplayList(OVERLAY_DISP++, tempGfxDisp);
+    GRAPH_ALLOC_OPEN(tempGfxDisp, OVERLAY_DISP);
 
     if (R_ENABLE_FB_FILTER == 1) {
         GameState_SetFBFilter(&tempGfxDisp);
@@ -205,9 +206,10 @@ void GameState_Draw(GameState* gameState, GraphicsContext* gfxCtx) {
         R_ENABLE_ARENA_DBG = 0;
     }
 
-    gSPEndDisplayList(tempGfxDisp++);
-    Gfx_Close(lockedGfxDisp, tempGfxDisp);
-    POLY_OPA_DISP = tempGfxDisp;
+    // gSPEndDisplayList(tempGfxDisp++);
+    // Gfx_Close(lockedGfxDisp, tempGfxDisp);
+    // POLY_OPA_DISP = tempGfxDisp;
+    GRAPH_ALLOC_CLOSE(tempGfxDisp);
 
     CLOSE_DISPS(gfxCtx, "../game.c", 800);
 
@@ -241,8 +243,9 @@ void func_800C49F4(GraphicsContext* gfxCtx) {
 
     OPEN_DISPS(gfxCtx, "../game.c", 846);
 
-    tempGfxDisp = Gfx_Open(lockedGfxDisp = POLY_OPA_DISP);
-    gSPDisplayList(OVERLAY_DISP++, tempGfxDisp);
+    // tempGfxDisp = Gfx_Open(lockedGfxDisp = POLY_OPA_DISP);
+    // gSPDisplayList(OVERLAY_DISP++, tempGfxDisp);
+    GRAPH_ALLOC_OPEN(tempGfxDisp, OVERLAY_DISP);
 
 #if PLATFORM_N64
     if (D_80121212 != 0) {
@@ -250,9 +253,10 @@ void func_800C49F4(GraphicsContext* gfxCtx) {
     }
 #endif
 
-    gSPEndDisplayList(tempGfxDisp++);
-    Gfx_Close(lockedGfxDisp, tempGfxDisp);
-    POLY_OPA_DISP = tempGfxDisp;
+    // gSPEndDisplayList(tempGfxDisp++);
+    // Gfx_Close(lockedGfxDisp, tempGfxDisp);
+    // POLY_OPA_DISP = tempGfxDisp;
+    GRAPH_ALLOC_CLOSE(tempGfxDisp);
 
     CLOSE_DISPS(gfxCtx, "../game.c", 865);
 }

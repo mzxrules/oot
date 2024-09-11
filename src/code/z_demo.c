@@ -2220,13 +2220,15 @@ void CutsceneHandler_RunScript(PlayState* play, CutsceneContext* csCtx) {
 
             OPEN_DISPS(play->state.gfxCtx, "../z_demo.c", 4101);
 
-            prevDisplayList = POLY_OPA_DISP;
-            displayList = Gfx_Open(POLY_OPA_DISP);
-            gSPDisplayList(OVERLAY_DISP++, displayList);
+            // prevDisplayList = POLY_OPA_DISP;
+            // displayList = Gfx_Open(POLY_OPA_DISP);
+            // gSPDisplayList(OVERLAY_DISP++, displayList);
+            GRAPH_ALLOC_OPEN(tempGfxDisp, OVERLAY_DISP);
             Cutscene_DrawDebugInfo(play, &displayList, csCtx);
-            gSPEndDisplayList(displayList++);
-            Gfx_Close(prevDisplayList, displayList);
-            POLY_OPA_DISP = displayList;
+            // gSPEndDisplayList(displayList++);
+            // Gfx_Close(prevDisplayList, displayList);
+            // POLY_OPA_DISP = displayList;
+            GRAPH_ALLOC_CLOSE(tempGfxDisp);
 
             CLOSE_DISPS(play->state.gfxCtx, "../z_demo.c", 4108);
         }

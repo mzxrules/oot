@@ -288,8 +288,9 @@ void Debug_DrawText(GraphicsContext* gfxCtx) {
     OPEN_DISPS(gfxCtx, "../z_debug.c", 628);
 
     GfxPrint_Init(&printer);
-    tempGfxDisp = Gfx_Open(lockedGfxDisp = POLY_OPA_DISP);
-    gSPDisplayList(OVERLAY_DISP++, tempGfxDisp);
+    // tempGfxDisp = Gfx_Open(lockedGfxDisp = POLY_OPA_DISP);
+    // gSPDisplayList(OVERLAY_DISP++, tempGfxDisp);
+    GRAPH_ALLOC_OPEN(tempGfxDisp, OVERLAY_DISP);
     GfxPrint_Open(&printer, tempGfxDisp);
 
     if ((OREG(0) == 1) || (OREG(0) == 8)) {
@@ -305,9 +306,10 @@ void Debug_DrawText(GraphicsContext* gfxCtx) {
     sDebugCamTextEntryCount = 0;
 
     tempGfxDisp = GfxPrint_Close(&printer);
-    gSPEndDisplayList(tempGfxDisp++);
-    Gfx_Close(lockedGfxDisp, tempGfxDisp);
-    POLY_OPA_DISP = tempGfxDisp;
+    // gSPEndDisplayList(tempGfxDisp++);
+    // Gfx_Close(lockedGfxDisp, tempGfxDisp);
+    // POLY_OPA_DISP = tempGfxDisp;
+    GRAPH_ALLOC_CLOSE(tempGfxDisp);
 
     CLOSE_DISPS(gfxCtx, "../z_debug.c", 664);
 
