@@ -3544,11 +3544,8 @@ void Interface_Draw(PlayState* play) {
             for (svar1 = 0; svar1 < ARRAY_COUNT(gSpoilingItems); svar1++) {
                 if (INV_CONTENT(ITEM_TRADE_ADULT) == gSpoilingItems[svar1]) {
 #if OOT_VERSION >= NTSC_1_1
-                    gSaveContext.eventInf[EVENTINF_HORSES_INDEX] &=
-                        (u16) ~(EVENTINF_INGORACE_STATE_MASK | EVENTINF_INGORACE_HORSETYPE_MASK |
-                                EVENTINF_INGORACE_LOST_ONCE_MASK | EVENTINF_INGORACE_SECOND_RACE_MASK |
-                                EVENTINF_INGORACE_0F_MASK);
-                    PRINTF("EVENT_INF=%x\n", gSaveContext.eventInf[EVENTINF_HORSES_INDEX]);
+                    RESET_EVENTINF_INGORACE();
+                    PRINTF("EVENT_INF=%x\n", gSaveContext.eventInf[EVENTINF_INGORACE_INDEX]);
 #endif
                     play->nextEntranceIndex = spoilingItemEntrances[svar1];
                     INV_CONTENT(gSpoilingItemReverts[svar1]) = gSpoilingItemReverts[svar1];

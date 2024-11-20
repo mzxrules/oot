@@ -10746,7 +10746,7 @@ void Player_Init(Actor* thisx, PlayState* play2) {
     gSaveContext.respawn[RESPAWN_MODE_DOWN].data = 1;
 
     if (play->sceneId <= SCENE_INSIDE_GANONS_CASTLE_COLLAPSE) {
-        gSaveContext.save.info.infTable[INFTABLE_1AX_INDEX] |= gBitFlags[play->sceneId];
+        gSaveContext.save.info.infTable[INFTABLE_OVERWORLD_ENTRANCE_ICON_INDEX] |= gBitFlags[play->sceneId];
     }
 
     initMode = PARAMS_GET_S(thisx->params, 8, 4);
