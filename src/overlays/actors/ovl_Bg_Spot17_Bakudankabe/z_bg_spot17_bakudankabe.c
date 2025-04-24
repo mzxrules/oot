@@ -94,11 +94,11 @@ void func_808B6BC0(BgSpot17Bakudankabe* this, PlayState* play) {
                              0, scale, 1, 3, 80, KAKERA_COLOR_NONE, OBJECT_GAMEPLAY_FIELD_KEEP, gFieldKakeraDL);
     }
     Math_Vec3f_Copy(&burstDepthY, &this->dyna.actor.world.pos);
-    func_80033480(play, &burstDepthY, 60.0f, 4, 110, 160, 1);
+    Actor_SpawnFloorDustCircle(play, &burstDepthY, 60.0f, 4, 110, 160, 1);
     burstDepthY.y += 40.0f;
-    func_80033480(play, &burstDepthY, 60.0f, 4, 120, 160, 1);
+    Actor_SpawnFloorDustCircle(play, &burstDepthY, 60.0f, 4, 120, 160, 1);
     burstDepthY.y += 40.0f;
-    func_80033480(play, &burstDepthY, 60.0f, 4, 110, 160, 1);
+    Actor_SpawnFloorDustCircle(play, &burstDepthY, 60.0f, 4, 110, 160, 1);
 }
 
 void BgSpot17Bakudankabe_Init(Actor* thisx, PlayState* play) {
@@ -124,7 +124,7 @@ void BgSpot17Bakudankabe_Destroy(Actor* thisx, PlayState* play) {
 
 void BgSpot17Bakudankabe_Update(Actor* thisx, PlayState* play) {
     BgSpot17Bakudankabe* this = (BgSpot17Bakudankabe*)thisx;
-    if (this->dyna.actor.xzDistToPlayer < 650.0f && func_80033684(play, &this->dyna.actor) != NULL) {
+    if (this->dyna.actor.xzDistToPlayer < 650.0f && Actor_GetNearbyExplodingBomb(play, &this->dyna.actor) != NULL) {
         func_808B6BC0(this, play);
         Flags_SetSwitch(play, PARAMS_GET_U(this->dyna.actor.params, 0, 6));
         SfxSource_PlaySfxAtFixedWorldPos(play, &this->dyna.actor.world.pos, 40, NA_SE_EV_WALL_BROKEN);

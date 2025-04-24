@@ -164,13 +164,13 @@ void BgHidanKowarerukabe_SpawnDust(BgHidanKowarerukabe* this, PlayState* play) {
     pos = this->dyna.actor.world.pos;
     pos.y += 10.0f;
 
-    func_80033480(play, &pos, 0.0f, 0, 600, 300, 1);
+    Actor_SpawnFloorDustCircle(play, &pos, 0.0f, 0, 600, 300, 1);
 
     pos.x = ((Rand_ZeroOne() - 0.5f) * 80.0f) + this->dyna.actor.world.pos.x;
     pos.y = (Rand_ZeroOne() * 100.0f) + this->dyna.actor.world.pos.y;
     pos.z = ((Rand_ZeroOne() - 0.5f) * 80.0f) + this->dyna.actor.world.pos.z;
 
-    func_80033480(play, &pos, 100.0f, 4, 200, 250, 1);
+    Actor_SpawnFloorDustCircle(play, &pos, 100.0f, 4, 200, 250, 1);
 }
 
 void BgHidanKowarerukabe_FloorBreak(BgHidanKowarerukabe* this, PlayState* play) {

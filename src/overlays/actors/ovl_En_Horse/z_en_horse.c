@@ -3650,19 +3650,19 @@ void EnHorse_Update(Actor* thisx, PlayState* play2) {
         if (gSaveContext.save.entranceIndex != ENTR_LON_LON_RANCH_0 || gSaveContext.sceneLayer != 9) {
             if (this->dustFlags & 1) {
                 this->dustFlags &= ~1;
-                func_800287AC(play, &this->frontRightHoof, &dustVel, &dustAcc, EnHorse_RandInt(100) + 200,
+                EffectSsDust_SpawnDirt6(play, &this->frontRightHoof, &dustVel, &dustAcc, EnHorse_RandInt(100) + 200,
                               EnHorse_RandInt(10) + 30, EnHorse_RandInt(20) + 30);
             } else if (this->dustFlags & 2) {
                 this->dustFlags &= ~2;
-                func_800287AC(play, &this->frontLeftHoof, &dustVel, &dustAcc, EnHorse_RandInt(100) + 200,
+                EffectSsDust_SpawnDirt6(play, &this->frontLeftHoof, &dustVel, &dustAcc, EnHorse_RandInt(100) + 200,
                               EnHorse_RandInt(10) + 30, EnHorse_RandInt(20) + 30);
             } else if (this->dustFlags & 4) {
                 this->dustFlags &= ~4;
-                func_800287AC(play, &this->backRightHoof, &dustVel, &dustAcc, EnHorse_RandInt(100) + 200,
+                EffectSsDust_SpawnDirt6(play, &this->backRightHoof, &dustVel, &dustAcc, EnHorse_RandInt(100) + 200,
                               EnHorse_RandInt(10) + 30, EnHorse_RandInt(20) + 30);
             } else if (this->dustFlags & 8) {
                 this->dustFlags &= ~8;
-                func_800287AC(play, &this->backLeftHoof, &dustVel, &dustAcc, EnHorse_RandInt(100) + 200,
+                EffectSsDust_SpawnDirt6(play, &this->backLeftHoof, &dustVel, &dustAcc, EnHorse_RandInt(100) + 200,
                               EnHorse_RandInt(10) + 30, EnHorse_RandInt(20) + 30);
             }
         }

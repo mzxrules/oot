@@ -343,7 +343,7 @@ void EnArrow_Fly(EnArrow* this, PlayState* play) {
         if ((this->touchedPoly =
                  BgCheck_ProjectileLineTest(&play->colCtx, &this->actor.prevPos, &this->actor.world.pos, &hitPoint,
                                             &this->actor.wallPoly, true, true, true, true, &bgId))) {
-            func_8002F9EC(play, &this->actor, this->actor.wallPoly, bgId, &hitPoint);
+            Actor_HitJabuJabuSurface(play, &this->actor, this->actor.wallPoly, bgId, &hitPoint);
             Math_Vec3f_Copy(&posCopy, &this->actor.world.pos);
             Math_Vec3f_Copy(&this->actor.world.pos, &hitPoint);
         }
@@ -446,7 +446,7 @@ void func_809B4800(EnArrow* this, PlayState* play) {
             addBlureVertex = this->actor.params <= ARROW_LIGHT;
 
             if (this->hitActor == NULL) {
-                addBlureVertex &= func_80090480(play, &this->collider, &this->weaponInfo, &sp44, &sp38);
+                addBlureVertex &= PlayerLib_IsWeaponColliderUnk_80090480(play, &this->collider, &this->weaponInfo, &sp44, &sp38);
             } else {
                 if (addBlureVertex) {
                     if ((sp44.x == this->weaponInfo.tip.x) && (sp44.y == this->weaponInfo.tip.y) &&

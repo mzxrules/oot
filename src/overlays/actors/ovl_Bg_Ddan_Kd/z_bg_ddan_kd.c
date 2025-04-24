@@ -161,22 +161,22 @@ void BgDdanKd_LowerStairs(BgDdanKd* this, PlayState* play) {
             pos1.y = this->dyna.actor.floorHeight + 20.0f + Rand_ZeroOne();
             pos2.y = this->dyna.actor.floorHeight + 20.0f + Rand_ZeroOne();
 
-            func_80033480(play, &pos1, 20.0f, 1, effectStrength * 135.0f, 60, 1);
-            func_80033480(play, &pos2, 20.0f, 1, effectStrength * 135.0f, 60, 1);
+            Actor_SpawnFloorDustCircle(play, &pos1, 20.0f, 1, effectStrength * 135.0f, 60, 1);
+            Actor_SpawnFloorDustCircle(play, &pos2, 20.0f, 1, effectStrength * 135.0f, 60, 1);
 
             velocity.x = Rand_CenteredFloat(3.0f);
             velocity.z = Rand_CenteredFloat(3.0f);
 
-            func_8003555C(play, &pos1, &velocity, &accel);
-            func_8003555C(play, &pos2, &velocity, &accel);
+            Actor_SpawnSmallBrownSparkles(play, &pos1, &velocity, &accel);
+            Actor_SpawnSmallBrownSparkles(play, &pos2, &velocity, &accel);
 
             pos1 = this->dyna.actor.world.pos;
             pos1.z += 560.0f + Rand_ZeroOne() * 5.0f;
             pos1.x += (Rand_ZeroOne() - 0.5f) * 160.0f;
             pos1.y = Rand_ZeroOne() * 3.0f + (this->dyna.actor.floorHeight + 20.0f);
 
-            func_80033480(play, &pos1, 20.0f, 1, effectStrength * 135.0f, 60, 1);
-            func_8003555C(play, &pos1, &velocity, &accel);
+            Actor_SpawnFloorDustCircle(play, &pos1, 20.0f, 1, effectStrength * 135.0f, 60, 1);
+            Actor_SpawnSmallBrownSparkles(play, &pos1, &velocity, &accel);
         }
         Camera_RequestQuake(&play->mainCamera, 0, effectStrength * 0.6f, 3);
         Audio_PlaySfxGeneral(NA_SE_EV_PILLAR_SINK - SFX_FLAG, &this->dyna.actor.projectedPos, 4,

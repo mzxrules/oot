@@ -124,7 +124,7 @@ void ConsoleLogo_Draw(ConsoleLogoState* this) {
     v1.z = 0;
     v2.z = 1119.0837;
 
-    func_8002EABC(&v1, &v2, &v3, this->state.gfxCtx);
+    Actor_DrawLookatHilight_PolyOpa(&v1, &v2, &v3, this->state.gfxCtx);
     gSPSetLights1(POLY_OPA_DISP++, sTitleLights);
     ConsoleLogo_SetupView(this, 0, 150.0, 300.0);
     Gfx_SetupDL_25Opa(this->state.gfxCtx);

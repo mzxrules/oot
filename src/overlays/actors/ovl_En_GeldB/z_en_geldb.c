@@ -1122,8 +1122,8 @@ void EnGeldB_SetupJump(EnGeldB* this) {
 void EnGeldB_Jump(EnGeldB* this, PlayState* play) {
     Math_SmoothStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 1, 0xFA0, 1);
     if (this->actor.velocity.y >= 5.0f) {
-        func_800355B8(play, &this->leftFootPos);
-        func_800355B8(play, &this->rightFootPos);
+        Actor_SpawnSmallBrownSparkles2(play, &this->leftFootPos);
+        Actor_SpawnSmallBrownSparkles2(play, &this->rightFootPos);
     }
     if (SkelAnime_Update(&this->skelAnime) &&
         (this->actor.bgCheckFlags & (BGCHECKFLAG_GROUND | BGCHECKFLAG_GROUND_TOUCH))) {

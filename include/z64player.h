@@ -1034,7 +1034,7 @@ s32 Player_OverrideLimbDrawGameplayFirstPerson(struct PlayState* play, s32 limbI
                                                Vec3s* rot, void* thisx);
 s32 Player_OverrideLimbDrawGameplayCrawling(struct PlayState* play, s32 limbIndex, Gfx** dList, Vec3f* pos, Vec3s* rot,
                                             void* thisx);
-u8 func_80090480(struct PlayState* play, ColliderQuad* collider, WeaponInfo* weaponInfo, Vec3f* newTip, Vec3f* newBase);
+u8 PlayerLib_IsWeaponColliderUnk_80090480(struct PlayState* play, ColliderQuad* collider, WeaponInfo* weaponInfo, Vec3f* newTip, Vec3f* newBase);
 void Player_DrawGetItem(struct PlayState* play, Player* this);
 void Player_PostLimbDrawGameplay(struct PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot, void* thisx);
 u32 Player_InitPauseDrawData(struct PlayState* play, u8* segment, SkelAnime* skelAnime);

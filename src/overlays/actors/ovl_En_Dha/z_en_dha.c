@@ -252,7 +252,7 @@ void EnDha_Wait(EnDha* this, PlayState* play) {
                 }
             }
 
-            func_80035844(&this->handPos[1], &playerPos, &this->handAngle, 0);
+            Actor_GetSomeXYRot_80035844(&this->handPos[1], &playerPos, &this->handAngle, 0);
             this->handAngle.y -= this->actor.shape.rot.y + this->limbAngleY;
             this->handAngle.x -= this->actor.shape.rot.x + this->limbAngleX[0] + this->limbAngleX[1];
         } else {
@@ -283,12 +283,12 @@ void EnDha_Wait(EnDha* this, PlayState* play) {
         Math_SmoothStepToF(&this->handPos[0].y, playerPos.y, 1.0f, 16.0f, 0.0f);
         Math_SmoothStepToF(&this->handPos[0].z, playerPos.z, 1.0f, 16.0f, 0.0f);
 
-        func_80035844(&this->armPos, &this->handPos[0], &angle, 0);
+        Actor_GetSomeXYRot_80035844(&this->armPos, &this->handPos[0], &angle, 0);
         Matrix_Translate(this->handPos[0].x, this->handPos[0].y, this->handPos[0].z, MTXMODE_NEW);
         Matrix_RotateZYX(angle.x, angle.y, 0, MTXMODE_APPLY);
         Matrix_MultVec3f(&armPosMultiplier2, &this->armPos);
         Matrix_Translate(this->actor.world.pos.x, this->actor.world.pos.y, this->actor.world.pos.z, MTXMODE_NEW);
-        func_80035844(&this->actor.world.pos, &this->armPos, &angle, 0);
+        Actor_GetSomeXYRot_80035844(&this->actor.world.pos, &this->armPos, &angle, 0);
         Matrix_RotateZYX(angle.x, angle.y, 0, MTXMODE_APPLY);
         Matrix_MultVec3f(&armPosMultiplier1, &this->armPos);
         this->limbAngleX[0] = Math_Vec3f_Pitch(&this->actor.world.pos, &this->armPos);
@@ -386,7 +386,7 @@ void EnDha_Die(EnDha* this, PlayState* play) {
         if (this->actionTimer != 0) {
             if (-12000.0f < this->actor.shape.yOffset) {
                 this->actor.shape.yOffset -= 1000.0f;
-                func_80033480(play, &vec, 7.0f, 1, 0x5A, 0x14, 1);
+                Actor_SpawnFloorDustCircle(play, &vec, 7.0f, 1, 0x5A, 0x14, 1);
             } else {
                 this->actionTimer--;
 
@@ -396,7 +396,7 @@ void EnDha_Die(EnDha* this, PlayState* play) {
             }
         } else {
             this->actor.shape.yOffset += 500.0f;
-            func_80033480(play, &vec, 7.0f, 1, 0x5A, 0x14, 1);
+            Actor_SpawnFloorDustCircle(play, &vec, 7.0f, 1, 0x5A, 0x14, 1);
 
             if (this->actor.shape.yOffset == 0.0f) {
                 EnDha_SetupWait(this);

@@ -376,7 +376,7 @@ void EnBom_Draw(Actor* thisx, PlayState* play) {
     if (thisx->params == BOMB_BODY) {
         Gfx_SetupDL_25Opa(play->state.gfxCtx);
         Matrix_ReplaceRotation(&play->billboardMtxF);
-        func_8002EBCC(thisx, play, 0);
+        Actor_DrawPlayEnvLookatHighlight_PolyOpa(thisx, play, 0);
 
         MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_en_bom.c", 928);
         gSPDisplayList(POLY_OPA_DISP++, gBombCapDL);

@@ -340,43 +340,43 @@ Acmd* AudioSynth_MaybeMixRingBuffer1(Acmd* cmd, SynthesisReverb* reverb, s32 upd
     return cmd;
 }
 
-void func_800DBB94(void) {
+void stubfunc_800DBB94(void) {
 }
 
 void AudioSynth_ClearBuffer(Acmd* cmd, s32 dmem, s32 size) {
     aClearBuffer(cmd, dmem, size);
 }
 
-void func_800DBBBC(void) {
+void stubfunc_800DBBBC(void) {
 }
 
-void func_800DBBC4(void) {
+void stubfunc_800DBBC4(void) {
 }
 
-void func_800DBBCC(void) {
+void stubfunc_800DBBCC(void) {
 }
 
 void AudioSynth_Mix(Acmd* cmd, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     aMix(cmd, arg1, arg2, arg3, arg4);
 }
 
-void func_800DBC08(void) {
+void stubfunc_800DBC08(void) {
 }
 
-void func_800DBC10(void) {
+void stubfunc_800DBC10(void) {
 }
 
-void func_800DBC18(void) {
+void stubfunc_800DBC18(void) {
 }
 
 void AudioSynth_SetBuffer(Acmd* cmd, s32 flags, s32 dmemIn, s32 dmemOut, u32 size) {
     aSetBuffer(cmd, flags, dmemIn, dmemOut, size);
 }
 
-void func_800DBC54(void) {
+void stubfunc_800DBC54(void) {
 }
 
-void func_800DBC5C(void) {
+void stubfunc_800DBC5C(void) {
 }
 
 // possible fake match?
@@ -385,16 +385,16 @@ void AudioSynth_DMemMove(Acmd* cmd, s32 dmemIn, s32 dmemOut, u32 size) {
     cmd->words.w1 = _SHIFTL(dmemOut, 16, 16) | _SHIFTL(size, 0, 16);
 }
 
-void func_800DBC90(void) {
+void stubfunc_800DBC90(void) {
 }
 
-void func_800DBC98(void) {
+void stubfunc_800DBC98(void) {
 }
 
-void func_800DBCA0(void) {
+void stubfunc_800DBCA0(void) {
 }
 
-void func_800DBCA8(void) {
+void stubfunc_800DBCA8(void) {
 }
 
 void AudioSynth_InterL(Acmd* cmd, s32 dmemIn, s32 dmemOut, s32 numSamples) {
@@ -406,7 +406,7 @@ void AudioSynth_EnvSetup1(Acmd* cmd, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     aEnvSetup1(cmd, arg1, arg2, arg3, arg4);
 }
 
-void func_800DBD08(void) {
+void stubfunc_800DBD08(void) {
 }
 
 void AudioSynth_LoadBuffer(Acmd* cmd, s32 dmemDest, s32 size, void* addrSrc) {
@@ -422,13 +422,13 @@ void AudioSynth_EnvSetup2(Acmd* cmd, s32 volLeft, s32 volRight) {
     cmd->words.w1 = _SHIFTL(volLeft, 16, 16) | _SHIFTL(volRight, 0, 16);
 }
 
-void func_800DBD7C(void) {
+void stubfunc_800DBD7C(void) {
 }
 
-void func_800DBD84(void) {
+void stubfunc_800DBD84(void) {
 }
 
-void func_800DBD8C(void) {
+void stubfunc_800DBD8C(void) {
 }
 
 void AudioSynth_S8Dec(Acmd* cmd, s32 flags, s16* state) {
@@ -445,16 +445,16 @@ void AudioSynth_UnkCmd19(Acmd* cmd, s32 arg1, s32 arg2, s32 size, s32 arg4) {
     cmd->words.w1 = _SHIFTL(arg1, 16, 16) | _SHIFTL(arg2, 0, 16);
 }
 
-void func_800DBE18(void) {
+void stubfunc_800DBE18(void) {
 }
 
-void func_800DBE20(void) {
+void stubfunc_800DBE20(void) {
 }
 
-void func_800DBE28(void) {
+void stubfunc_800DBE28(void) {
 }
 
-void func_800DBE30(void) {
+void stubfunc_800DBE30(void) {
 }
 
 void AudioSynth_UnkCmd3(Acmd* cmd, s32 arg1, s32 arg2, s32 size) {
@@ -462,13 +462,13 @@ void AudioSynth_UnkCmd3(Acmd* cmd, s32 arg1, s32 arg2, s32 size) {
     cmd->words.w1 = _SHIFTL(arg1, 16, 16) | _SHIFTL(arg2, 0, 16);
 }
 
-void func_800DBE5C(void) {
+void stubfunc_800DBE5C(void) {
 }
 
-void func_800DBE64(void) {
+void stubfunc_800DBE64(void) {
 }
 
-void func_800DBE6C(void) {
+void stubfunc_800DBE6C(void) {
 }
 
 void AudioSynth_LoadFilterBuffer(Acmd* cmd, s32 flags, s32 buf, void* addr) {

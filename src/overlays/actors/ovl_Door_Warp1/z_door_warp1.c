@@ -918,7 +918,7 @@ void DoorWarp1_DrawPurpleCrystal(DoorWarp1* this, PlayState* play) {
     OPEN_DISPS(play->state.gfxCtx, "../z_door_warp1.c", 2122);
 
     Gfx_SetupDL_25Xlu(play->state.gfxCtx);
-    func_8002EB44(&this->actor.world.pos, &eye, &eye, play->state.gfxCtx);
+    Actor_DrawLookatHilight_PolyXlu(&this->actor.world.pos, &eye, &eye, play->state.gfxCtx);
 
     gDPSetPrimColor(POLY_XLU_DISP++, 0, 0, 255, 255, 255, (u8)this->crystalAlpha);
     gDPSetEnvColor(POLY_XLU_DISP++, 150, 0, 100, (u8)this->crystalAlpha);

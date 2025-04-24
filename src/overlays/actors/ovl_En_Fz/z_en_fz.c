@@ -742,7 +742,7 @@ void EnFz_Draw(Actor* thisx, PlayState* play) {
     }
 
     if (this->isActive) {
-        func_8002ED80(&this->actor, play, 0);
+        Actor_DrawPlayEnvLookatHighlight_PolyXlu(&this->actor, play, 0);
         Gfx_SetupDL_25Xlu(play->state.gfxCtx);
         gSPSegment(POLY_XLU_DISP++, 0x08,
                    Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, play->state.frames & 0x7F, 32, 32, 1, 0,

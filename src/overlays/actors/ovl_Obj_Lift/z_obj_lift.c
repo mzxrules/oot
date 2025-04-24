@@ -110,9 +110,9 @@ void ObjLift_SpawnFragments(ObjLift* this, PlayState* play) {
     }
 
     if (PARAMS_GET_U(this->dyna.actor.params, 1, 1) == 0) {
-        func_80033480(play, &this->dyna.actor.world.pos, 120.0f, 12, 120, 100, 1);
+        Actor_SpawnFloorDustCircle(play, &this->dyna.actor.world.pos, 120.0f, 12, 120, 100, 1);
     } else if (PARAMS_GET_U(this->dyna.actor.params, 1, 1) == 1) {
-        func_80033480(play, &this->dyna.actor.world.pos, 60.0f, 8, 60, 100, 1);
+        Actor_SpawnFloorDustCircle(play, &this->dyna.actor.world.pos, 60.0f, 8, 60, 100, 1);
     }
 }
 

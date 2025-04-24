@@ -1172,7 +1172,7 @@ f32 D_80126068[] = { 5.0f, 3.0f };
 
 Vec3f D_80126070 = { 0.0f, -300.0f, 0.0f };
 
-void func_8008F87C(PlayState* play, Player* this, SkelAnime* skelAnime, Vec3f* pos, Vec3s* rot, s32 thighLimbIndex,
+void PlayerLib_DrawLegs(PlayState* play, Player* this, SkelAnime* skelAnime, Vec3f* pos, Vec3s* rot, s32 thighLimbIndex,
                    s32 shinLimbIndex, s32 footLimbIndex) {
     Vec3f spA4;
     Vec3f sp98;
@@ -1258,7 +1258,7 @@ void func_8008F87C(PlayState* play, Player* this, SkelAnime* skelAnime, Vec3f* p
 
             temp3 = SurfaceType_GetFloorType(&play->colCtx, sp88, sp84);
 
-            if ((temp3 >= FLOOR_TYPE_2) && (temp3 <= FLOOR_TYPE_3) && !func_80042108(&play->colCtx, sp88, sp84)) {
+            if ((temp3 >= FLOOR_TYPE_2) && (temp3 <= FLOOR_TYPE_3) && !SurfaceType_Get1_08000000(&play->colCtx, sp88, sp84)) {
                 footprintPos.y = sp80;
                 EffectSsGFire_Spawn(play, &footprintPos);
             }
@@ -1329,12 +1329,12 @@ s32 Player_OverrideLimbDrawGameplayCommon(PlayState* play, s32 limbIndex, Gfx** 
         } else if (limbIndex == PLAYER_LIMB_L_THIGH) {
             s32 pad;
 
-            func_8008F87C(play, this, &this->skelAnime, pos, rot, PLAYER_LIMB_L_THIGH, PLAYER_LIMB_L_SHIN,
+            PlayerLib_DrawLegs(play, this, &this->skelAnime, pos, rot, PLAYER_LIMB_L_THIGH, PLAYER_LIMB_L_SHIN,
                           PLAYER_LIMB_L_FOOT);
         } else if (limbIndex == PLAYER_LIMB_R_THIGH) {
             s32 pad;
 
-            func_8008F87C(play, this, &this->skelAnime, pos, rot, PLAYER_LIMB_R_THIGH, PLAYER_LIMB_R_SHIN,
+            PlayerLib_DrawLegs(play, this, &this->skelAnime, pos, rot, PLAYER_LIMB_R_THIGH, PLAYER_LIMB_R_SHIN,
                           PLAYER_LIMB_R_FOOT);
         } else {
             return false;
@@ -1438,7 +1438,7 @@ s32 Player_OverrideLimbDrawGameplayCrawling(PlayState* play, s32 limbIndex, Gfx*
     return false;
 }
 
-u8 func_80090480(PlayState* play, ColliderQuad* collider, WeaponInfo* weaponInfo, Vec3f* newTip, Vec3f* newBase) {
+u8 PlayerLib_IsWeaponColliderUnk_80090480(PlayState* play, ColliderQuad* collider, WeaponInfo* weaponInfo, Vec3f* newTip, Vec3f* newBase) {
     if (weaponInfo->active == 0) {
         if (collider != NULL) {
             Collider_ResetQuadAT(play, &collider->base);
@@ -1500,14 +1500,14 @@ Vec3f D_801260A4[3] = {
     { 0.0f, -400.0f, 1000.0f },
 };
 
-void func_800906D4(PlayState* play, Player* this, Vec3f* newTipPos) {
+void PlayerLib_UpdateMeleeWeaponAttack(PlayState* play, Player* this, Vec3f* newTipPos) {
     Vec3f newBasePos[3];
 
     Matrix_MultVec3f(&D_801260A4[0], &newBasePos[0]);
     Matrix_MultVec3f(&D_801260A4[1], &newBasePos[1]);
     Matrix_MultVec3f(&D_801260A4[2], &newBasePos[2]);
 
-    if (func_80090480(play, NULL, &this->meleeWeaponInfo[0], &newTipPos[0], &newBasePos[0]) &&
+    if (PlayerLib_IsWeaponColliderUnk_80090480(play, NULL, &this->meleeWeaponInfo[0], &newTipPos[0], &newBasePos[0]) &&
         !(this->stateFlags1 & PLAYER_STATE1_SHIELDING)) {
         EffectBlure_AddVertex(Effect_GetByIndex(this->meleeWeaponEffectIndex), &this->meleeWeaponInfo[0].tip,
                               &this->meleeWeaponInfo[0].base);
@@ -1515,8 +1515,8 @@ void func_800906D4(PlayState* play, Player* this, Vec3f* newTipPos) {
 
     if ((this->meleeWeaponState > 0) &&
         ((this->meleeWeaponAnimation < PLAYER_MWA_SPIN_ATTACK_1H) || (this->stateFlags2 & PLAYER_STATE2_17))) {
-        func_80090480(play, &this->meleeWeaponQuads[0], &this->meleeWeaponInfo[1], &newTipPos[1], &newBasePos[1]);
-        func_80090480(play, &this->meleeWeaponQuads[1], &this->meleeWeaponInfo[2], &newTipPos[2], &newBasePos[2]);
+        PlayerLib_IsWeaponColliderUnk_80090480(play, &this->meleeWeaponQuads[0], &this->meleeWeaponInfo[1], &newTipPos[1], &newBasePos[1]);
+        PlayerLib_IsWeaponColliderUnk_80090480(play, &this->meleeWeaponQuads[1], &this->meleeWeaponInfo[2], &newTipPos[2], &newBasePos[2]);
     }
 }
 
@@ -1547,7 +1547,7 @@ void Player_DrawGetItem(PlayState* play, Player* this) {
     }
 }
 
-void func_80090A28(Player* this, Vec3f* vecs) {
+void PlayerLib_MeleeWeapon_80090A28(Player* this, Vec3f* vecs) {
     D_8012608C.x = D_80126080.x;
 
     if (this->unk_845 >= 3) {
@@ -1651,9 +1651,9 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
 
             if (this->actor.scale.y >= 0.0f) {
                 D_80126080.x = this->unk_85C * 5000.0f;
-                func_80090A28(this, sp124);
+                PlayerLib_MeleeWeapon_80090A28(this, sp124);
                 if (this->meleeWeaponState != 0) {
-                    func_800906D4(play, this, sp124);
+                    PlayerLib_UpdateMeleeWeaponAttack(play, this, sp124);
                 } else {
                     Math_Vec3f_Copy(&this->meleeWeaponInfo[0].tip, &sp124[0]);
                 }
@@ -1676,8 +1676,8 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
                 D_80126080.x = sMeleeWeaponLengths[Player_GetMeleeWeaponHeld(this)];
             }
 
-            func_80090A28(this, spE4);
-            func_800906D4(play, this, spE4);
+            PlayerLib_MeleeWeapon_80090A28(this, spE4);
+            PlayerLib_UpdateMeleeWeaponAttack(play, this, spE4);
         } else if ((*dList != NULL) && (this->leftHandType == PLAYER_MODELTYPE_LH_BOTTLE)) {
             //! @bug When Player is actively using shield, the `itemAction` value will be set to -1.
             //! If shield is used at the same time a bottle is in hand, `Player_ActionToBottle` will
@@ -2033,7 +2033,7 @@ void Player_DrawPauseImpl(PlayState* play, void* gameplayKeep, void* linkObject,
 
     POLY_OPA_DISP = Gfx_SetFog2(POLY_OPA_DISP++, 0, 0, 0, 0, 997, 1000);
 
-    func_8002EABC(pos, &play->view.eye, &lightDir, play->state.gfxCtx);
+    Actor_DrawLookatHilight_PolyOpa(pos, &play->view.eye, &lightDir, play->state.gfxCtx);
 
     gSPSegment(POLY_OPA_DISP++, 0x0C, gCullBackDList);
 

@@ -361,7 +361,7 @@ typedef struct DynaLineTest {
     /* 0x28 */ f32 chkDist;    // distance from poly
 } DynaLineTest;
 
-void func_80038A28(CollisionPoly* poly, f32 tx, f32 ty, f32 tz, MtxF* dest);
+void CollisionPoly_GetGroundMtxF(CollisionPoly* poly, f32 tx, f32 ty, f32 tz, MtxF* dest);
 f32 CollisionPoly_GetPointDistanceFromPlane(CollisionPoly* poly, Vec3f* point);
 void CollisionPoly_GetVerticesByBgId(CollisionPoly* poly, s32 bgId, CollisionContext* colCtx, Vec3f* dest);
 void BgCheck_Allocate(CollisionContext* colCtx, struct PlayState* play, CollisionHeader* colHeader);
@@ -429,7 +429,7 @@ void DynaPoly_UnsetAllInteractFlags(struct PlayState* play, DynaCollisionContext
 void DynaPoly_UpdateContext(struct PlayState* play, DynaCollisionContext* dyna);
 void DynaPoly_UpdateBgActorTransforms(struct PlayState* play, DynaCollisionContext* dyna);
 void CollisionHeader_GetVirtual(void* colHeader, CollisionHeader** dest);
-void func_800418D0(CollisionContext* colCtx, struct PlayState* play);
+void CollisionHeader_InitializeAll(CollisionContext* colCtx, struct PlayState* play);
 u32 SurfaceType_GetBgCamIndex(CollisionContext* colCtx, CollisionPoly* poly, s32 bgId);
 u16 BgCheck_GetBgCamSettingImpl(CollisionContext* colCtx, u32 bgCamIndex, s32 bgId);
 u16 BgCheck_GetBgCamSetting(CollisionContext* colCtx, CollisionPoly* poly, s32 bgId);
@@ -438,7 +438,7 @@ Vec3s* BgCheck_GetBgCamFuncDataImpl(CollisionContext* colCtx, s32 bgCamIndex, s3
 Vec3s* BgCheck_GetBgCamFuncData(CollisionContext* colCtx, CollisionPoly* poly, s32 bgId);
 u32 SurfaceType_GetExitIndex(CollisionContext* colCtx, CollisionPoly* poly, s32 bgId);
 u32 SurfaceType_GetFloorType(CollisionContext* colCtx, CollisionPoly* poly, s32 bgId);
-u32 func_80041D70(CollisionContext* colCtx, CollisionPoly* poly, s32 bgId);
+u32 SurfaceType_Get0_001C0000(CollisionContext* colCtx, CollisionPoly* poly, s32 bgId);
 s32 SurfaceType_GetWallFlags(CollisionContext* colCtx, CollisionPoly* poly, s32 bgId);
 s32 SurfaceType_CheckWallFlag0(CollisionContext* colCtx, CollisionPoly* poly, s32 bgId);
 s32 SurfaceType_CheckWallFlag1(CollisionContext* colCtx, CollisionPoly* poly, s32 bgId);
@@ -457,7 +457,7 @@ s32 SurfaceType_IsIgnoredByProjectiles(CollisionContext* colCtx, CollisionPoly* 
 s32 SurfaceType_IsFloorConveyor(CollisionContext* colCtx, CollisionPoly* poly, s32 bgId);
 u32 SurfaceType_GetConveyorSpeed(CollisionContext* colCtx, CollisionPoly* poly, s32 bgId);
 u32 SurfaceType_GetConveyorDirection(CollisionContext* colCtx, CollisionPoly* poly, s32 bgId);
-u32 func_80042108(CollisionContext* colCtx, CollisionPoly* poly, s32 bgId);
+u32 SurfaceType_Get1_08000000(CollisionContext* colCtx, CollisionPoly* poly, s32 bgId);
 s32 WaterBox_GetSurface1(struct PlayState* play, CollisionContext* colCtx, f32 x, f32 z, f32* ySurface,
                          WaterBox** outWaterBox);
 s32 WaterBox_GetSurface2(struct PlayState* play, CollisionContext* colCtx, Vec3f* pos, f32 surfaceChkDist,
@@ -467,8 +467,8 @@ s32 WaterBox_GetSurfaceImpl(struct PlayState* play, CollisionContext* colCtx, f3
 u32 WaterBox_GetBgCamIndex(CollisionContext* colCtx, WaterBox* waterBox);
 u16 WaterBox_GetBgCamSetting(CollisionContext* colCtx, WaterBox* waterBox);
 u32 WaterBox_GetLightIndex(CollisionContext* colCtx, WaterBox* waterBox);
-s32 func_80042708(CollisionPoly* polyA, CollisionPoly* polyB, Vec3f* point, Vec3f* closestPoint);
-s32 func_800427B4(CollisionPoly* polyA, CollisionPoly* polyB, Vec3f* pointA, Vec3f* pointB, Vec3f* closestPoint);
+s32 CollisionPoly_PolyVsPolyVsLineClosestPoint(CollisionPoly* polyA, CollisionPoly* polyB, Vec3f* point, Vec3f* closestPoint);
+s32 CollisionPoly_PolyVsLineSegClosestPoint(CollisionPoly* polyA, CollisionPoly* polyB, Vec3f* pointA, Vec3f* pointB, Vec3f* closestPoint);
 #if DEBUG_FEATURES
 void BgCheck_DrawDynaCollision(struct PlayState*, CollisionContext*);
 void BgCheck_DrawStaticCollision(struct PlayState*, CollisionContext*);

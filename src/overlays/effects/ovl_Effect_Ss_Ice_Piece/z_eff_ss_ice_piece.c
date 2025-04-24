@@ -77,7 +77,7 @@ void EffectSsIcePiece_Draw(PlayState* play, u32 index, EffectSs* this) {
     MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, gfxCtx, "../z_eff_ice_piece.c", 185);
     Gfx_SetupDL_25Xlu(play->state.gfxCtx);
     gDPSetEnvColor(POLY_XLU_DISP++, 0, 50, 100, (s32)alpha & 0xFF);
-    func_8003435C(&this->pos, play);
+    Actor_SetRoomLights_PolyXlu(&this->pos, play);
     gSPSegment(POLY_XLU_DISP++, 0x08,
                Gfx_TwoTexScroll(play->state.gfxCtx, G_TX_RENDERTILE, 0, (1 * frames) % 256, 0x20, 0x10, 1, 0,
                                 (2 * frames) % 256, 0x40, 0x20));

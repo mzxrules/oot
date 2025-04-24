@@ -543,7 +543,7 @@ void EnNy_Draw(Actor* thisx, PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx, "../z_en_ny.c", 837);
     Collider_UpdateSpheres(0, &this->collider);
-    func_8002ED80(&this->actor, play, 1);
+    Actor_DrawPlayEnvLookatHighlight_PolyXlu(&this->actor, play, 1);
     Gfx_SetupDL_25Xlu(play->state.gfxCtx);
     MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, "../z_en_ny.c", 845);
     gDPPipeSync(POLY_XLU_DISP++);
@@ -556,7 +556,7 @@ void EnNy_Draw(Actor* thisx, PlayState* play) {
     gSPDisplayList(POLY_XLU_DISP++, gEnNyRockBodyDL);
     if (this->unk_1E0 > 0.25f) {
         Matrix_Scale(this->unk_1E0, this->unk_1E0, this->unk_1E0, MTXMODE_APPLY);
-        func_8002EBCC(&this->actor, play, 1);
+        Actor_DrawPlayEnvLookatHighlight_PolyOpa(&this->actor, play, 1);
         Gfx_SetupDL_25Opa(play->state.gfxCtx);
         MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_en_ny.c", 868);
         gSPDisplayList(POLY_OPA_DISP++, gEnNySpikeDL);

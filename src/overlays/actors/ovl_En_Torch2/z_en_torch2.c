@@ -164,7 +164,7 @@ Actor* EnTorch2_GetAttackItem(PlayState* play, Player* this) {
     if (rangedItem != NULL) {
         return rangedItem;
     } else {
-        return func_80033684(play, &this->actor);
+        return Actor_GetNearbyExplodingBomb(play, &this->actor);
     }
 }
 
@@ -779,16 +779,16 @@ void EnTorch2_Draw(Actor* thisx, PlayState* play2) {
     if (sAlpha == 255) {
         gDPSetEnvColor(POLY_OPA_DISP++, 255, 0, 0, sAlpha);
         gSPSegment(POLY_OPA_DISP++, 0x0C, D_80116280 + 2);
-        func_8002EBCC(&this->actor, play, 0);
-        func_8002ED80(&this->actor, play, 0);
+        Actor_DrawPlayEnvLookatHighlight_PolyOpa(&this->actor, play, 0);
+        Actor_DrawPlayEnvLookatHighlight_PolyXlu(&this->actor, play, 0);
         POLY_OPA_DISP =
             SkelAnime_DrawFlex(play, this->skelAnime.skeleton, this->skelAnime.jointTable, this->skelAnime.dListCount,
                                EnTorch2_OverrideLimbDraw, EnTorch2_PostLimbDraw, this, POLY_OPA_DISP);
     } else {
         gDPSetEnvColor(POLY_XLU_DISP++, 255, 0, 0, sAlpha);
         gSPSegment(POLY_XLU_DISP++, 0x0C, D_80116280);
-        func_8002EBCC(&this->actor, play, 0);
-        func_8002ED80(&this->actor, play, 0);
+        Actor_DrawPlayEnvLookatHighlight_PolyOpa(&this->actor, play, 0);
+        Actor_DrawPlayEnvLookatHighlight_PolyXlu(&this->actor, play, 0);
         POLY_XLU_DISP =
             SkelAnime_DrawFlex(play, this->skelAnime.skeleton, this->skelAnime.jointTable, this->skelAnime.dListCount,
                                EnTorch2_OverrideLimbDraw, EnTorch2_PostLimbDraw, this, POLY_XLU_DISP);

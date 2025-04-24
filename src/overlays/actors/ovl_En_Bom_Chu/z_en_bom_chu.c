@@ -500,7 +500,7 @@ void EnBomChu_Draw(Actor* thisx, PlayState* play) {
     OPEN_DISPS(play->state.gfxCtx, "../z_en_bom_chu.c", 921);
 
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
-    func_8002EBCC(&this->actor, play, 0);
+    Actor_DrawPlayEnvLookatHighlight_PolyOpa(&this->actor, play, 0);
 
     if (this->timer >= 40) {
         blinkTime = this->timer % 20;

@@ -1968,7 +1968,7 @@ void EnTest_Draw(Actor* thisx, PlayState* play) {
     EnTest* this = (EnTest*)thisx;
 
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
-    func_8002EBCC(&this->actor, play, 1);
+    Actor_DrawPlayEnvLookatHighlight_PolyOpa(&this->actor, play, 1);
 
     if ((thisx->params <= STALFOS_TYPE_CEILING) || (thisx->child == NULL)) {
         SkelAnime_DrawOpa(play, this->skelAnime.skeleton, this->skelAnime.jointTable, EnTest_OverrideLimbDraw,

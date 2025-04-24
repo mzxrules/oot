@@ -295,8 +295,8 @@ void EnGoroiwa_SpawnDust(PlayState* play, Vec3f* pos) {
         randPos.x = pos->x + (47.0f * (Rand_ZeroOne() * 0.5f + 0.5f)) * Math_SinS(angle);
         randPos.y = pos->y + (Rand_ZeroOne() - 0.5f) * 40.0f;
         randPos.z = pos->z + ((47.0f * (Rand_ZeroOne() * 0.5f + 0.5f))) * Math_CosS(angle);
-        func_800286CC(play, &randPos, &velocity, &accel, (s16)(Rand_ZeroOne() * 30.0f) + 100, 80);
-        func_800286CC(play, &randPos, &velocity, &accel, (s16)(Rand_ZeroOne() * 20.0f) + 80, 80);
+        EffectSsDust_SpawnDirt4(play, &randPos, &velocity, &accel, (s16)(Rand_ZeroOne() * 30.0f) + 100, 80);
+        EffectSsDust_SpawnDirt4(play, &randPos, &velocity, &accel, (s16)(Rand_ZeroOne() * 20.0f) + 80, 80);
     }
 }
 
@@ -544,8 +544,8 @@ void EnGoroiwa_SpawnFragments(EnGoroiwa* this, PlayState* play) {
     effectPos.x = thisPos->x;
     effectPos.y = thisPos->y + yOffsets[yOffsetIdx];
     effectPos.z = thisPos->z;
-    func_80033480(play, &effectPos, 80.0f, 5, 70, 110, 1);
-    func_80033480(play, &effectPos, 90.0f, 5, 110, 160, 1);
+    Actor_SpawnFloorDustCircle(play, &effectPos, 80.0f, 5, 70, 110, 1);
+    Actor_SpawnFloorDustCircle(play, &effectPos, 90.0f, 5, 110, 160, 1);
 }
 
 static InitChainEntry sInitChain[] = {

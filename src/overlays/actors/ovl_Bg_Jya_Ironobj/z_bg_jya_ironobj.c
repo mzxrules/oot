@@ -162,7 +162,7 @@ void BgJyaIronobj_SpawnPillarParticles(BgJyaIronobj* this, PlayState* play, EnIk
         EffectSsKakera_Spawn(play, &pos, &vel, &pos, -350, unkArg5, D_80899500[j & 7], 4, 0, D_808994E0[j & 7], 0, 5,
                              D_808994F0[j & 7], -1, OBJECT_JYA_IRON, gObjectJyaIronDL_000880);
         if (Rand_ZeroOne() < 0.26f) {
-            func_80033480(play, &pos, 200.0f, 1, D_808994E0[j & 7] * 4 + 60, D_808994E0[j & 7] * 4 + 80, 1);
+            Actor_SpawnFloorDustCircle(play, &pos, 200.0f, 1, D_808994E0[j & 7] * 4 + 60, D_808994E0[j & 7] * 4 + 80, 1);
         }
     }
 }
@@ -225,7 +225,7 @@ void BgJyaIronobj_SpawnThroneParticles(BgJyaIronobj* this, PlayState* play, EnIk
         EffectSsKakera_Spawn(play, &pos, &vel, &pos, -350, unkArg5, D_80899530[j & 7], 4, 0, D_80899510[j & 7], 0, 5,
                              D_80899520[j & 7], -1, OBJECT_JYA_IRON, gObjectJyaIronDL_000880);
         if (Rand_ZeroOne() < 0.26f) {
-            func_80033480(play, &pos, 200.0f, 1, D_80899510[j & 7] * 4 + 60, D_80899510[j & 7] * 4 + 80, 1);
+            Actor_SpawnFloorDustCircle(play, &pos, 200.0f, 1, D_80899510[j & 7] * 4 + 60, D_80899510[j & 7] * 4 + 80, 1);
         }
     }
 }

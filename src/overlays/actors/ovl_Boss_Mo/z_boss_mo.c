@@ -2540,7 +2540,7 @@ void BossMo_DrawTentacle(BossMo* this, PlayState* play) {
         gSPMatrix(POLY_XLU_DISP++, matrix, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
         if (i == 0) {
-            func_8002EB44(&this->tentPos[i], &play->view.eye, &sp110, play->state.gfxCtx);
+            Actor_DrawLookatHilight_PolyXlu(&this->tentPos[i], &play->view.eye, &sp110, play->state.gfxCtx);
         }
 
         if (i == 0) {
@@ -2661,7 +2661,7 @@ void BossMo_DrawCore(Actor* thisx, PlayState* play) {
 
         gDPSetPrimColor(POLY_XLU_DISP++, 0x80, 0x80, 255, 255, 255, (s8)this->baseAlpha);
 
-        func_8002ED80(&this->actor, play, 0);
+        Actor_DrawPlayEnvLookatHighlight_PolyXlu(&this->actor, play, 0);
 
         gSPDisplayList(POLY_XLU_DISP++, SEGMENTED_TO_VIRTUAL(gMorphaCoreMembraneDL));
 

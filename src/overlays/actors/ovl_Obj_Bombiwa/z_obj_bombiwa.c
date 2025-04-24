@@ -126,14 +126,14 @@ void ObjBombiwa_Break(ObjBombiwa* this, PlayState* play) {
         EffectSsKakera_Spawn(play, &pos, &velocity, &pos, -400, arg5, 10, 2, 0, scale, 1, 0, 80, KAKERA_COLOR_NONE,
                              OBJECT_BOMBIWA, dlist);
     }
-    func_80033480(play, &this->actor.world.pos, 60.0f, 8, 100, 160, 1);
+    Actor_SpawnFloorDustCircle(play, &this->actor.world.pos, 60.0f, 8, 100, 160, 1);
 }
 
 void ObjBombiwa_Update(Actor* thisx, PlayState* play) {
     ObjBombiwa* this = (ObjBombiwa*)thisx;
     s32 pad;
 
-    if ((func_80033684(play, &this->actor) != NULL) ||
+    if ((Actor_GetNearbyExplodingBomb(play, &this->actor) != NULL) ||
         ((this->collider.base.acFlags & AC_HIT) && (this->collider.elem.acHitElem->atDmgInfo.dmgFlags & DMG_HAMMER))) {
         ObjBombiwa_Break(this, play);
         Flags_SetSwitch(play, PARAMS_GET_U(this->actor.params, 0, 6));

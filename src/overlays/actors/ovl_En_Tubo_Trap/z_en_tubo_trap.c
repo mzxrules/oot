@@ -129,7 +129,7 @@ void EnTuboTrap_SpawnEffectsOnLand(EnTuboTrap* this, PlayState* play) {
                              0, 32, 60, KAKERA_COLOR_NONE, OBJECT_GAMEPLAY_DANGEON_KEEP, gPotFragmentDL);
     }
 
-    func_80033480(play, actorPos, 30.0f, 4, 20, 50, 0);
+    Actor_SpawnFloorDustCircle(play, actorPos, 30.0f, 4, 20, 50, 0);
 }
 
 void EnTuboTrap_SpawnEffectsInWater(EnTuboTrap* this, PlayState* play) {

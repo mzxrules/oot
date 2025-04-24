@@ -95,7 +95,7 @@ void ActorShadow_Draw(Actor* actor, Lights* lights, PlayState* play, Gfx* dlist,
             gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 0, 0, 0, (u32)(actor->shape.shadowAlpha * temp2) & 0xFF);
         }
 
-        func_80038A28(actor->floorPoly, actor->world.pos.x, actor->floorHeight, actor->world.pos.z, &sp60);
+        CollisionPoly_GetGroundMtxF(actor->floorPoly, actor->world.pos.x, actor->floorHeight, actor->world.pos.z, &sp60);
         Matrix_Put(&sp60);
 
         if (dlist != gCircleShadowDL) {
@@ -1512,7 +1512,7 @@ void Actor_UpdateBgCheckInfo(PlayState* play, Actor* actor, f32 wallCheckHeight,
 
 Mtx D_8015BBA8;
 
-Gfx* func_8002E830(Vec3f* object, Vec3f* eye, Vec3f* lightDir, GraphicsContext* gfxCtx, Gfx* gfx, Hilite** hilite) {
+Gfx* Actor_DrawLookatHilight(Vec3f* object, Vec3f* eye, Vec3f* lightDir, GraphicsContext* gfxCtx, Gfx* gfx, Hilite** hilite) {
     LookAt* lookAt;
     f32 correctedEyeX;
 
@@ -1540,31 +1540,31 @@ Gfx* func_8002E830(Vec3f* object, Vec3f* eye, Vec3f* lightDir, GraphicsContext* 
     return gfx;
 }
 
-Hilite* func_8002EABC(Vec3f* object, Vec3f* eye, Vec3f* lightDir, GraphicsContext* gfxCtx) {
+Hilite* Actor_DrawLookatHilight_PolyOpa(Vec3f* object, Vec3f* eye, Vec3f* lightDir, GraphicsContext* gfxCtx) {
     Hilite* hilite;
 
     OPEN_DISPS(gfxCtx, "../z_actor.c", 4306);
 
-    POLY_OPA_DISP = func_8002E830(object, eye, lightDir, gfxCtx, POLY_OPA_DISP, &hilite);
+    POLY_OPA_DISP = Actor_DrawLookatHilight(object, eye, lightDir, gfxCtx, POLY_OPA_DISP, &hilite);
 
     CLOSE_DISPS(gfxCtx, "../z_actor.c", 4313);
 
     return hilite;
 }
 
-Hilite* func_8002EB44(Vec3f* object, Vec3f* eye, Vec3f* lightDir, GraphicsContext* gfxCtx) {
+Hilite* Actor_DrawLookatHilight_PolyXlu(Vec3f* object, Vec3f* eye, Vec3f* lightDir, GraphicsContext* gfxCtx) {
     Hilite* hilite;
 
     OPEN_DISPS(gfxCtx, "../z_actor.c", 4332);
 
-    POLY_XLU_DISP = func_8002E830(object, eye, lightDir, gfxCtx, POLY_XLU_DISP, &hilite);
+    POLY_XLU_DISP = Actor_DrawLookatHilight(object, eye, lightDir, gfxCtx, POLY_XLU_DISP, &hilite);
 
     CLOSE_DISPS(gfxCtx, "../z_actor.c", 4339);
 
     return hilite;
 }
 
-void func_8002EBCC(Actor* actor, PlayState* play, s32 flag) {
+void Actor_DrawPlayEnvLookatHighlight_PolyOpa(Actor* actor, PlayState* play, s32 flag) {
     Hilite* hilite;
     Vec3f lightDir;
     Gfx* displayListHead;
@@ -1581,7 +1581,7 @@ void func_8002EBCC(Actor* actor, PlayState* play, s32 flag) {
     }
 #endif
 
-    hilite = func_8002EABC(&actor->world.pos, &play->view.eye, &lightDir, play->state.gfxCtx);
+    hilite = Actor_DrawLookatHilight_PolyOpa(&actor->world.pos, &play->view.eye, &lightDir, play->state.gfxCtx);
 
     if (flag != 0) {
         displayList = GRAPH_ALLOC(play->state.gfxCtx, 2 * sizeof(Gfx));
@@ -1597,7 +1597,7 @@ void func_8002EBCC(Actor* actor, PlayState* play, s32 flag) {
     }
 }
 
-void func_8002ED80(Actor* actor, PlayState* play, s32 flag) {
+void Actor_DrawPlayEnvLookatHighlight_PolyXlu(Actor* actor, PlayState* play, s32 flag) {
     Hilite* hilite;
     Vec3f lightDir;
     Gfx* displayListHead;
@@ -1607,7 +1607,7 @@ void func_8002ED80(Actor* actor, PlayState* play, s32 flag) {
     lightDir.y = play->envCtx.dirLight1.params.dir.y;
     lightDir.z = play->envCtx.dirLight1.params.dir.z;
 
-    hilite = func_8002EB44(&actor->world.pos, &play->view.eye, &lightDir, play->state.gfxCtx);
+    hilite = Actor_DrawLookatHilight_PolyXlu(&actor->world.pos, &play->view.eye, &lightDir, play->state.gfxCtx);
 
     if (flag != 0) {
         displayList = GRAPH_ALLOC(play->state.gfxCtx, 2 * sizeof(Gfx));
@@ -2108,7 +2108,7 @@ void Actor_PlaySfx_FlaggedTimer(Actor* actor, s32 timer) {
 }
 
 // Tests if something hit Jabu Jabu surface, displaying hit splash and playing sfx if true
-s32 func_8002F9EC(PlayState* play, Actor* actor, CollisionPoly* poly, s32 bgId, Vec3f* pos) {
+s32 Actor_HitJabuJabuSurface(PlayState* play, Actor* actor, CollisionPoly* poly, s32 bgId, Vec3f* pos) {
     if (SurfaceType_GetFloorType(&play->colCtx, poly, bgId) == FLOOR_TYPE_8) {
         play->roomCtx.drawParams[0] = 1;
         CollisionCheck_BlueBlood(play, NULL, pos);
@@ -2123,12 +2123,12 @@ s32 func_8002F9EC(PlayState* play, Actor* actor, CollisionPoly* poly, s32 bgId, 
                                "ntsc-1.0:22 ntsc-1.1:22 ntsc-1.2:22 pal-1.0:22 pal-1.1:22"
 
 // Local data used for Farore's Wind light (stored in BSS)
-LightInfo D_8015BC00;
-LightNode* D_8015BC10;
-s32 D_8015BC14;
-f32 D_8015BC18;
+LightInfo sFaroresWindLightInfo;
+LightNode* sFaroresWindLightNode;
+s32 sFaroresWindTimer;
+f32 sFaroresWindDelta;
 
-void func_8002FA60(PlayState* play) {
+void Actor_InitFaroresWindPointer(PlayState* play) {
     f32 lightPosX;
     f32 lightPosY;
     f32 lightPosZ;
@@ -2155,12 +2155,12 @@ void func_8002FA60(PlayState* play) {
     lightPosX = gSaveContext.respawn[RESPAWN_MODE_TOP].pos.x; \
     lightPosY = gSaveContext.respawn[RESPAWN_MODE_TOP].pos.y + 80.0f; \
     lightPosZ = gSaveContext.respawn[RESPAWN_MODE_TOP].pos.z; \
-    Lights_PointNoGlowSetInfo(&D_8015BC00, lightPosX, lightPosY, lightPosZ, 0xFF, 0xFF, 0xFF, -1);
+    Lights_PointNoGlowSetInfo(&sFaroresWindLightInfo, lightPosX, lightPosY, lightPosZ, 0xFF, 0xFF, 0xFF, -1);
     // clang-format on
 
-    D_8015BC10 = LightContext_InsertLight(play, &play->lightCtx, &D_8015BC00);
-    D_8015BC14 = 0;
-    D_8015BC18 = 0.0f;
+    sFaroresWindLightNode = LightContext_InsertLight(play, &play->lightCtx, &sFaroresWindLightInfo);
+    sFaroresWindTimer = 0;
+    sFaroresWindDelta = 0.0f;
 }
 
 void Actor_DrawFaroresWindPointer(PlayState* play) {
@@ -2180,18 +2180,18 @@ void Actor_DrawFaroresWindPointer(PlayState* play) {
         if (temp < 0) {
             gSaveContext.respawn[RESPAWN_MODE_TOP].data = ++params;
             ratio = ABS(params) * 0.025f;
-            D_8015BC14 = 60;
-            D_8015BC18 = 1.0f;
-        } else if (D_8015BC14) {
-            D_8015BC14--;
-        } else if (D_8015BC18 > 0.0f) {
+            sFaroresWindTimer = 60;
+            sFaroresWindDelta = 1.0f;
+        } else if (sFaroresWindTimer) {
+            sFaroresWindTimer--;
+        } else if (sFaroresWindDelta > 0.0f) {
             static Vec3f effectVel = { 0.0f, -0.05f, 0.0f };
             static Vec3f effectAccel = { 0.0f, -0.025f, 0.0f };
             static Color_RGBA8 effectPrimCol = { 255, 255, 255, 0 };
             static Color_RGBA8 effectEnvCol = { 100, 200, 0, 0 };
             Vec3f* curPos = &gSaveContext.respawn[RESPAWN_MODE_TOP].pos;
             Vec3f* nextPos = &gSaveContext.respawn[RESPAWN_MODE_DOWN].pos;
-            f32 prevNum = D_8015BC18;
+            f32 prevNum = sFaroresWindDelta;
             Vec3f dist;
             f32 diff = Math_Vec3f_DistXYZAndStoreDiff(nextPos, curPos, &dist);
             Vec3f effectPos;
@@ -2201,16 +2201,16 @@ void Actor_DrawFaroresWindPointer(PlayState* play) {
             f32 speed;
 
             if (diff < 20.0f) {
-                D_8015BC18 = 0.0f;
+                sFaroresWindDelta = 0.0f;
                 Math_Vec3f_Copy(curPos, nextPos);
             } else {
-                length = diff * (1.0f / D_8015BC18);
+                length = diff * (1.0f / sFaroresWindDelta);
                 speed = 20.0f / length;
                 if (speed < 0.05f) {
                     speed = 0.05f;
                 }
-                Math_StepToF(&D_8015BC18, 0.0f, speed);
-                factor = (diff * (D_8015BC18 / prevNum)) / diff;
+                Math_StepToF(&sFaroresWindDelta, 0.0f, speed);
+                factor = (diff * (sFaroresWindDelta / prevNum)) / diff;
                 curPos->x = nextPos->x + (dist.x * factor);
                 curPos->y = nextPos->y + (dist.y * factor);
                 curPos->z = nextPos->z + (dist.z * factor);
@@ -2227,7 +2227,7 @@ void Actor_DrawFaroresWindPointer(PlayState* play) {
             EffectSsKiraKira_SpawnDispersed(play, &effectPos, &effectVel, &effectAccel, &effectPrimCol, &effectEnvCol,
                                             1000, 16);
 
-            if (D_8015BC18 == 0.0f) {
+            if (sFaroresWindDelta == 0.0f) {
                 gSaveContext.respawn[RESPAWN_MODE_TOP] = gSaveContext.respawn[RESPAWN_MODE_DOWN];
                 gSaveContext.respawn[RESPAWN_MODE_TOP].playerParams =
                     PLAYER_PARAMS(PLAYER_START_MODE_FARORES_WIND, PLAYER_START_BG_CAM_DEFAULT);
@@ -2306,7 +2306,7 @@ void Actor_DrawFaroresWindPointer(PlayState* play) {
 
         //! @bug This function call is not contained in the above block, meaning the light for Farore's Wind will draw
         //! in every scene at the same position that it was originally set.
-        Lights_PointNoGlowSetInfo(&D_8015BC00, ((void)0, gSaveContext.respawn[RESPAWN_MODE_TOP].pos.x),
+        Lights_PointNoGlowSetInfo(&sFaroresWindLightInfo, ((void)0, gSaveContext.respawn[RESPAWN_MODE_TOP].pos.x),
                                   ((void)0, gSaveContext.respawn[RESPAWN_MODE_TOP].pos.y) + yOffset,
                                   ((void)0, gSaveContext.respawn[RESPAWN_MODE_TOP].pos.z), 255, 255, 255, lightRadius);
 
@@ -2314,8 +2314,8 @@ void Actor_DrawFaroresWindPointer(PlayState* play) {
     }
 }
 
-void func_80030488(PlayState* play) {
-    LightContext_RemoveLight(play, &play->lightCtx, D_8015BC10);
+void Actor_DeleteFaroresWindPointer(PlayState* play) {
+    LightContext_RemoveLight(play, &play->lightCtx, sFaroresWindLightNode);
 }
 
 void Actor_DisableLens(PlayState* play) {
@@ -2356,7 +2356,7 @@ void Actor_InitContext(PlayState* play, ActorContext* actorCtx, ActorEntry* play
 
     Actor_SpawnEntry(actorCtx, playerEntry, play);
     Attention_Init(&actorCtx->attention, actorCtx->actorLists[ACTORCAT_PLAYER].head, play);
-    func_8002FA60(play);
+    Actor_InitFaroresWindPointer(play);
 }
 
 u32 sCategoryFreezeMasks[ACTORCAT_MAX] = {
@@ -3048,7 +3048,7 @@ void func_80031B14(PlayState* play, ActorContext* actorCtx) {
 }
 
 // Actor_CleanupContext
-void func_80031C3C(ActorContext* actorCtx, PlayState* play) {
+void Actor_CleanupContext(ActorContext* actorCtx, PlayState* play) {
     Actor* actor;
     s32 i;
 
@@ -3068,7 +3068,7 @@ void func_80031C3C(ActorContext* actorCtx, PlayState* play) {
     }
 
     Play_SaveSceneFlags(play);
-    func_80030488(play);
+    Actor_DeleteFaroresWindPointer(play);
     ActorOverlayTable_Cleanup();
 }
 
@@ -3750,12 +3750,12 @@ void Actor_SpawnFloorDustRing(PlayState* play, Actor* actor, Vec3f* posXZ, f32 r
         accel.z = (Rand_ZeroOne() - 0.5f) * randAccelWeight;
 
         if (scale == 0) {
-            func_8002857C(play, &pos, &velocity, &accel);
+            EffectSsDust_SpawnDirt1(play, &pos, &velocity, &accel);
         } else {
             if (useLighting) {
-                func_800286CC(play, &pos, &velocity, &accel, scale, scaleStep);
+                EffectSsDust_SpawnDirt4(play, &pos, &velocity, &accel, scale, scaleStep);
             } else {
-                func_8002865C(play, &pos, &velocity, &accel, scale, scaleStep);
+                EffectSsDust_SpawnDirt3(play, &pos, &velocity, &accel, scale, scaleStep);
             }
         }
 
@@ -3763,7 +3763,7 @@ void Actor_SpawnFloorDustRing(PlayState* play, Actor* actor, Vec3f* posXZ, f32 r
     }
 }
 
-void func_80033480(PlayState* play, Vec3f* posBase, f32 randRangeDiameter, s32 amountMinusOne, s16 scaleBase,
+void Actor_SpawnFloorDustCircle(PlayState* play, Vec3f* posBase, f32 randRangeDiameter, s32 amountMinusOne, s16 scaleBase,
                    s16 scaleStep, u8 arg6) {
     Vec3f pos;
     Vec3f velocity = { 0.0f, 0.0f, 0.0f };
@@ -3781,9 +3781,9 @@ void func_80033480(PlayState* play, Vec3f* posBase, f32 randRangeDiameter, s32 a
         var2 = arg6;
 
         if (var2 != 0) {
-            func_800286CC(play, &pos, &velocity, &accel, scale, scaleStep);
+            EffectSsDust_SpawnDirt4(play, &pos, &velocity, &accel, scale, scaleStep);
         } else {
-            func_8002865C(play, &pos, &velocity, &accel, scale, scaleStep);
+            EffectSsDust_SpawnDirt3(play, &pos, &velocity, &accel, scale, scaleStep);
         }
     }
 }
@@ -3797,7 +3797,7 @@ Actor* Actor_GetCollidedExplosive(PlayState* play, Collider* collider) {
     return NULL;
 }
 
-Actor* func_80033684(PlayState* play, Actor* explosiveActor) {
+Actor* Actor_GetNearbyExplodingBomb(PlayState* play, Actor* explosiveActor) {
     Actor* actor = play->actorCtx.actorLists[ACTORCAT_EXPLOSIVE].head;
 
     while (actor != NULL) {
@@ -4051,7 +4051,7 @@ void func_80033C30(Vec3f* arg0, Vec3f* arg1, u8 alpha, PlayState* play) {
     yIntersect = BgCheck_EntityRaycastDown2(play, &play->colCtx, &groundPoly, &checkPos);
 
     if (groundPoly != NULL) {
-        func_80038A28(groundPoly, arg0->x, yIntersect, arg0->z, &sp60);
+        CollisionPoly_GetGroundMtxF(groundPoly, arg0->x, yIntersect, arg0->z, &sp60);
         Matrix_Put(&sp60);
     } else {
         Matrix_Translate(arg0->x, arg0->y, arg0->z, MTXMODE_NEW);
@@ -4188,24 +4188,24 @@ void Actor_SetColorFilter(Actor* actor, s16 colorFlag, s16 colorIntensityMax, s1
     actor->colorFilterTimer = duration;
 }
 
-void func_800342EC(Vec3f* object, PlayState* play) {
+void Actor_SetRoomLights_PolyOpa(Vec3f* object, PlayState* play) {
     Vec3f lightDir;
 
     lightDir.x = play->envCtx.dirLight1.params.dir.x;
     lightDir.y = play->envCtx.dirLight1.params.dir.y;
     lightDir.z = play->envCtx.dirLight1.params.dir.z;
 
-    func_8002EABC(object, &play->view.eye, &lightDir, play->state.gfxCtx);
+    Actor_DrawLookatHilight_PolyOpa(object, &play->view.eye, &lightDir, play->state.gfxCtx);
 }
 
-void func_8003435C(Vec3f* object, PlayState* play) {
+void Actor_SetRoomLights_PolyXlu(Vec3f* object, PlayState* play) {
     Vec3f lightDir;
 
     lightDir.x = play->envCtx.dirLight1.params.dir.x;
     lightDir.y = play->envCtx.dirLight1.params.dir.y;
     lightDir.z = play->envCtx.dirLight1.params.dir.z;
 
-    func_8002EB44(object, &play->view.eye, &lightDir, play->state.gfxCtx);
+    Actor_DrawLookatHilight_PolyXlu(object, &play->view.eye, &lightDir, play->state.gfxCtx);
 }
 
 /**
@@ -4683,7 +4683,7 @@ s32 func_800354B4(PlayState* play, Actor* actor, f32 range, s16 arg3, s16 arg4, 
     }
 }
 
-void func_8003555C(PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel) {
+void Actor_SpawnSmallBrownSparkles(PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel) {
     Color_RGBA8 color1;
     Color_RGBA8 color2;
 
@@ -4709,8 +4709,8 @@ Gfx D_80116280[] = {
     gsSPEndDisplayList(),
 };
 
-void func_800355B8(PlayState* play, Vec3f* pos) {
-    func_8003555C(play, pos, &D_80116268, &D_80116274);
+void Actor_SpawnSmallBrownSparkles2(PlayState* play, Vec3f* pos) {
+    Actor_SpawnSmallBrownSparkles(play, pos, &D_80116268, &D_80116274);
 }
 
 u8 func_800355E4(PlayState* play, Collider* collider) {
@@ -4804,7 +4804,7 @@ void Actor_SetDropFlagJntSph(Actor* actor, ColliderJntSph* jntSph, s32 freezeFla
     }
 }
 
-void func_80035844(Vec3f* arg0, Vec3f* arg1, Vec3s* arg2, s32 arg3) {
+void Actor_GetSomeXYRot_80035844(Vec3f* arg0, Vec3f* arg1, Vec3s* arg2, s32 arg3) {
     f32 dx = arg1->x - arg0->x;
     f32 dz = arg1->z - arg0->z;
     f32 dy = arg3 ? (arg1->y - arg0->y) : (arg0->y - arg1->y);
@@ -4867,7 +4867,7 @@ void func_800359B8(Actor* actor, s16 arg1, Vec3s* arg2) {
     }
 }
 
-void func_80035B18(PlayState* play, Actor* actor, u16 textId) {
+void Actor_ProtoMesg_StartMesg(PlayState* play, Actor* actor, u16 textId) {
     Message_ContinueTextbox(play, textId);
     actor->textId = textId;
 }
@@ -4912,7 +4912,7 @@ void Flags_SetInfTable(s32 flag) {
     gSaveContext.save.info.infTable[index] |= mask;
 }
 
-u32 func_80035BFC(PlayState* play, s16 arg1) {
+u32 Actor_ProtoMesg_80035BFC(PlayState* play, s16 arg1) {
     u16 retTextId = 0;
 
     switch (arg1) {
@@ -5640,7 +5640,7 @@ u32 func_80035BFC(PlayState* play, s16 arg1) {
     return retTextId;
 }
 
-void func_80036E50(u16 textId, s16 arg1) {
+void Actor_ProtoMesg_80036E50(u16 textId, s16 arg1) {
     switch (arg1) {
         case 0:
             switch (textId) {
@@ -5907,7 +5907,7 @@ void func_80036E50(u16 textId, s16 arg1) {
     }
 }
 
-s32 func_800374E0(PlayState* play, Actor* actor, u16 textId) {
+s32 Actor_ProtoMesg_800374E0(PlayState* play, Actor* actor, u16 textId) {
     MessageContext* msgCtx = &play->msgCtx;
     s32 ret = 1;
 
@@ -5915,16 +5915,16 @@ s32 func_800374E0(PlayState* play, Actor* actor, u16 textId) {
         case 0x1035:
             if (msgCtx->choiceIndex == 0) {
                 if (Flags_GetInfTable(INFTABLE_2A)) {
-                    func_80035B18(play, actor, 0x1036);
+                    Actor_ProtoMesg_StartMesg(play, actor, 0x1036);
                 } else {
-                    func_80035B18(play, actor, 0x1041);
+                    Actor_ProtoMesg_StartMesg(play, actor, 0x1041);
                 }
             }
             if (msgCtx->choiceIndex == 1) {
                 if (Flags_GetInfTable(INFTABLE_2B)) {
-                    func_80035B18(play, actor, 0x1037);
+                    Actor_ProtoMesg_StartMesg(play, actor, 0x1037);
                 } else {
-                    func_80035B18(play, actor, 0x1041);
+                    Actor_ProtoMesg_StartMesg(play, actor, 0x1041);
                 }
             }
             ret = 0;
@@ -5932,58 +5932,58 @@ s32 func_800374E0(PlayState* play, Actor* actor, u16 textId) {
         case 0x1038:
             if (msgCtx->choiceIndex == 0) {
                 if (Flags_GetInfTable(INFTABLE_2E)) {
-                    func_80035B18(play, actor, 0x1039);
+                    Actor_ProtoMesg_StartMesg(play, actor, 0x1039);
                 } else {
-                    func_80035B18(play, actor, 0x1041);
+                    Actor_ProtoMesg_StartMesg(play, actor, 0x1041);
                 }
             }
             if (msgCtx->choiceIndex == 1) {
                 if (Flags_GetInfTable(INFTABLE_2F)) {
-                    func_80035B18(play, actor, 0x103A);
+                    Actor_ProtoMesg_StartMesg(play, actor, 0x103A);
                 } else {
-                    func_80035B18(play, actor, 0x1041);
+                    Actor_ProtoMesg_StartMesg(play, actor, 0x1041);
                 }
             }
             if (msgCtx->choiceIndex == 2) {
                 if (Flags_GetInfTable(INFTABLE_30)) {
-                    func_80035B18(play, actor, 0x103B);
+                    Actor_ProtoMesg_StartMesg(play, actor, 0x103B);
                 } else {
-                    func_80035B18(play, actor, 0x1041);
+                    Actor_ProtoMesg_StartMesg(play, actor, 0x1041);
                 }
             }
             ret = 0;
             break;
         case 0x103E:
             if (msgCtx->choiceIndex == 0) {
-                func_80035B18(play, actor, 0x103F);
+                Actor_ProtoMesg_StartMesg(play, actor, 0x103F);
             }
             if (msgCtx->choiceIndex == 1) {
-                func_80035B18(play, actor, 0x1040);
+                Actor_ProtoMesg_StartMesg(play, actor, 0x1040);
             }
             ret = 0;
             break;
         case 0x1041:
             if (msgCtx->choiceTextId == 0x1035) {
                 if (msgCtx->choiceIndex == 0) {
-                    func_80035B18(play, actor, 0x1036);
+                    Actor_ProtoMesg_StartMesg(play, actor, 0x1036);
                     Flags_SetInfTable(INFTABLE_2A);
                 }
                 if (msgCtx->choiceIndex == 1) {
-                    func_80035B18(play, actor, 0x1037);
+                    Actor_ProtoMesg_StartMesg(play, actor, 0x1037);
                     Flags_SetInfTable(INFTABLE_2B);
                 }
             }
             if (msgCtx->choiceTextId == 0x1038) {
                 if (msgCtx->choiceIndex == 0) {
-                    func_80035B18(play, actor, 0x1039);
+                    Actor_ProtoMesg_StartMesg(play, actor, 0x1039);
                     Flags_SetInfTable(INFTABLE_2E);
                 }
                 if (msgCtx->choiceIndex == 1) {
-                    func_80035B18(play, actor, 0x103A);
+                    Actor_ProtoMesg_StartMesg(play, actor, 0x103A);
                     Flags_SetInfTable(INFTABLE_2F);
                 }
                 if (msgCtx->choiceIndex == 2) {
-                    func_80035B18(play, actor, 0x103B);
+                    Actor_ProtoMesg_StartMesg(play, actor, 0x103B);
                     Flags_SetInfTable(INFTABLE_30);
                 }
             }
@@ -5991,10 +5991,10 @@ s32 func_800374E0(PlayState* play, Actor* actor, u16 textId) {
             break;
         case 0x1062:
             if (msgCtx->choiceIndex == 0) {
-                func_80035B18(play, actor, 0x1063);
+                Actor_ProtoMesg_StartMesg(play, actor, 0x1063);
             }
             if (msgCtx->choiceIndex == 1) {
-                func_80035B18(play, actor, 0x1064);
+                Actor_ProtoMesg_StartMesg(play, actor, 0x1064);
             }
             ret = 0;
             break;
@@ -6002,14 +6002,14 @@ s32 func_800374E0(PlayState* play, Actor* actor, u16 textId) {
         case 0x2031:
             if (msgCtx->choiceIndex == 0) {
                 if (gSaveContext.save.info.playerData.rupees >= 10) {
-                    func_80035B18(play, actor, 0x2034);
+                    Actor_ProtoMesg_StartMesg(play, actor, 0x2034);
                     Rupees_ChangeBy(-10);
                 } else {
-                    func_80035B18(play, actor, 0x2032);
+                    Actor_ProtoMesg_StartMesg(play, actor, 0x2032);
                 }
             }
             if (msgCtx->choiceIndex == 1) {
-                func_80035B18(play, actor, 0x2032);
+                Actor_ProtoMesg_StartMesg(play, actor, 0x2032);
             }
             Flags_SetInfTable(INFTABLE_9A);
             ret = 0;
@@ -6019,10 +6019,10 @@ s32 func_800374E0(PlayState* play, Actor* actor, u16 textId) {
         case 0x2036:
         case 0x2037:
             if (msgCtx->choiceIndex == 0) {
-                func_80035B18(play, actor, 0x201F);
+                Actor_ProtoMesg_StartMesg(play, actor, 0x201F);
             }
             if (msgCtx->choiceIndex == 1) {
-                func_80035B18(play, actor, 0x205A);
+                Actor_ProtoMesg_StartMesg(play, actor, 0x205A);
             }
             ret = 0;
             break;
@@ -6031,7 +6031,7 @@ s32 func_800374E0(PlayState* play, Actor* actor, u16 textId) {
                 break;
             }
             if (msgCtx->choiceIndex == 1) {
-                func_80035B18(play, actor, 0x205A);
+                Actor_ProtoMesg_StartMesg(play, actor, 0x205A);
             }
             ret = 0;
             break;
@@ -6039,14 +6039,14 @@ s32 func_800374E0(PlayState* play, Actor* actor, u16 textId) {
             if (msgCtx->choiceIndex != 0) {
                 break;
             }
-            func_80035B18(play, actor, 0x2035);
+            Actor_ProtoMesg_StartMesg(play, actor, 0x2035);
             ret = 0;
             break;
         case 0x2043:
             if (Flags_GetEventChkInf(EVENTCHKINF_RECEIVED_WEIRD_EGG)) {
                 break;
             }
-            func_80035B18(play, actor, 0x2044);
+            Actor_ProtoMesg_StartMesg(play, actor, 0x2044);
             ret = 0;
             break;
         case 0x205A:
@@ -6054,52 +6054,52 @@ s32 func_800374E0(PlayState* play, Actor* actor, u16 textId) {
         case 0x300A:
             if (msgCtx->choiceIndex == 0) {
                 if (Flags_GetEventChkInf(EVENTCHKINF_22)) {
-                    func_80035B18(play, actor, 0x300B);
+                    Actor_ProtoMesg_StartMesg(play, actor, 0x300B);
                 } else {
-                    func_80035B18(play, actor, 0x300C);
+                    Actor_ProtoMesg_StartMesg(play, actor, 0x300C);
                 }
             }
             if (msgCtx->choiceIndex == 1) {
-                func_80035B18(play, actor, 0x300D);
+                Actor_ProtoMesg_StartMesg(play, actor, 0x300D);
             }
             ret = 0;
             break;
         case 0x301B:
             if (msgCtx->choiceIndex == 0) {
-                func_80035B18(play, actor, 0x301D);
+                Actor_ProtoMesg_StartMesg(play, actor, 0x301D);
             }
             if (msgCtx->choiceIndex == 1) {
                 if (Flags_GetInfTable(INFTABLE_113)) {
-                    func_80035B18(play, actor, 0x301F);
+                    Actor_ProtoMesg_StartMesg(play, actor, 0x301F);
                 } else {
-                    func_80035B18(play, actor, 0x301E);
+                    Actor_ProtoMesg_StartMesg(play, actor, 0x301E);
                 }
             }
             ret = 0;
             break;
         case 0x301E:
-            func_80035B18(play, actor, 0x3020);
+            Actor_ProtoMesg_StartMesg(play, actor, 0x3020);
             ret = 0;
             break;
         case 0x400C:
             if (msgCtx->choiceIndex == 0) {
-                func_80035B18(play, actor, 0x400D);
+                Actor_ProtoMesg_StartMesg(play, actor, 0x400D);
             }
             if (msgCtx->choiceIndex == 1) {
-                func_80035B18(play, actor, 0x400E);
+                Actor_ProtoMesg_StartMesg(play, actor, 0x400E);
             }
             ret = 0;
             break;
         case 0x7007:
-            func_80035B18(play, actor, 0x703E);
+            Actor_ProtoMesg_StartMesg(play, actor, 0x703E);
             ret = 0;
             break;
         case 0x703E:
-            func_80035B18(play, actor, 0x703F);
+            Actor_ProtoMesg_StartMesg(play, actor, 0x703F);
             ret = 0;
             break;
         case 0x703F:
-            func_80035B18(play, actor, 0x7042);
+            Actor_ProtoMesg_StartMesg(play, actor, 0x7042);
             ret = 0;
             break;
     }
@@ -6107,31 +6107,31 @@ s32 func_800374E0(PlayState* play, Actor* actor, u16 textId) {
     return ret;
 }
 
-u16 func_80037C30(PlayState* play, s16 arg1) {
-    return func_80035BFC(play, arg1);
+u16 Actor_ProtoMesg_80037C30(PlayState* play, s16 arg1) {
+    return Actor_ProtoMesg_80035BFC(play, arg1);
 }
 
-s32 func_80037C5C(PlayState* play, s16 arg1, u16 textId) {
-    func_80036E50(textId, arg1);
+s32 Actor_ProtoMesg_80037C5C(PlayState* play, s16 arg1, u16 textId) {
+    Actor_ProtoMesg_80036E50(textId, arg1);
     return false;
 }
 
-s32 func_80037C94(PlayState* play, Actor* actor, s32 arg2) {
-    return func_800374E0(play, actor, actor->textId);
+s32 Actor_ProtoMesg_80037C94(PlayState* play, Actor* actor, s32 arg2) {
+    return Actor_ProtoMesg_800374E0(play, actor, actor->textId);
 }
 
-s32 func_80037CB8(PlayState* play, Actor* actor, s16 arg2) {
+s32 Actor_ProtoMesg_80037CB8(PlayState* play, Actor* actor, s16 arg2) {
     MessageContext* msgCtx = &play->msgCtx;
     s32 ret = false;
 
     switch (Message_GetState(msgCtx)) {
         case TEXT_STATE_CLOSING:
-            func_80037C5C(play, arg2, actor->textId);
+            Actor_ProtoMesg_80037C5C(play, arg2, actor->textId);
             ret = true;
             break;
         case TEXT_STATE_CHOICE:
         case TEXT_STATE_EVENT:
-            if (Message_ShouldAdvance(play) && func_80037C94(play, actor, arg2)) {
+            if (Message_ShouldAdvance(play) && Actor_ProtoMesg_80037C94(play, actor, arg2)) {
                 Audio_PlaySfxGeneral(NA_SE_SY_CANCEL, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                                      &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                 msgCtx->msgMode = MSGMODE_TEXT_CLOSING;
@@ -6143,7 +6143,7 @@ s32 func_80037CB8(PlayState* play, Actor* actor, s16 arg2) {
     return ret;
 }
 
-s32 func_80037D98(PlayState* play, Actor* actor, s32 arg2, s32* arg3) {
+s32 Actor_ProtoMesg_80037D98(PlayState* play, Actor* actor, s32 arg2, s32* arg3) {
     s16 var;
     s16 sp2C;
     s16 sp2A;
@@ -6155,7 +6155,7 @@ s32 func_80037D98(PlayState* play, Actor* actor, s32 arg2, s32* arg3) {
     }
 
     if (*arg3 == 1) {
-        if (func_80037CB8(play, actor, arg2)) {
+        if (Actor_ProtoMesg_80037CB8(play, actor, arg2)) {
             *arg3 = 0;
         }
         return false;
@@ -6180,11 +6180,11 @@ s32 func_80037D98(PlayState* play, Actor* actor, s32 arg2, s32* arg3) {
 
     if (actor->xyzDistToPlayerSq <= SQ(80.0f)) {
         if (Actor_OfferTalk(actor, play, 80.0f)) {
-            actor->textId = func_80037C30(play, arg2);
+            actor->textId = Actor_ProtoMesg_80037C30(play, arg2);
         }
     } else {
         if (Actor_OfferTalkNearColChkInfoCylinder(actor, play)) {
-            actor->textId = func_80037C30(play, arg2);
+            actor->textId = Actor_ProtoMesg_80037C30(play, arg2);
         }
     }
 

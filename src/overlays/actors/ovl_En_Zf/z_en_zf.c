@@ -1742,8 +1742,8 @@ void EnZf_SetupJumpUp(EnZf* this) {
 void EnZf_JumpUp(EnZf* this, PlayState* play) {
     Math_SmoothStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 1, 4000, 1);
     if (this->actor.velocity.y >= 5.0f) {
-        func_800355B8(play, &this->leftFootPos);
-        func_800355B8(play, &this->rightFootPos);
+        Actor_SpawnSmallBrownSparkles2(play, &this->leftFootPos);
+        Actor_SpawnSmallBrownSparkles2(play, &this->rightFootPos);
     }
 
     if (SkelAnime_Update(&this->skelAnime)) {
@@ -2281,7 +2281,7 @@ void EnZf_Draw(Actor* thisx, PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx, "../z_en_zf.c", 3533);
 
-    func_8002EBCC(thisx, play, 1);
+    Actor_DrawPlayEnvLookatHighlight_PolyOpa(thisx, play, 1);
 
     gSPTexture(D_80B4A2F8, IREG(0), IREG(1), 0, G_TX_RENDERTILE, G_ON);
 

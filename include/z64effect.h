@@ -322,13 +322,13 @@ void func_800284A4(struct PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* a
                    Color_RGBA8* envColor, s16 scale, s16 scaleStep);
 void func_80028510(struct PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, Color_RGBA8* primColor,
                    Color_RGBA8* envColor, s16 scale, s16 scaleStep);
-void func_8002857C(struct PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel);
-void func_800285EC(struct PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel);
-void func_8002865C(struct PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale, s16 scaleStep);
-void func_800286CC(struct PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale, s16 scaleStep);
-void func_8002873C(struct PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale, s16 scaleStep,
+void EffectSsDust_SpawnDirt1(struct PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel);
+void EffectSsDust_SpawnDirt2(struct PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel);
+void EffectSsDust_SpawnDirt3(struct PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale, s16 scaleStep);
+void EffectSsDust_SpawnDirt4(struct PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale, s16 scaleStep);
+void EffectSsDust_SpawnDirt5(struct PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale, s16 scaleStep,
                    s16 life);
-void func_800287AC(struct PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale, s16 scaleStep,
+void EffectSsDust_SpawnDirt6(struct PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale, s16 scaleStep,
                    s16 life);
 void func_8002881C(struct PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, Color_RGBA8* primColor,
                    Color_RGBA8* envColor);

@@ -244,8 +244,8 @@ void ItemEtcetera_Update(Actor* thisx, PlayState* play) {
 void ItemEtcetera_DrawThroughLens(Actor* thisx, PlayState* play) {
     ItemEtcetera* this = (ItemEtcetera*)thisx;
     if (play->actorCtx.lensActive) {
-        func_8002EBCC(&this->actor, play, 0);
-        func_8002ED80(&this->actor, play, 0);
+        Actor_DrawPlayEnvLookatHighlight_PolyOpa(&this->actor, play, 0);
+        Actor_DrawPlayEnvLookatHighlight_PolyXlu(&this->actor, play, 0);
         GetItem_Draw(play, this->giDrawId);
     }
 }
@@ -253,7 +253,7 @@ void ItemEtcetera_DrawThroughLens(Actor* thisx, PlayState* play) {
 void ItemEtcetera_Draw(Actor* thisx, PlayState* play) {
     ItemEtcetera* this = (ItemEtcetera*)thisx;
 
-    func_8002EBCC(&this->actor, play, 0);
-    func_8002ED80(&this->actor, play, 0);
+    Actor_DrawPlayEnvLookatHighlight_PolyOpa(&this->actor, play, 0);
+    Actor_DrawPlayEnvLookatHighlight_PolyXlu(&this->actor, play, 0);
     GetItem_Draw(play, this->giDrawId);
 }

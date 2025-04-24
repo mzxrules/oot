@@ -151,7 +151,7 @@ void BgJyaMegami_SpawnEffect(PlayState* play, Vec3f* pos, Vec3f* velocity, s32 n
         if (Rand_ZeroOne() < 0.45f) {
             Math_Vec3f_Copy(&spB4, pos);
             spB4.z += 25.0f;
-            func_80033480(play, &spB4, 60.0f, 0, D_8089B14C[idx] * 4 + 50, D_8089B14C[idx] * 4 + 70, 1);
+            Actor_SpawnFloorDustCircle(play, &spB4, 60.0f, 0, D_8089B14C[idx] * 4 + 50, D_8089B14C[idx] * 4 + 70, 1);
         }
     }
 }
@@ -289,7 +289,7 @@ void BgJyaMegami_Explode(BgJyaMegami* this, PlayState* play) {
         sp8C.x = this->dyna.actor.world.pos.x;
         sp8C.y = this->dyna.actor.world.pos.y - 60.0f;
         sp8C.z = this->dyna.actor.world.pos.z;
-        func_80033480(play, &sp8C, 100.0f, 1, 150, 100, 1);
+        Actor_SpawnFloorDustCircle(play, &sp8C, 100.0f, 1, 150, 100, 1);
     }
     if (this->explosionTimer == 60) {
         Sfx_PlaySfxCentered(NA_SE_SY_CORRECT_CHIME);

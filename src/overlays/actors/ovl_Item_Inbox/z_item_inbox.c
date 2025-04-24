@@ -54,7 +54,7 @@ void ItemInbox_Update(Actor* thisx, PlayState* play) {
 void ItemInbox_Draw(Actor* thisx, PlayState* play) {
     ItemInbox* this = (ItemInbox*)thisx;
 
-    func_8002EBCC(&this->actor, play, 0);
-    func_8002ED80(&this->actor, play, 0);
+    Actor_DrawPlayEnvLookatHighlight_PolyOpa(&this->actor, play, 0);
+    Actor_DrawPlayEnvLookatHighlight_PolyXlu(&this->actor, play, 0);
     GetItem_Draw(play, PARAMS_GET_U(this->actor.params, 0, 8));
 }

@@ -991,8 +991,8 @@ void EnWf_SomersaultAndAttack(EnWf* this, PlayState* play) {
 
     if (this->actor.velocity.y >= 5.0f) {
         //! @bug unk_4C8 and unk_4BC are used but not set (presumably intended to be feet positions like other actors)
-        func_800355B8(play, &this->unk_4C8);
-        func_800355B8(play, &this->unk_4BC);
+        Actor_SpawnSmallBrownSparkles2(play, &this->unk_4C8);
+        Actor_SpawnSmallBrownSparkles2(play, &this->unk_4BC);
     }
 
     if (SkelAnime_Update(&this->skelAnime) &&

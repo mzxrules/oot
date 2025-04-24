@@ -240,7 +240,7 @@ void CollisionPoly_GetNormalF(CollisionPoly* poly, f32* nx, f32* ny, f32* nz) {
 /**
  * Compute transform matrix mapping +y (up) to the collision poly's normal
  */
-void func_80038A28(CollisionPoly* poly, f32 tx, f32 ty, f32 tz, MtxF* dest) {
+void CollisionPoly_GetGroundMtxF(CollisionPoly* poly, f32 tx, f32 ty, f32 tz, MtxF* dest) {
     f32 nx;
     f32 ny;
     f32 nz;
@@ -3918,7 +3918,7 @@ void CollisionHeader_GetVirtual(void* colHeader, CollisionHeader** dest) {
 /**
  * SEGMENT_TO_VIRTUAL all active BgActor CollisionHeaders
  */
-void func_800418D0(CollisionContext* colCtx, PlayState* play) {
+void CollisionHeader_InitializeAll(CollisionContext* colCtx, PlayState* play) {
     DynaCollisionContext* dyna = &colCtx->dyna;
     s32 i;
     u16 flag;
@@ -4110,7 +4110,7 @@ u32 SurfaceType_GetFloorType(CollisionContext* colCtx, CollisionPoly* poly, s32 
 /**
  * SurfaceType Get ? Property (& 0x001C 0000)
  */
-u32 func_80041D70(CollisionContext* colCtx, CollisionPoly* poly, s32 bgId) {
+u32 SurfaceType_Get0_001C0000(CollisionContext* colCtx, CollisionPoly* poly, s32 bgId) {
     return SurfaceType_GetData(colCtx, poly, bgId, 0) >> 18 & 7;
 }
 
@@ -4237,7 +4237,7 @@ u32 SurfaceType_GetConveyorDirection(CollisionContext* colCtx, CollisionPoly* po
     return SurfaceType_GetData(colCtx, poly, bgId, 1) >> 21 & 0x3F;
 }
 
-u32 func_80042108(CollisionContext* colCtx, CollisionPoly* poly, s32 bgId) {
+u32 SurfaceType_Get1_08000000(CollisionContext* colCtx, CollisionPoly* poly, s32 bgId) {
     return (SurfaceType_GetData(colCtx, poly, bgId, 1) & 0x08000000) ? 1 : 0;
 }
 
@@ -4388,7 +4388,7 @@ u32 WaterBox_GetLightIndex(CollisionContext* colCtx, WaterBox* waterBox) {
  * returns true if point is within the xz boundaries of an active water box, else false
  * `ySurface` returns the water box's surface, while `outWaterBox` returns a pointer to the WaterBox
  */
-s32 func_800425B0(PlayState* play, CollisionContext* colCtx, f32 x, f32 z, f32* ySurface, WaterBox** outWaterBox) {
+s32 WaterBox_GetSurfaceImpl_WATERBOX_FLAG_19(PlayState* play, CollisionContext* colCtx, f32 x, f32 z, f32* ySurface, WaterBox** outWaterBox) {
     CollisionHeader* colHeader = colCtx->colHeader;
     s32 room;
     WaterBox* waterBox;
@@ -4418,7 +4418,7 @@ s32 func_800425B0(PlayState* play, CollisionContext* colCtx, f32 x, f32 z, f32* 
  * Gets the `closestPoint` to `point` on the line formed from the intesection of planes `polyA` and `polyB`
  * returns true if the `closestPoint` exists, else returns false
  */
-s32 func_80042708(CollisionPoly* polyA, CollisionPoly* polyB, Vec3f* point, Vec3f* closestPoint) {
+s32 CollisionPoly_PolyVsPolyVsLineClosestPoint(CollisionPoly* polyA, CollisionPoly* polyB, Vec3f* point, Vec3f* closestPoint) {
     f32 n1X;
     f32 n1Y;
     f32 n1Z;
@@ -4436,7 +4436,7 @@ s32 func_80042708(CollisionPoly* polyA, CollisionPoly* polyB, Vec3f* point, Vec3
  * Get the `closestPoint` to line (`pointA`, `pointB`) formed from the intersection of planes `polyA` and `polyB`
  * returns true if the `closestPoint` exists, else returns false
  */
-s32 func_800427B4(CollisionPoly* polyA, CollisionPoly* polyB, Vec3f* pointA, Vec3f* pointB, Vec3f* closestPoint) {
+s32 CollisionPoly_PolyVsLineSegClosestPoint(CollisionPoly* polyA, CollisionPoly* polyB, Vec3f* pointA, Vec3f* pointB, Vec3f* closestPoint) {
     f32 n1X;
     f32 n1Y;
     f32 n1Z;

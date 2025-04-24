@@ -225,7 +225,7 @@ void func_808884C8(BgHidanHamstep* step, PlayState* play) {
 
     pos.y -= 20.0f;
 
-    func_80033480(play, &pos, 0.0f, 0, 600, 300, 0);
+    Actor_SpawnFloorDustCircle(play, &pos, 0.0f, 0, 600, 300, 0);
 
     sin = Math_SinS(step->dyna.actor.shape.rot.y + 0x8000);
     cos = Math_CosS(step->dyna.actor.shape.rot.y + 0x8000);
@@ -235,7 +235,7 @@ void func_808884C8(BgHidanHamstep* step, PlayState* play) {
     for (i = 0; i < ARRAY_COUNT(sEffectPositions); i++) {
         pos.x = (sEffectPositions[i][1] * sin) + (sEffectPositions[i][0] * cos) + step->dyna.actor.world.pos.x;
         pos.z = ((sEffectPositions[i][1] * cos) - (sEffectPositions[i][0] * sin)) + step->dyna.actor.world.pos.z;
-        func_80033480(play, &pos, 0.0f, 0, 150, 150, 0);
+        Actor_SpawnFloorDustCircle(play, &pos, 0.0f, 0, 150, 150, 0);
     }
 }
 

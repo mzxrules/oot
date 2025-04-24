@@ -1637,7 +1637,7 @@ void DemoEffect_UpdateDust(DemoEffect* this, PlayState* play) {
         accel.x = 0.0f;
         accel.y = 0.2f;
 
-        func_8002873C(play, &pos, &velocity, &accel, 300, 0, 30);
+        EffectSsDust_SpawnDirt5(play, &pos, &velocity, &accel, 300, 0, 30);
 
         this->dust.timer++;
     }
@@ -1697,13 +1697,13 @@ void DemoEffect_DrawJewel(Actor* thisx, PlayState* play2) {
             MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, "../z_demo_effect.c", 2597);
             MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_demo_effect.c", 2599);
             Gfx_SetupDL_25Xlu(play->state.gfxCtx);
-            func_8002ED80(&this->actor, play, 0);
+            Actor_DrawPlayEnvLookatHighlight_PolyXlu(&this->actor, play, 0);
             gDPSetPrimColor(POLY_XLU_DISP++, 0, 128, this->primXluColor[0], this->primXluColor[1],
                             this->primXluColor[2], 255);
             gDPSetEnvColor(POLY_XLU_DISP++, this->envXluColor[0], this->envXluColor[1], this->envXluColor[2], 255);
             gSPDisplayList(POLY_XLU_DISP++, this->jewelDisplayList);
             Gfx_SetupDL_25Opa(play->state.gfxCtx);
-            func_8002EBCC(&this->actor, play, 0);
+            Actor_DrawPlayEnvLookatHighlight_PolyOpa(&this->actor, play, 0);
             gDPSetPrimColor(POLY_OPA_DISP++, 0, 128, this->primOpaColor[0], this->primOpaColor[1],
                             this->primOpaColor[2], 255);
             gDPSetEnvColor(POLY_OPA_DISP++, this->envOpaColor[0], this->envOpaColor[1], this->envOpaColor[2], 255);
@@ -1810,7 +1810,7 @@ void DemoEffect_DrawGodLgt(Actor* thisx, PlayState* play) {
         MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, "../z_demo_effect.c", 2801);
         gSPDisplayList(POLY_XLU_DISP++, gGoldenGoddessAuraDL);
         Gfx_SetupDL_25Opa(play->state.gfxCtx);
-        func_8002EBCC(&this->actor, play, 0);
+        Actor_DrawPlayEnvLookatHighlight_PolyOpa(&this->actor, play, 0);
         Matrix_Pop();
 
         this->godLgt.rotation++;
@@ -1949,7 +1949,7 @@ void DemoEffect_DrawTriforceSpot(Actor* thisx, PlayState* play) {
             MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, "../z_demo_effect.c", 3042);
 
             if (this->triforceSpot.triforceSpotOpacity < 250) {
-                func_8002ED80(&this->actor, play, 0);
+                Actor_DrawPlayEnvLookatHighlight_PolyXlu(&this->actor, play, 0);
                 Gfx_SetupDL_25Xlu(play->state.gfxCtx);
                 gDPSetRenderMode(POLY_XLU_DISP++, G_RM_PASS, G_RM_AA_ZB_XLU_SURF2);
                 Matrix_RotateY(BINANG_TO_RAD(this->triforceSpot.rotation), MTXMODE_APPLY);
@@ -1960,7 +1960,7 @@ void DemoEffect_DrawTriforceSpot(Actor* thisx, PlayState* play) {
                 gDPSetEnvColor(POLY_XLU_DISP++, 170, 140, 0, 255);
                 gSPDisplayList(POLY_XLU_DISP++, gTriforceDL);
             } else {
-                func_8002EBCC(&this->actor, play, 0);
+                Actor_DrawPlayEnvLookatHighlight_PolyOpa(&this->actor, play, 0);
                 Gfx_SetupDL_25Opa(play->state.gfxCtx);
                 gDPSetRenderMode(POLY_OPA_DISP++, G_RM_PASS, G_RM_AA_ZB_OPA_SURF2);
                 Matrix_RotateY(BINANG_TO_RAD(this->triforceSpot.rotation), MTXMODE_APPLY);
@@ -1986,8 +1986,8 @@ void DemoEffect_DrawGetItem(Actor* thisx, PlayState* play) {
             this->getItem.isLoaded = 1;
             return;
         }
-        func_8002EBCC(thisx, play, 0);
-        func_8002ED80(thisx, play, 0);
+        Actor_DrawPlayEnvLookatHighlight_PolyOpa(thisx, play, 0);
+        Actor_DrawPlayEnvLookatHighlight_PolyXlu(thisx, play, 0);
         GetItem_Draw(play, this->getItem.drawId);
     }
 }

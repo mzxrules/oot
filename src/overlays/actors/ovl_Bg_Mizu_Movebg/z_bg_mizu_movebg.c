@@ -359,7 +359,7 @@ void BgMizuMovebg_UpdateHookshotPlatform(BgMizuMovebg* this, PlayState* play) {
     if (dist < this->dyna.actor.speed) {
         this->dyna.actor.speed = dist;
     }
-    func_80035844(&this->dyna.actor.world.pos, &waypoint, &this->dyna.actor.world.rot, 1);
+    Actor_GetSomeXYRot_80035844(&this->dyna.actor.world.pos, &waypoint, &this->dyna.actor.world.rot, 1);
     Actor_MoveXYZ(&this->dyna.actor);
     dx = waypoint.x - this->dyna.actor.world.pos.x;
     dy = waypoint.y - this->dyna.actor.world.pos.y;

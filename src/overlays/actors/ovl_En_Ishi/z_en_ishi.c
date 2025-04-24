@@ -242,7 +242,7 @@ void EnIshi_SpawnDustSmall(EnIshi* this, PlayState* play) {
         pos.y += 2.0f * this->actor.velocity.y;
         pos.z -= 2.0f * this->actor.velocity.z;
     }
-    func_80033480(play, &pos, 60.0f, 3, 0x50, 0x3C, 1);
+    Actor_SpawnFloorDustCircle(play, &pos, 60.0f, 3, 0x50, 0x3C, 1);
 }
 
 void EnIshi_SpawnDustLarge(EnIshi* this, PlayState* play) {
@@ -258,7 +258,7 @@ void EnIshi_SpawnDustLarge(EnIshi* this, PlayState* play) {
         pos.y += 2.0f * this->actor.velocity.y;
         pos.z -= 2.0f * this->actor.velocity.z;
     }
-    func_80033480(play, &pos, 140.0f, 0xA, 0xB4, 0x5A, 1);
+    Actor_SpawnFloorDustCircle(play, &pos, 140.0f, 0xA, 0xB4, 0x5A, 1);
 }
 
 void EnIshi_DropCollectible(EnIshi* this, PlayState* play) {

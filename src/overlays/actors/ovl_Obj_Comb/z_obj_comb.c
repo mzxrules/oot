@@ -135,7 +135,7 @@ void ObjComb_Break(ObjComb* this, PlayState* play) {
     pos.x = this->actor.world.pos.x;
     pos.y = this->actor.world.pos.y - 10.0f;
     pos.z = this->actor.world.pos.z;
-    func_80033480(play, &pos, 40.0f, 6, 70, 60, 1);
+    Actor_SpawnFloorDustCircle(play, &pos, 40.0f, 6, 70, 60, 1);
 }
 
 void ObjComb_ChooseItemDrop(ObjComb* this, PlayState* play) {

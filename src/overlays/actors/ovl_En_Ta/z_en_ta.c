@@ -458,7 +458,7 @@ void EnTa_RunWithAccelerationAndSfx(EnTa* this, PlayState* play) {
 
 void EnTa_RunAwayRunOutOfGate(EnTa* this, PlayState* play) {
     // Spawn dust particles
-    func_80033480(play, &this->actor.world.pos, 50.0f, 2, 250, 20, 1);
+    Actor_SpawnFloorDustCircle(play, &this->actor.world.pos, 50.0f, 2, 250, 20, 1);
     EnTa_RunWithAccelerationAndSfx(this, play);
 
     if (this->timer == 0) {
@@ -478,7 +478,7 @@ void EnTa_RunAwayTurnTowardsGate(EnTa* this, PlayState* play) {
 
 void EnTa_RunAwayRunWest(EnTa* this, PlayState* play) {
     // Spawn dust particles
-    func_80033480(play, &this->actor.world.pos, 50.0f, 2, 250, 20, 1);
+    Actor_SpawnFloorDustCircle(play, &this->actor.world.pos, 50.0f, 2, 250, 20, 1);
     EnTa_RunWithAccelerationAndSfx(this, play);
 
     if (this->timer == 0) {
@@ -499,7 +499,7 @@ void EnTa_RunAwayTurnWest(EnTa* this, PlayState* play) {
 
 void EnTa_RunAwayRunSouth(EnTa* this, PlayState* play) {
     // Spawn dust particles
-    func_80033480(play, &this->actor.world.pos, 50.0f, 2, 250, 20, 1);
+    Actor_SpawnFloorDustCircle(play, &this->actor.world.pos, 50.0f, 2, 250, 20, 1);
 
     EnTa_RunWithAccelerationAndSfx(this, play);
 

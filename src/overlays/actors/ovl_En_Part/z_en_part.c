@@ -217,7 +217,7 @@ void func_80ACE5C8(EnPart* this, PlayState* play) {
             this->timer = 1;
         }
 
-        func_80033480(play, &this->actor.world.pos, 0.0f, 1, 300, 150, 1);
+        Actor_SpawnFloorDustCircle(play, &this->actor.world.pos, 0.0f, 1, 300, 150, 1);
         velocity.x = Rand_CenteredFloat(16.0f);
         EffectSsHahen_Spawn(play, &this->actor.world.pos, &velocity, &accel, 20,
                             (s32)((Rand_ZeroOne() * 5.0f + 12.0f) * 2), -1, 10, NULL);
@@ -303,7 +303,7 @@ void EnPart_Draw(Actor* thisx, PlayState* play) {
     }
 
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
-    func_8002EBCC(thisx, play, 0);
+    Actor_DrawPlayEnvLookatHighlight_PolyOpa(thisx, play, 0);
 
     if (thisx->params == 5) {
         gSPSegment(POLY_OPA_DISP++, 0x08, func_80ACEAC0(play->state.gfxCtx, 245, 255, 205, 30, 35, 0));

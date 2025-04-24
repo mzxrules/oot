@@ -23,7 +23,7 @@
 #include "z64save.h"
 #include "z64skin_matrix.h"
 
-Vec3f D_801270A0 = { 0.0f, 0.0f, 0.0f };
+Vec3f scenePosition = { 0.0f, 0.0f, 0.0f };
 
 // unused
 Gfx D_801270B0[] = {
@@ -61,14 +61,14 @@ void Room_DrawNormal(PlayState* play, Room* room, u32 flags) {
     OPEN_DISPS(play->state.gfxCtx, "../z_room.c", 193);
 
     if (flags & ROOM_DRAW_OPA) {
-        func_800342EC(&D_801270A0, play);
+        Actor_SetRoomLights_PolyOpa(&scenePosition, play);
         gSPSegment(POLY_OPA_DISP++, 0x03, room->segment);
         func_80093C80(play);
         gSPMatrix(POLY_OPA_DISP++, &gIdentityMtx, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
     }
 
     if (flags & ROOM_DRAW_XLU) {
-        func_8003435C(&D_801270A0, play);
+        Actor_SetRoomLights_PolyXlu(&scenePosition, play);
         gSPSegment(POLY_XLU_DISP++, 0x03, room->segment);
         Gfx_SetupDL_25Xlu(play->state.gfxCtx);
         gSPMatrix(POLY_XLU_DISP++, &gIdentityMtx, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
@@ -135,7 +135,7 @@ void Room_DrawCullable(PlayState* play, Room* room, u32 flags) {
     OPEN_DISPS(play->state.gfxCtx, "../z_room.c", 287);
 
     if (flags & ROOM_DRAW_OPA) {
-        func_800342EC(&D_801270A0, play);
+        Actor_SetRoomLights_PolyOpa(&scenePosition, play);
         gSPSegment(POLY_OPA_DISP++, 0x03, room->segment);
         func_80093C80(play);
         gSPMatrix(POLY_OPA_DISP++, &gIdentityMtx, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
@@ -144,7 +144,7 @@ void Room_DrawCullable(PlayState* play, Room* room, u32 flags) {
     if (1) {}
 
     if (flags & ROOM_DRAW_XLU) {
-        func_8003435C(&D_801270A0, play);
+        Actor_SetRoomLights_PolyXlu(&scenePosition, play);
         gSPSegment(POLY_XLU_DISP++, 0x03, room->segment);
         Gfx_SetupDL_25Xlu(play->state.gfxCtx);
         gSPMatrix(POLY_XLU_DISP++, &gIdentityMtx, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);

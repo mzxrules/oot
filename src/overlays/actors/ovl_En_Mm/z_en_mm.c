@@ -472,7 +472,7 @@ void func_80AAE294(EnMm* this, PlayState* play) {
             dustPos.z = this->actor.world.pos.z;
 
             if (gSaveContext.gameMode != GAMEMODE_END_CREDITS) {
-                func_80033480(play, &dustPos, 50.0f, 2, 350, 20, 0);
+                Actor_SpawnFloorDustCircle(play, &dustPos, 50.0f, 2, 350, 20, 0);
             }
 
             if (this->collider.base.ocFlags2 & OC2_HIT_PLAYER) {

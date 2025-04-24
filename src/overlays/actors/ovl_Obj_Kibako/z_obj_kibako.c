@@ -151,7 +151,7 @@ void ObjKibako_AirBreak(ObjKibako* this, PlayState* play) {
         EffectSsKakera_Spawn(play, &pos, &velocity, breakPos, -200, phi_s0, 10, 10, 0, (Rand_ZeroOne() * 30.0f) + 10.0f,
                              0, 32, 60, KAKERA_COLOR_NONE, OBJECT_GAMEPLAY_DANGEON_KEEP, gSmallWoodenBoxFragmentDL);
     }
-    func_80033480(play, &this->actor.world.pos, 40.0f, 3, 50, 140, 1);
+    Actor_SpawnFloorDustCircle(play, &this->actor.world.pos, 40.0f, 3, 50, 140, 1);
 }
 
 void ObjKibako_WaterBreak(ObjKibako* this, PlayState* play) {

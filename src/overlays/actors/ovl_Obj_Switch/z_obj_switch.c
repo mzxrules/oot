@@ -446,7 +446,7 @@ void ObjSwitch_FloorPressInit(ObjSwitch* this) {
 
 void ObjSwitch_FloorPress(ObjSwitch* this, PlayState* play) {
     if (OBJSWITCH_SUBTYPE(&this->dyna.actor) == OBJSWITCH_SUBTYPE_HOLD_INVERTED || !this->cooldownOn ||
-        func_8005B198() == this->dyna.actor.category || this->cooldownTimer <= 0) {
+        Camera_GetTargetActorCategory() == this->dyna.actor.category || this->cooldownTimer <= 0) {
         this->dyna.actor.scale.y -= 99.0f / 2000.0f;
         if (this->dyna.actor.scale.y <= 33.0f / 2000.0f) {
             ObjSwitch_FloorDownInit(this);
@@ -505,7 +505,7 @@ void ObjSwitch_FloorRelease(ObjSwitch* this, PlayState* play) {
     s16 subType = OBJSWITCH_SUBTYPE(&this->dyna.actor);
 
     if (((subType != OBJSWITCH_SUBTYPE_TOGGLE) && (subType != OBJSWITCH_SUBTYPE_HOLD_INVERTED)) || !this->cooldownOn ||
-        func_8005B198() == this->dyna.actor.category || this->cooldownTimer <= 0) {
+        Camera_GetTargetActorCategory() == this->dyna.actor.category || this->cooldownTimer <= 0) {
 
         this->dyna.actor.scale.y += 99.0f / 2000.0f;
         if (this->dyna.actor.scale.y >= 33.0f / 200.0f) {
@@ -565,7 +565,7 @@ void ObjSwitch_EyeClosingInit(ObjSwitch* this) {
 }
 
 void ObjSwitch_EyeClosing(ObjSwitch* this, PlayState* play) {
-    if (!this->cooldownOn || func_8005B198() == this->dyna.actor.category || this->cooldownTimer <= 0) {
+    if (!this->cooldownOn || Camera_GetTargetActorCategory() == this->dyna.actor.category || this->cooldownTimer <= 0) {
         this->eyeTexIndex++;
         if (this->eyeTexIndex >= 3) {
             ObjSwitch_EyeClosedInit(this);
@@ -605,7 +605,7 @@ void ObjSwitch_EyeOpeningInit(ObjSwitch* this) {
 
 void ObjSwitch_EyeOpening(ObjSwitch* this, PlayState* play) {
     if (OBJSWITCH_SUBTYPE(&this->dyna.actor) != OBJSWITCH_SUBTYPE_TOGGLE || !this->cooldownOn ||
-        func_8005B198() == this->dyna.actor.category || this->cooldownTimer <= 0) {
+        Camera_GetTargetActorCategory() == this->dyna.actor.category || this->cooldownTimer <= 0) {
 
         this->eyeTexIndex--;
         if (this->eyeTexIndex <= 0) {
@@ -661,7 +661,7 @@ void ObjSwitch_CrystalTurnOnInit(ObjSwitch* this) {
 }
 
 void ObjSwitch_CrystalTurnOn(ObjSwitch* this, PlayState* play) {
-    if (!this->cooldownOn || func_8005B198() == this->dyna.actor.category || this->cooldownTimer <= 0) {
+    if (!this->cooldownOn || Camera_GetTargetActorCategory() == this->dyna.actor.category || this->cooldownTimer <= 0) {
         ObjSwitch_CrystalOnInit(this);
         if (OBJSWITCH_SUBTYPE(&this->dyna.actor) == OBJSWITCH_SUBTYPE_TOGGLE) {
             ObjSwitch_UpdateTwoTexScrollXY(this);
@@ -706,7 +706,7 @@ void ObjSwitch_CrystalTurnOffInit(ObjSwitch* this) {
 
 void ObjSwitch_CrystalTurnOff(ObjSwitch* this, PlayState* play) {
     if (OBJSWITCH_SUBTYPE(&this->dyna.actor) != OBJSWITCH_SUBTYPE_TOGGLE || !this->cooldownOn ||
-        func_8005B198() == this->dyna.actor.category || this->cooldownTimer <= 0) {
+        Camera_GetTargetActorCategory() == this->dyna.actor.category || this->cooldownTimer <= 0) {
         ObjSwitch_CrystalOffInit(this);
         ObjSwitch_UpdateTwoTexScrollXY(this);
         Actor_PlaySfx(&this->dyna.actor, NA_SE_EV_DIAMOND_SWITCH);
@@ -810,7 +810,7 @@ void ObjSwitch_DrawCrystal(Actor* thisx, PlayState* play) {
     s32 pad;
     s32 subType = OBJSWITCH_SUBTYPE(&this->dyna.actor);
 
-    func_8002ED80(&this->dyna.actor, play, 0);
+    Actor_DrawPlayEnvLookatHighlight_PolyXlu(&this->dyna.actor, play, 0);
 
     OPEN_DISPS(play->state.gfxCtx, "../z_obj_switch.c", 1494);
 

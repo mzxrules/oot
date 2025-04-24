@@ -293,7 +293,7 @@ void DemoIk_Type1Draw(DemoIk* this, PlayState* play) {
     SkelAnime* skelAnime = &this->skelAnime;
 
     OPEN_DISPS(gfxCtx, "../z_demo_ik_inArmer.c", 422);
-    func_8002EBCC(&this->actor, play, 0);
+    Actor_DrawPlayEnvLookatHighlight_PolyOpa(&this->actor, play, 0);
     Gfx_SetupDL_25Opa(gfxCtx);
     Gfx_SetupDL_25Xlu(gfxCtx);
     gSPSegment(POLY_OPA_DISP++, 0x08, DemoIk_SetColors(gfxCtx, 245, 225, 155, 30, 30, 0));
@@ -456,7 +456,7 @@ void DemoIk_Type2Draw(DemoIk* this, PlayState* play) {
     SkelAnime* skelAnime = &this->skelAnime;
 
     OPEN_DISPS(gfxCtx, "../z_demo_ik_inFace.c", 318);
-    func_8002EBCC(&this->actor, play, 0);
+    Actor_DrawPlayEnvLookatHighlight_PolyOpa(&this->actor, play, 0);
     Gfx_SetupDL_25Opa(gfxCtx);
     Gfx_SetupDL_25Xlu(gfxCtx);
     gSPSegment(POLY_OPA_DISP++, 0x08, DemoIk_SetColors(gfxCtx, 245, 225, 155, 30, 30, 0));

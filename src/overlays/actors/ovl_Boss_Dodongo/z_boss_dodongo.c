@@ -813,7 +813,7 @@ void BossDodongo_Roll(BossDodongo* this, PlayState* play) {
             sp50.x = this->actor.world.pos.x;
             sp50.y = this->actor.world.pos.y + 60.0f;
             sp50.z = this->actor.world.pos.z;
-            func_80033480(play, &sp50, 250.0f, 40, 800, 10, 0);
+            Actor_SpawnFloorDustCircle(play, &sp50, 250.0f, 40, 800, 10, 0);
             Actor_RequestQuakeAndRumble(&this->actor, play, 6, 15);
         } else {
             this->actor.velocity.y = 15.0f;
@@ -1447,7 +1447,7 @@ void BossDodongo_DeathCutscene(BossDodongo* this, PlayState* play) {
                     dustPos.x = this->actor.world.pos.x;
                     dustPos.y = this->actor.world.pos.y + 60.0f;
                     dustPos.z = this->actor.world.pos.z;
-                    func_80033480(play, &dustPos, 250.0f, 0x28, 0x320, 0xA, 0);
+                    Actor_SpawnFloorDustCircle(play, &dustPos, 250.0f, 0x28, 0x320, 0xA, 0);
                 }
             }
             break;

@@ -4954,8 +4954,8 @@ s32 func_808382DC(Player* this, PlayState* play) {
                 s32 sp48 = func_80838144(sFloorType);
 
                 if (((this->actor.wallPoly != NULL) &&
-                     func_80042108(&play->colCtx, this->actor.wallPoly, this->actor.wallBgId)) ||
-                    ((sp48 >= 0) && func_80042108(&play->colCtx, this->actor.floorPoly, this->actor.floorBgId) &&
+                     SurfaceType_Get1_08000000(&play->colCtx, this->actor.wallPoly, this->actor.wallBgId)) ||
+                    ((sp48 >= 0) && SurfaceType_Get1_08000000(&play->colCtx, this->actor.floorPoly, this->actor.floorBgId) &&
                      (this->floorTypeTimer >= D_808544F4[sp48])) ||
                     ((sp48 >= 0) &&
                      ((this->currentTunic != PLAYER_TUNIC_GORON) || (this->floorTypeTimer >= D_808544F4[sp48])))) {
@@ -8925,10 +8925,10 @@ s32 func_8084269C(PlayState* play, Player* this) {
     if ((this->floorSfxOffset == SURFACE_SFX_OFFSET_DIRT) || (this->floorSfxOffset == SURFACE_SFX_OFFSET_SAND)) {
         func_8084260C(&this->actor.shape.feetPos[FOOT_LEFT], &sp2C,
                       this->actor.floorHeight - this->actor.shape.feetPos[FOOT_LEFT].y, 7.0f, 5.0f);
-        func_800286CC(play, &sp2C, &D_808545B4, &D_808545C0, 50, 30);
+        EffectSsDust_SpawnDirt4(play, &sp2C, &D_808545B4, &D_808545C0, 50, 30);
         func_8084260C(&this->actor.shape.feetPos[FOOT_RIGHT], &sp2C,
                       this->actor.floorHeight - this->actor.shape.feetPos[FOOT_RIGHT].y, 7.0f, 5.0f);
-        func_800286CC(play, &this->actor.shape.feetPos[FOOT_RIGHT], &D_808545B4, &D_808545C0, 50, 30);
+        EffectSsDust_SpawnDirt4(play, &this->actor.shape.feetPos[FOOT_RIGHT], &D_808545B4, &D_808545C0, 50, 30);
         return 1;
     }
 
@@ -9091,7 +9091,7 @@ s32 func_80842DF4(PlayState* play, Player* this) {
                                                 true, false, false, true, &bgId) &&
                         !SurfaceType_IsIgnoredByEntities(&play->colCtx, groundPoly, bgId) &&
                         (SurfaceType_GetFloorType(&play->colCtx, groundPoly, bgId) != FLOOR_TYPE_6) &&
-                        (func_8002F9EC(play, &this->actor, groundPoly, bgId, &sp5C) == 0)) {
+                        (Actor_HitJabuJabuSurface(play, &this->actor, groundPoly, bgId, &sp5C) == 0)) {
 
                         if (this->heldItemAction == PLAYER_IA_HAMMER) {
                             func_80832630(play);
@@ -9442,7 +9442,7 @@ void Player_Action_80843CEC(Player* this, PlayState* play) {
     if (this->currentTunic != PLAYER_TUNIC_GORON) {
         if ((play->roomCtx.curRoom.environmentType == ROOM_ENV_HOT) || (sFloorType == FLOOR_TYPE_9) ||
             ((func_80838144(sFloorType) >= 0) &&
-             !func_80042108(&play->colCtx, this->actor.floorPoly, this->actor.floorBgId))) {
+             !SurfaceType_Get1_08000000(&play->colCtx, this->actor.floorPoly, this->actor.floorBgId))) {
             func_8083821C(this);
         }
     }
@@ -12276,8 +12276,8 @@ void Player_Draw(Actor* thisx, PlayState* play2) {
                                         4000 - (s32)(Math_CosS(this->damageFlickerAnimCounter * 256) * 2000.0f));
         }
 
-        func_8002EBCC(&this->actor, play, 0);
-        func_8002ED80(&this->actor, play, 0);
+        Actor_DrawPlayEnvLookatHighlight_PolyOpa(&this->actor, play, 0);
+        Actor_DrawPlayEnvLookatHighlight_PolyXlu(&this->actor, play, 0);
 
         if (this->unk_6AD != 0) {
             Vec3f projectedHeadPos;

@@ -3209,7 +3209,7 @@ void BossSst_DrawEffects(Actor* thisx, PlayState* play) {
             for (i = 0; i < 18; i++) {
                 effect = &this->effects[i];
                 if (effect->move) {
-                    func_8003435C(&effect->pos, play2);
+                    Actor_SetRoomLights_PolyXlu(&effect->pos, play2);
                     if (this->effects[0].status != 0) {
                         Matrix_Translate(effect->pos.x, effect->pos.y, effect->pos.z, MTXMODE_NEW);
                     } else {

@@ -396,7 +396,7 @@ void func_8096A630(DemoDu* this, PlayState* play) {
     Vec3f pos = this->actor.world.pos;
 
     pos.y += kREG(5);
-    func_80033480(play, &pos, kREG(1) + 100.0f, kREG(2) + 10, kREG(3) + 300, kREG(4), 0);
+    Actor_SpawnFloorDustCircle(play, &pos, kREG(1) + 100.0f, kREG(2) + 10, kREG(3) + 300, kREG(4), 0);
     DemoDu_CsPlaySfx_GoronLanding(this);
 }
 

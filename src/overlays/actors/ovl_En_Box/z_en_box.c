@@ -242,7 +242,7 @@ void EnBox_SpawnDust(EnBox* this, PlayState* play) {
 
     for (i = 0; i < 20; i++) {
         EnBox_RandomDustKinematic(this, &pos, &velocity, &accel);
-        func_8002873C(play, &pos, &velocity, &accel, 100, 30, 15);
+        EffectSsDust_SpawnDirt5(play, &pos, &velocity, &accel, 100, 30, 15);
     }
 }
 
@@ -377,7 +377,7 @@ void EnBox_AppearOnRoomClear(EnBox* this, PlayState* play) {
  * The chest is ready to appear, possibly waiting for camera/cutscene-related stuff to happen
  */
 void EnBox_AppearInit(EnBox* this, PlayState* play) {
-    if (func_8005B198() == this->dyna.actor.category || this->unk_1A8 != 0) {
+    if (Camera_GetTargetActorCategory() == this->dyna.actor.category || this->unk_1A8 != 0) {
         EnBox_SetupAction(this, EnBox_AppearAnimation);
         this->unk_1A8 = 0;
         Actor_Spawn(&play->actorCtx, play, ACTOR_DEMO_KANKYO, this->dyna.actor.home.pos.x, this->dyna.actor.home.pos.y,

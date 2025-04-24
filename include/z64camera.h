@@ -1650,7 +1650,7 @@ s32 Camera_Copy(Camera* dstCamera, Camera* srcCamera);
 Vec3f Camera_GetQuakeOffset(Camera* camera);
 void Camera_SetCameraData(Camera* camera, s16 setDataFlags, void* data0, void* data1, s16 data2, s16 data3,
                           UNK_TYPE arg6);
-s32 func_8005B198(void);
+s32 Camera_GetTargetActorCategory(void);
 s16 Camera_SetFinishedFlag(Camera* camera);
 
 #endif

@@ -4579,7 +4579,7 @@ void KaleidoScope_Update(PlayState* play) {
                     R_UPDATE_RATE = 3;
                     R_PAUSE_BG_PRERENDER_STATE = PAUSE_BG_PRERENDER_OFF;
                     func_800981B8(&play->objectCtx);
-                    func_800418D0(&play->colCtx, play);
+                    CollisionHeader_InitializeAll(&play->colCtx, play);
                     if (pauseCtx->promptChoice == 0) {
                         Play_TriggerRespawn(play);
                         gSaveContext.respawnFlag = -2;
@@ -4640,7 +4640,7 @@ void KaleidoScope_Update(PlayState* play) {
             R_PAUSE_BG_PRERENDER_STATE = PAUSE_BG_PRERENDER_OFF;
 
             func_800981B8(&play->objectCtx);
-            func_800418D0(&play->colCtx, play);
+            CollisionHeader_InitializeAll(&play->colCtx, play);
 
             switch (play->sceneId) {
                 case SCENE_DEKU_TREE:

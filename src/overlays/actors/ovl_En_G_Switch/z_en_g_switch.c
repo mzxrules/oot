@@ -421,7 +421,7 @@ void EnGSwitch_ArcheryPot(EnGSwitch* this, PlayState* play) {
             EffectSsKakera_Spawn(play, &pos, &vel, thisPos, -240, phi_s0, 10, 10, 0, scale, 0, 0x20, 60,
                                  KAKERA_COLOR_NONE, OBJECT_TSUBO, object_tsubo_DL_001960);
         }
-        func_80033480(play, thisPos, 30.0f, 4, 20, 50, 0);
+        Actor_SpawnFloorDustCircle(play, thisPos, 30.0f, 4, 20, 50, 0);
         SfxSource_PlaySfxAtFixedWorldPos(play, thisPos, 40, NA_SE_EV_POT_BROKEN);
         EnGSwitch_Break(this, play);
         this->killTimer = 50;
@@ -498,7 +498,7 @@ void EnGSwitch_DrawRupee(Actor* thisx, PlayState* play) {
     if (!this->broken) {
         OPEN_DISPS(play->state.gfxCtx, "../z_en_g_switch.c", 951);
         Gfx_SetupDL_25Opa(play->state.gfxCtx);
-        func_8002EBCC(&this->actor, play, 0);
+        Actor_DrawPlayEnvLookatHighlight_PolyOpa(&this->actor, play, 0);
         MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_en_g_switch.c", 957);
         gSPSegment(POLY_OPA_DISP++, 0x08, SEGMENTED_TO_VIRTUAL(sRupeeTextures[this->colorIdx]));
         gSPDisplayList(POLY_OPA_DISP++, gRupeeDL);

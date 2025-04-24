@@ -476,7 +476,7 @@ void BgIceShelter_Draw(Actor* thisx, PlayState* play2) {
         case RED_ICE_SMALL:
         case RED_ICE_PLATFORM:
         case RED_ICE_KING_ZORA:
-            func_8002ED80(&this->dyna.actor, play, 0);
+            Actor_DrawPlayEnvLookatHighlight_PolyXlu(&this->dyna.actor, play, 0);
             break;
     }
 

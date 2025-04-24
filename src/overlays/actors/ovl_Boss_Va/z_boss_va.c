@@ -2516,7 +2516,7 @@ void BossVa_BariIntro(BossVa* this, PlayState* play) {
             if (this->timer == 0) {
                 this->timer2 = 0;
             } else {
-                func_80035844(&GET_BODY(this)->actor.world.pos, &this->actor.world.pos, &this->actor.world.rot, false);
+                Actor_GetSomeXYRot_80035844(&GET_BODY(this)->actor.world.pos, &this->actor.world.pos, &this->actor.world.rot, false);
                 this->unk_1A0 = Math_Vec3f_DistXYZ(&GET_BODY(this)->actor.world.pos, &this->actor.world.pos);
                 if (sp50 > 30.0f) {
                     BossVa_Spark(play, this, 1, 80, 15.0f, 0.0f, SPARK_BARI, 1.0f, true);
@@ -3093,7 +3093,7 @@ void BossVa_ZapperPostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3
             Matrix_MultVec3f(&sp70, &this->effectPos[3]);
             sp70.x = 20.0f;
             Matrix_MultVec3f(&sp70, &this->effectPos[9]);
-            func_80035844(&this->effectPos[9], &this->unk_1D8, &this->headRot, false);
+            Actor_GetSomeXYRot_80035844(&this->effectPos[9], &this->unk_1D8, &this->headRot, false);
             sp3E = this->headRot.x;
             sp3C = this->headRot.y;
             Matrix_Push();

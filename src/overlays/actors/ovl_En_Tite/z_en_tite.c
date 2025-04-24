@@ -372,10 +372,10 @@ void EnTite_Attack(EnTite* this, PlayState* play) {
             // Generate sparkles at feet upon landing, set jumping animation and attack collider and check if hit player
             if (this->actor.velocity.y >= 5.0f) {
                 if (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) {
-                    func_800355B8(play, &this->frontLeftFootPos);
-                    func_800355B8(play, &this->frontRightFootPos);
-                    func_800355B8(play, &this->backRightFootPos);
-                    func_800355B8(play, &this->backLeftFootPos);
+                    Actor_SpawnSmallBrownSparkles2(play, &this->frontLeftFootPos);
+                    Actor_SpawnSmallBrownSparkles2(play, &this->frontRightFootPos);
+                    Actor_SpawnSmallBrownSparkles2(play, &this->backRightFootPos);
+                    Actor_SpawnSmallBrownSparkles2(play, &this->backLeftFootPos);
                 }
             }
             if (!(this->collider.base.atFlags & AT_HIT) && (this->actor.flags & ACTOR_FLAG_INSIDE_CULLING_VOLUME)) {
@@ -409,10 +409,10 @@ void EnTite_Attack(EnTite* this, PlayState* play) {
     // Create ripples on water surface where tektite feet landed
     if (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND_TOUCH) {
         if (!(this->actor.bgCheckFlags & BGCHECKFLAG_WATER)) {
-            func_80033480(play, &this->frontLeftFootPos, 1.0f, 2, 80, 15, 1);
-            func_80033480(play, &this->frontRightFootPos, 1.0f, 2, 80, 15, 1);
-            func_80033480(play, &this->backRightFootPos, 1.0f, 2, 80, 15, 1);
-            func_80033480(play, &this->backLeftFootPos, 1.0f, 2, 80, 15, 1);
+            Actor_SpawnFloorDustCircle(play, &this->frontLeftFootPos, 1.0f, 2, 80, 15, 1);
+            Actor_SpawnFloorDustCircle(play, &this->frontRightFootPos, 1.0f, 2, 80, 15, 1);
+            Actor_SpawnFloorDustCircle(play, &this->backRightFootPos, 1.0f, 2, 80, 15, 1);
+            Actor_SpawnFloorDustCircle(play, &this->backLeftFootPos, 1.0f, 2, 80, 15, 1);
         }
     }
     // if landed, kill XZ speed and play appropriate sound effect
@@ -526,10 +526,10 @@ void EnTite_MoveTowardPlayer(EnTite* this, PlayState* play) {
 
     if (this->actor.bgCheckFlags & (BGCHECKFLAG_GROUND_TOUCH | BGCHECKFLAG_WATER_TOUCH)) {
         if (!(this->actor.bgCheckFlags & BGCHECKFLAG_WATER_TOUCH)) {
-            func_80033480(play, &this->frontLeftFootPos, 1.0f, 2, 80, 15, 1);
-            func_80033480(play, &this->frontRightFootPos, 1.0f, 2, 80, 15, 1);
-            func_80033480(play, &this->backRightFootPos, 1.0f, 2, 80, 15, 1);
-            func_80033480(play, &this->backLeftFootPos, 1.0f, 2, 80, 15, 1);
+            Actor_SpawnFloorDustCircle(play, &this->frontLeftFootPos, 1.0f, 2, 80, 15, 1);
+            Actor_SpawnFloorDustCircle(play, &this->frontRightFootPos, 1.0f, 2, 80, 15, 1);
+            Actor_SpawnFloorDustCircle(play, &this->backRightFootPos, 1.0f, 2, 80, 15, 1);
+            Actor_SpawnFloorDustCircle(play, &this->backLeftFootPos, 1.0f, 2, 80, 15, 1);
             Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_M_GND);
         } else {
             Actor_PlaySfx(&this->actor, NA_SE_EN_TEKU_LAND_WATER);
@@ -611,10 +611,10 @@ void EnTite_MoveTowardPlayer(EnTite* this, PlayState* play) {
         Math_SmoothStepToS(&this->actor.shape.rot.y, this->actor.yawTowardsPlayer, 1, 1000, 0);
         if (this->actor.velocity.y >= 6.0f) {
             if (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND) {
-                func_800355B8(play, &this->frontLeftFootPos);
-                func_800355B8(play, &this->frontRightFootPos);
-                func_800355B8(play, &this->backRightFootPos);
-                func_800355B8(play, &this->backLeftFootPos);
+                Actor_SpawnSmallBrownSparkles2(play, &this->frontLeftFootPos);
+                Actor_SpawnSmallBrownSparkles2(play, &this->frontRightFootPos);
+                Actor_SpawnSmallBrownSparkles2(play, &this->backRightFootPos);
+                Actor_SpawnSmallBrownSparkles2(play, &this->backLeftFootPos);
             }
         }
     }
@@ -654,10 +654,10 @@ void EnTite_Recoil(EnTite* this, PlayState* play) {
     // play sound effect and generate ripples
     if (this->actor.bgCheckFlags & (BGCHECKFLAG_GROUND_TOUCH | BGCHECKFLAG_WATER_TOUCH)) {
         if (!(this->actor.bgCheckFlags & BGCHECKFLAG_WATER_TOUCH)) {
-            func_80033480(play, &this->frontLeftFootPos, 1.0f, 2, 80, 15, 1);
-            func_80033480(play, &this->frontRightFootPos, 1.0f, 2, 80, 15, 1);
-            func_80033480(play, &this->backRightFootPos, 1.0f, 2, 80, 15, 1);
-            func_80033480(play, &this->backLeftFootPos, 1.0f, 2, 80, 15, 1);
+            Actor_SpawnFloorDustCircle(play, &this->frontLeftFootPos, 1.0f, 2, 80, 15, 1);
+            Actor_SpawnFloorDustCircle(play, &this->frontRightFootPos, 1.0f, 2, 80, 15, 1);
+            Actor_SpawnFloorDustCircle(play, &this->backRightFootPos, 1.0f, 2, 80, 15, 1);
+            Actor_SpawnFloorDustCircle(play, &this->backLeftFootPos, 1.0f, 2, 80, 15, 1);
             Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_M_GND);
         } else {
             this->actor.bgCheckFlags &= ~BGCHECKFLAG_WATER_TOUCH;
@@ -724,10 +724,10 @@ void EnTite_Stunned(EnTite* this, PlayState* play) {
     // Play sound effect and spawn dirt effects upon landing
     if (this->actor.bgCheckFlags & (BGCHECKFLAG_GROUND_TOUCH | BGCHECKFLAG_WATER_TOUCH)) {
         if (!(this->actor.bgCheckFlags & BGCHECKFLAG_WATER_TOUCH)) {
-            func_80033480(play, &this->frontLeftFootPos, 1.0f, 2, 80, 15, 1);
-            func_80033480(play, &this->frontRightFootPos, 1.0f, 2, 80, 15, 1);
-            func_80033480(play, &this->backRightFootPos, 1.0f, 2, 80, 15, 1);
-            func_80033480(play, &this->backLeftFootPos, 1.0f, 2, 80, 15, 1);
+            Actor_SpawnFloorDustCircle(play, &this->frontLeftFootPos, 1.0f, 2, 80, 15, 1);
+            Actor_SpawnFloorDustCircle(play, &this->frontRightFootPos, 1.0f, 2, 80, 15, 1);
+            Actor_SpawnFloorDustCircle(play, &this->backRightFootPos, 1.0f, 2, 80, 15, 1);
+            Actor_SpawnFloorDustCircle(play, &this->backLeftFootPos, 1.0f, 2, 80, 15, 1);
             Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_M_GND);
         } else {
             this->actor.bgCheckFlags &= ~BGCHECKFLAG_WATER_TOUCH;
@@ -848,10 +848,10 @@ void EnTite_FlipUpright(EnTite* this, PlayState* play) {
     SkelAnime_Update(&this->skelAnime);
     //! @bug flying tektite: the following condition is never met and tektite stays stuck in this action forever
     if (this->actor.bgCheckFlags & BGCHECKFLAG_GROUND_TOUCH) {
-        func_80033480(play, &this->frontLeftFootPos, 1.0f, 2, 80, 15, 1);
-        func_80033480(play, &this->frontRightFootPos, 1.0f, 2, 80, 15, 1);
-        func_80033480(play, &this->backRightFootPos, 1.0f, 2, 80, 15, 1);
-        func_80033480(play, &this->backLeftFootPos, 1.0f, 2, 80, 15, 1);
+        Actor_SpawnFloorDustCircle(play, &this->frontLeftFootPos, 1.0f, 2, 80, 15, 1);
+        Actor_SpawnFloorDustCircle(play, &this->frontRightFootPos, 1.0f, 2, 80, 15, 1);
+        Actor_SpawnFloorDustCircle(play, &this->backRightFootPos, 1.0f, 2, 80, 15, 1);
+        Actor_SpawnFloorDustCircle(play, &this->backLeftFootPos, 1.0f, 2, 80, 15, 1);
         this->actor.shape.yOffset = 0.0f;
         this->actor.world.pos.y = this->actor.floorHeight;
         Actor_PlaySfx(&this->actor, NA_SE_EN_DODO_M_GND);

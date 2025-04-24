@@ -263,7 +263,7 @@ void Play_Destroy(GameState* thisx) {
         Player_SetEquipmentData(this, player);
     }
 
-    func_80031C3C(&this->actorCtx, this);
+    Actor_CleanupContext(&this->actorCtx, this);
     Interface_Destroy(this);
     KaleidoScopeCall_Destroy(this);
     KaleidoManager_Destroy();

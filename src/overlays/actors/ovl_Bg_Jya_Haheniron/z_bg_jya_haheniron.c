@@ -120,7 +120,7 @@ void BgJyaHaheniron_SpawnFragments(PlayState* play, Vec3f* vec1, Vec3f* vec2) {
     pos.x = vec1->x + (vec2->x * 5.0f);
     pos.y = vec1->y + (vec2->y * 5.0f);
     pos.z = vec1->z + (vec2->z * 5.0f);
-    func_80033480(play, &pos, 100.0f, 4, 100, 160, 1);
+    Actor_SpawnFloorDustCircle(play, &pos, 100.0f, 4, 100, 160, 1);
 }
 
 void BgJyaHaheniron_Init(Actor* thisx, PlayState* play) {

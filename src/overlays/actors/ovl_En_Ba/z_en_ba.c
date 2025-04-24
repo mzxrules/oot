@@ -175,12 +175,12 @@ void EnBa_Idle(EnBa* this, PlayState* play) {
     this->unk_2FC.z += this->unk_308.y;
     func_80033AEC(&this->unk_2FC, &this->unk_158[13], 1.0f, this->actor.speed, 0.0f, 0.0f);
     for (i = 12; i >= 0; i--) {
-        func_80035844(&this->unk_158[i + 1], &this->unk_158[i], &sp5C, 0);
+        Actor_GetSomeXYRot_80035844(&this->unk_158[i + 1], &this->unk_158[i], &sp5C, 0);
         Matrix_Translate(this->unk_158[i + 1].x, this->unk_158[i + 1].y, this->unk_158[i + 1].z, MTXMODE_NEW);
         Matrix_RotateZYX(sp5C.x, sp5C.y, 0, MTXMODE_APPLY);
         Matrix_MultVec3f(&D_809B8080, &this->unk_158[i]);
     }
-    func_80035844(&this->unk_158[0], &this->unk_2FC, &sp5C, 0);
+    Actor_GetSomeXYRot_80035844(&this->unk_158[0], &this->unk_2FC, &sp5C, 0);
     Matrix_Translate(this->actor.world.pos.x, this->actor.world.pos.y, this->actor.world.pos.z, MTXMODE_NEW);
     Math_SmoothStepToS(&this->actor.shape.rot.y, this->unk_2A8[0].y, 3, this->unk_31C, 182);
     Math_SmoothStepToS(&this->actor.shape.rot.x, this->unk_2A8[0].x, 3, this->unk_31C, 182);
@@ -266,7 +266,7 @@ void EnBa_SwingAtPlayer(EnBa* this, PlayState* play) {
                 phi_fp = Math_Vec3f_Yaw(&this->actor.world.pos, &this->unk_2FC);
             }
             Math_SmoothStepToS(&this->unk_31C, 1500, 1, 30, 0);
-            func_80035844(&this->actor.world.pos, &this->unk_158[0], &sp58, 0);
+            Actor_GetSomeXYRot_80035844(&this->actor.world.pos, &this->unk_158[0], &sp58, 0);
             Math_SmoothStepToS(&this->actor.shape.rot.y, sp58.y, 1, this->unk_31C, 0);
             Math_SmoothStepToS(&this->actor.shape.rot.x, (sp58.x + 0x8000), 1, this->unk_31C, 0);
             Matrix_Translate(this->actor.world.pos.x, this->actor.world.pos.y, this->actor.world.pos.z, MTXMODE_NEW);
@@ -367,12 +367,12 @@ void EnBa_RecoilFromDamage(EnBa* this, PlayState* play) {
     this->unk_2FC.z += this->unk_308.y;
     func_80033AEC(&this->unk_2FC, &this->unk_158[13], 1.0f, this->actor.speed, 0.0f, 0.0f);
     for (i = 12; i >= 0; i--) {
-        func_80035844(&this->unk_158[i + 1], &this->unk_158[i], &sp6C, 0);
+        Actor_GetSomeXYRot_80035844(&this->unk_158[i + 1], &this->unk_158[i], &sp6C, 0);
         Matrix_Translate(this->unk_158[i + 1].x, this->unk_158[i + 1].y, this->unk_158[i + 1].z, MTXMODE_NEW);
         Matrix_RotateZYX(sp6C.x, sp6C.y, 0, MTXMODE_APPLY);
         Matrix_MultVec3f(&D_809B8080, &this->unk_158[i]);
     }
-    func_80035844(&this->actor.world.pos, &this->unk_158[0], &sp6C, 0);
+    Actor_GetSomeXYRot_80035844(&this->actor.world.pos, &this->unk_158[0], &sp6C, 0);
     Matrix_Translate(this->actor.world.pos.x, this->actor.world.pos.y, this->actor.world.pos.z, MTXMODE_NEW);
     Math_SmoothStepToS(&this->actor.shape.rot.y, sp6C.y, 3, this->unk_31C, 182);
     Math_SmoothStepToS(&this->actor.shape.rot.x, sp6C.x + 0x8000, 3, this->unk_31C, 182);
@@ -380,7 +380,7 @@ void EnBa_RecoilFromDamage(EnBa* this, PlayState* play) {
     Matrix_MultVec3f(&D_809B8080, &this->unk_158[0]);
 
     for (i = 0; i < 13; i++) {
-        func_80035844(&this->unk_158[i], &this->unk_158[i + 1], &sp6C, 0);
+        Actor_GetSomeXYRot_80035844(&this->unk_158[i], &this->unk_158[i + 1], &sp6C, 0);
         Matrix_Translate(this->unk_158[i].x, this->unk_158[i].y, this->unk_158[i].z, MTXMODE_NEW);
         Math_SmoothStepToS(&this->unk_2A8[i].y, sp6C.y, 3, this->unk_31C, 182);
         Math_SmoothStepToS(&this->unk_2A8[i].x, sp6C.x + 0x8000, 3, this->unk_31C, 182);

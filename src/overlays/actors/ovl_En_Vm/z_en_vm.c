@@ -437,7 +437,7 @@ void EnVm_Update(Actor* thisx, PlayState* play) {
 
     if (this->unk_260 == 4) {
         EffectSsDeadDs_SpawnStationary(play, &this->beamPos3, 20, -1, 255, 20);
-        func_80033480(play, &this->beamPos3, 6.0f, 1, 120, 20, 1);
+        Actor_SpawnFloorDustCircle(play, &this->beamPos3, 6.0f, 1, 120, 20, 1);
         Actor_PlaySfx(&this->actor, NA_SE_EN_BIMOS_LAZER_GND - SFX_FLAG);
     }
 

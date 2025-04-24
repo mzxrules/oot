@@ -205,7 +205,7 @@ void ObjIcePoly_Draw(Actor* thisx, PlayState* play) {
 
     OPEN_DISPS(play->state.gfxCtx, "../z_obj_ice_poly.c", 421);
     Gfx_SetupDL_25Xlu(play->state.gfxCtx);
-    func_8002ED80(&this->actor, play, 0);
+    Actor_DrawPlayEnvLookatHighlight_PolyXlu(&this->actor, play, 0);
     Matrix_RotateZYX(0x500, 0, -0x500, MTXMODE_APPLY);
 
     MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, "../z_obj_ice_poly.c", 428);

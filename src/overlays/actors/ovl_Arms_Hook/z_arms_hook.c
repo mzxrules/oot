@@ -291,7 +291,7 @@ void ArmsHook_Shoot(ArmsHook* this, PlayState* play) {
         sp60.z = this->unk_1F4.z - (this->unk_1E8.z - this->unk_1F4.z);
         if (BgCheck_EntityLineTest1(&play->colCtx, &sp60, &this->unk_1E8, &intersectPos, &poly, true, true, true, true,
                                     &bgId) &&
-            !func_8002F9EC(play, &this->actor, poly, bgId, &intersectPos)) {
+            !Actor_HitJabuJabuSurface(play, &this->actor, poly, bgId, &intersectPos)) {
             f32 polyNormalX = COLPOLY_GET_NORMAL(poly->normal.x);
             f32 polyNormalZ = COLPOLY_GET_NORMAL(poly->normal.z);
             s32 pad;
@@ -358,7 +358,7 @@ void ArmsHook_Draw(Actor* thisx, PlayState* play) {
             Matrix_MultVec3f(&D_80865BAC, &hookNewBase);
         }
 
-        func_80090480(play, &this->collider, &this->hookInfo, &hookNewTip, &hookNewBase);
+        PlayerLib_IsWeaponColliderUnk_80090480(play, &this->collider, &this->hookInfo, &hookNewTip, &hookNewBase);
         Gfx_SetupDL_25Opa(play->state.gfxCtx);
         MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_arms_hook.c", 895);
         gSPDisplayList(POLY_OPA_DISP++, gLinkAdultHookshotTipDL);

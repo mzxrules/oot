@@ -608,7 +608,7 @@ void EnWallmas_DrawXlu(EnWallmas* this, PlayState* play) {
     Gfx_SetupDL_44Xlu(play->state.gfxCtx);
     gDPSetPrimColor(POLY_XLU_DISP++, 0, 0, 0, 0, 0, 255);
 
-    func_80038A28(this->actor.floorPoly, this->actor.world.pos.x, this->actor.floorHeight, this->actor.world.pos.z,
+    CollisionPoly_GetGroundMtxF(this->actor.floorPoly, this->actor.world.pos.x, this->actor.floorHeight, this->actor.world.pos.z,
                   &mf);
     Matrix_Mult(&mf, MTXMODE_NEW);
 

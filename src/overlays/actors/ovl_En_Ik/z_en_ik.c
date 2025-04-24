@@ -1325,7 +1325,7 @@ void EnIk_CsDrawDefeat(EnIk* this, PlayState* play) {
 
     OPEN_DISPS(gfxCtx, "../z_en_ik_inAwake.c", 322);
 
-    func_8002EBCC(&this->actor, play, 0);
+    Actor_DrawPlayEnvLookatHighlight_PolyOpa(&this->actor, play, 0);
     Gfx_SetupDL_25Opa(gfxCtx);
     Gfx_SetupDL_25Xlu(gfxCtx);
     gSPSegment(POLY_OPA_DISP++, 0x08, EnIk_SetPrimEnvColors(gfxCtx, 245, 225, 155, 30, 30, 0));
@@ -1488,7 +1488,7 @@ void EnIk_CsDrawIntro(EnIk* this, PlayState* play) {
 
     OPEN_DISPS(gfxCtx, "../z_en_ik_inConfrontion.c", 630);
 
-    func_8002EBCC(&this->actor, play, 0);
+    Actor_DrawPlayEnvLookatHighlight_PolyOpa(&this->actor, play, 0);
     Gfx_SetupDL_25Opa(gfxCtx);
     Gfx_SetupDL_25Xlu(gfxCtx);
     gSPSegment(POLY_OPA_DISP++, 0x08, EnIk_SetPrimEnvColors(gfxCtx, 245, 225, 155, 30, 30, 0));

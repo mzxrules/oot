@@ -247,7 +247,7 @@ void BgDodoago_OpenJaw(BgDodoago* this, PlayState* play) {
             pos.x = dustOffsets[i].x + this->dyna.actor.world.pos.x;
             pos.y = dustOffsets[i].y + this->dyna.actor.world.pos.y;
             pos.z = dustOffsets[i].z + this->dyna.actor.world.pos.z;
-            func_80033480(play, &pos, 2.0f, 3, 200, 75, 1);
+            Actor_SpawnFloorDustCircle(play, &pos, 2.0f, 3, 200, 75, 1);
         }
     }
 

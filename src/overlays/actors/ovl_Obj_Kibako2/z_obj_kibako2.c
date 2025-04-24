@@ -109,7 +109,7 @@ void ObjKibako2_Break(ObjKibako2* this, PlayState* play) {
         EffectSsKakera_Spawn(play, &pos, &velocity, &pos, -200, phi_s0, 28, 2, 0, (Rand_ZeroOne() * 30.0f) + 5.0f, 0, 0,
                              70, KAKERA_COLOR_NONE, OBJECT_KIBAKO2, gLargeCrateFragmentDL);
     }
-    func_80033480(play, thisPos, 90.0f, 6, 100, 160, 1);
+    Actor_SpawnFloorDustCircle(play, thisPos, 90.0f, 6, 100, 160, 1);
 }
 
 void ObjKibako2_SpawnCollectible(ObjKibako2* this, PlayState* play) {
@@ -153,7 +153,7 @@ void ObjKibako2_Destroy(Actor* thisx, PlayState* play) {
 
 void ObjKibako2_Idle(ObjKibako2* this, PlayState* play) {
     if ((this->collider.base.acFlags & AC_HIT) || (this->dyna.actor.home.rot.z != 0) ||
-        func_80033684(play, &this->dyna.actor) != NULL) {
+        Actor_GetNearbyExplodingBomb(play, &this->dyna.actor) != NULL) {
         ObjKibako2_Break(this, play);
         SfxSource_PlaySfxAtFixedWorldPos(play, &this->dyna.actor.world.pos, 20, NA_SE_EV_WOODBOX_BREAK);
         this->dyna.actor.flags |= ACTOR_FLAG_UPDATE_CULLING_DISABLED;

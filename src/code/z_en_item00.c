@@ -31,9 +31,9 @@ void EnItem00_Destroy(Actor* thisx, PlayState* play);
 void EnItem00_Update(Actor* thisx, PlayState* play);
 void EnItem00_Draw(Actor* thisx, PlayState* play);
 
-void func_8001DFC8(EnItem00* this, PlayState* play);
-void func_8001E1C8(EnItem00* this, PlayState* play);
-void func_8001E304(EnItem00* this, PlayState* play);
+void EnItem00_actionfunc_8001DFC8(EnItem00* this, PlayState* play);
+void EnItem00_actionfunc_8001E1C8(EnItem00* this, PlayState* play);
+void EnItem00_actionfunc_8001E304(EnItem00* this, PlayState* play);
 void EnItem00_Collected(EnItem00* this, PlayState* play);
 
 void EnItem00_DrawRupee(EnItem00* this, PlayState* play);
@@ -522,7 +522,7 @@ void EnItem00_Init(Actor* thisx, PlayState* play) {
     this->getItemId = GI_NONE;
 
     if (!spawnParam8000) {
-        EnItem00_SetupAction(this, func_8001DFC8);
+        EnItem00_SetupAction(this, EnItem00_actionfunc_8001DFC8);
         this->despawnTimer = -1;
         return;
     }
@@ -614,7 +614,7 @@ void EnItem00_Destroy(Actor* thisx, PlayState* play) {
     Collider_DestroyCylinder(play, &this->collider);
 }
 
-void func_8001DFC8(EnItem00* this, PlayState* play) {
+void EnItem00_actionfunc_8001DFC8(EnItem00* this, PlayState* play) {
     if ((this->actor.params <= ITEM00_RUPEE_RED) ||
         ((this->actor.params == ITEM00_RECOVERY_HEART) && (this->despawnTimer < 0)) ||
         (this->actor.params == ITEM00_HEART_PIECE)) {
@@ -657,11 +657,11 @@ void func_8001DFC8(EnItem00* this, PlayState* play) {
     }
 
     if ((this->actor.gravity != 0.0f) && !(this->actor.bgCheckFlags & BGCHECKFLAG_GROUND)) {
-        EnItem00_SetupAction(this, func_8001E1C8);
+        EnItem00_SetupAction(this, EnItem00_actionfunc_8001E1C8);
     }
 }
 
-void func_8001E1C8(EnItem00* this, PlayState* play) {
+void EnItem00_actionfunc_8001E1C8(EnItem00* this, PlayState* play) {
     f32 originalVelocity;
     Vec3f effectPos;
 
@@ -680,7 +680,7 @@ void func_8001E1C8(EnItem00* this, PlayState* play) {
     if (this->actor.bgCheckFlags & (BGCHECKFLAG_GROUND | BGCHECKFLAG_GROUND_TOUCH)) {
         originalVelocity = this->actor.velocity.y;
         if (originalVelocity > -2.0f) {
-            EnItem00_SetupAction(this, func_8001DFC8);
+            EnItem00_SetupAction(this, EnItem00_actionfunc_8001DFC8);
             this->actor.velocity.y = 0.0f;
         } else {
             this->actor.velocity.y = originalVelocity * -0.8f;
@@ -689,7 +689,7 @@ void func_8001E1C8(EnItem00* this, PlayState* play) {
     }
 }
 
-void func_8001E304(EnItem00* this, PlayState* play) {
+void EnItem00_actionfunc_8001E304(EnItem00* this, PlayState* play) {
     s32 pad;
     Vec3f pos;
     s32 rotOffset;
@@ -736,7 +736,7 @@ void func_8001E304(EnItem00* this, PlayState* play) {
     }
 
     if (this->actor.bgCheckFlags & (BGCHECKFLAG_GROUND | BGCHECKFLAG_GROUND_TOUCH)) {
-        EnItem00_SetupAction(this, func_8001DFC8);
+        EnItem00_SetupAction(this, EnItem00_actionfunc_8001DFC8);
         this->actor.shape.rot.z = 0;
         this->actor.velocity.y = 0.0f;
         this->actor.speed = 0.0f;
@@ -1073,7 +1073,7 @@ void EnItem00_DrawRupee(EnItem00* this, PlayState* play) {
     OPEN_DISPS(play->state.gfxCtx, "../z_en_item00.c", 1546);
 
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
-    func_8002EBCC(&this->actor, play, 0);
+    Actor_DrawPlayEnvLookatHighlight_PolyOpa(&this->actor, play, 0);
 
     if (this->actor.params <= ITEM00_RUPEE_RED) {
         texIndex = this->actor.params;
@@ -1125,12 +1125,12 @@ void EnItem00_DrawHeartContainer(EnItem00* this, PlayState* play) {
     OPEN_DISPS(play->state.gfxCtx, "../z_en_item00.c", 1623);
 
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
-    func_8002EBCC(&this->actor, play, 0);
+    Actor_DrawPlayEnvLookatHighlight_PolyOpa(&this->actor, play, 0);
     MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_en_item00.c", 1634);
     gSPDisplayList(POLY_OPA_DISP++, gHeartPieceExteriorDL);
 
     Gfx_SetupDL_25Xlu(play->state.gfxCtx);
-    func_8002ED80(&this->actor, play, 0);
+    Actor_DrawPlayEnvLookatHighlight_PolyXlu(&this->actor, play, 0);
     MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, "../z_en_item00.c", 1644);
     gSPDisplayList(POLY_XLU_DISP++, gHeartContainerInteriorDL);
 
@@ -1146,7 +1146,7 @@ void EnItem00_DrawHeartPiece(EnItem00* this, PlayState* play) {
     OPEN_DISPS(play->state.gfxCtx, "../z_en_item00.c", 1658);
 
     Gfx_SetupDL_25Xlu(play->state.gfxCtx);
-    func_8002ED80(&this->actor, play, 0);
+    Actor_DrawPlayEnvLookatHighlight_PolyXlu(&this->actor, play, 0);
     MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, "../z_en_item00.c", 1670);
     gSPDisplayList(POLY_XLU_DISP++, gHeartPieceInteriorDL);
 
@@ -1157,7 +1157,7 @@ void EnItem00_DrawHeartPiece(EnItem00* this, PlayState* play) {
  * Converts a given drop type ID based on link's current age, health and owned items.
  * Returns a new drop type ID or -1 to cancel the drop.
  */
-s16 func_8001F404(s16 dropId) {
+s16 EnItem00_ConvertItemDrop(s16 dropId) {
     if (LINK_IS_ADULT) {
         if (dropId == ITEM00_SEEDS) {
             dropId = ITEM00_ARROWS_SMALL;
@@ -1208,7 +1208,7 @@ EnItem00* Item_DropCollectible(PlayState* play, Vec3f* spawnPos, s16 params) {
                                           40);
     } else {
         if (!param8000) {
-            params = func_8001F404(params & 0x00FF);
+            params = EnItem00_ConvertItemDrop(params & 0x00FF);
         }
 
         if (params != -1) {
@@ -1220,7 +1220,7 @@ EnItem00* Item_DropCollectible(PlayState* play, Vec3f* spawnPos, s16 params) {
                 spawnedActor->actor.gravity = -0.9f;
                 spawnedActor->actor.world.rot.y = Rand_CenteredFloat(65536.0f);
                 Actor_SetScale(&spawnedActor->actor, 0.0f);
-                EnItem00_SetupAction(spawnedActor, func_8001E304);
+                EnItem00_SetupAction(spawnedActor, EnItem00_actionfunc_8001E304);
                 spawnedActor->despawnTimer = 220;
                 if ((spawnedActor->actor.params != ITEM00_SMALL_KEY) &&
                     (spawnedActor->actor.params != ITEM00_HEART_PIECE) &&
@@ -1250,7 +1250,7 @@ EnItem00* Item_DropCollectible2(PlayState* play, Vec3f* spawnPos, s16 params) {
         EffectSsDeadSound_SpawnStationary(play, spawnPos, NA_SE_EV_BUTTERFRY_TO_FAIRY, true, DEADSOUND_REPEAT_MODE_OFF,
                                           40);
     } else {
-        params = func_8001F404(params & 0x00FF);
+        params = EnItem00_ConvertItemDrop(params & 0x00FF);
         if (params != -1) {
             spawnedActor = (EnItem00*)Actor_Spawn(&play->actorCtx, play, ACTOR_EN_ITEM00, spawnPos->x, spawnPos->y,
                                                   spawnPos->z, 0, 0, 0, params | param8000 | param3F00);
@@ -1362,7 +1362,7 @@ void Item_DropCollectibleRandom(PlayState* play, Actor* fromActor, Vec3f* spawnP
         dropQuantity = sDropQuantities[params + dropTableIndex];
         while (dropQuantity > 0) {
             if (!param8000) {
-                dropId = func_8001F404(dropId);
+                dropId = EnItem00_ConvertItemDrop(dropId);
                 if (dropId != ITEM00_NONE) {
                     spawnedActor = (EnItem00*)Actor_Spawn(&play->actorCtx, play, ACTOR_EN_ITEM00, spawnPos->x,
                                                           spawnPos->y, spawnPos->z, 0, 0, 0, dropId);
@@ -1372,7 +1372,7 @@ void Item_DropCollectibleRandom(PlayState* play, Actor* fromActor, Vec3f* spawnP
                         spawnedActor->actor.gravity = -0.9f;
                         spawnedActor->actor.world.rot.y = Rand_ZeroOne() * 40000.0f;
                         Actor_SetScale(&spawnedActor->actor, 0.0f);
-                        EnItem00_SetupAction(spawnedActor, func_8001E304);
+                        EnItem00_SetupAction(spawnedActor, EnItem00_actionfunc_8001E304);
                         spawnedActor->actor.flags |= ACTOR_FLAG_UPDATE_CULLING_DISABLED;
                         if ((spawnedActor->actor.params != ITEM00_SMALL_KEY) &&
                             (spawnedActor->actor.params != ITEM00_HEART_PIECE) &&

@@ -451,7 +451,7 @@ void EnTr_Draw(Actor* thisx, PlayState* play) {
         OPEN_DISPS(play->state.gfxCtx, "../z_en_tr.c", 840);
         Gfx_SetupDL_37Opa(play->state.gfxCtx);
         gSPSegment(POLY_OPA_DISP++, 0x08, SEGMENTED_TO_VIRTUAL(sEyeTextures[this->eyeIndex]));
-        func_8002EBCC(&this->actor, play, 0);
+        Actor_DrawPlayEnvLookatHighlight_PolyOpa(&this->actor, play, 0);
         SkelAnime_DrawFlexOpa(play, this->skelAnime.skeleton, this->skelAnime.jointTable, this->skelAnime.dListCount,
                               EnTr_OverrideLimbDraw, NULL, this);
         CLOSE_DISPS(play->state.gfxCtx, "../z_en_tr.c", 854);

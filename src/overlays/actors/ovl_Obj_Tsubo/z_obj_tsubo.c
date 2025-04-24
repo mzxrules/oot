@@ -197,7 +197,7 @@ void ObjTsubo_AirBreak(ObjTsubo* this, PlayState* play) {
                              sObjectIds[PARAMS_GET_U(this->actor.params, 8, 1)],
                              D_80BA1B8C[PARAMS_GET_U(this->actor.params, 8, 1)]);
     }
-    func_80033480(play, &this->actor.world.pos, 30.0f, 4, 20, 50, 1);
+    Actor_SpawnFloorDustCircle(play, &this->actor.world.pos, 30.0f, 4, 20, 50, 1);
 }
 
 void ObjTsubo_WaterBreak(ObjTsubo* this, PlayState* play) {

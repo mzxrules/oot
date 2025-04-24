@@ -122,7 +122,7 @@ void func_808AAE6C(BgSpot01Idohashira* this, PlayState* play) {
     Vec3f sp30 = this->dyna.actor.world.pos;
 
     sp30.y += kREG(15);
-    func_80033480(play, &sp30, kREG(11) + 350.0f, kREG(12) + 5, kREG(13) + 0x7D0, kREG(14) + 0x320, 0);
+    Actor_SpawnFloorDustCircle(play, &sp30, kREG(11) + 350.0f, kREG(12) + 5, kREG(13) + 0x7D0, kREG(14) + 0x320, 0);
     func_808AAD3C(play, &sp30, 5);
     BgSpot01Idohashira_PlayBreakSfx2(this, play);
 }
@@ -138,13 +138,13 @@ void func_808AAF34(BgSpot01Idohashira* this, PlayState* play) {
         src.y = kREG(21) + 200.0f;
         src.z = 0.0f;
         Matrix_MultVec3f(&src, &dest);
-        func_80033480(play, &dest, kREG(16) + 80.0f, kREG(17) + 10, kREG(18) + 1000, kREG(19), 0);
+        Actor_SpawnFloorDustCircle(play, &dest, kREG(16) + 80.0f, kREG(17) + 10, kREG(18) + 1000, kREG(19), 0);
         func_808AAD3C(play, &dest, 3);
         src.x = -(kREG(20) + 1300.0f);
         src.y = kREG(21) + 200.0f;
         src.z = 0.0f;
         Matrix_MultVec3f(&src, &dest);
-        func_80033480(play, &dest, kREG(16) + 80.0f, kREG(17) + 10, kREG(18) + 1000, kREG(19), 0);
+        Actor_SpawnFloorDustCircle(play, &dest, kREG(16) + 80.0f, kREG(17) + 10, kREG(18) + 1000, kREG(19), 0);
         func_808AAD3C(play, &dest, 3);
         this->unk_170 = 0;
         BgSpot01Idohashira_PlayBreakSfx1(this);

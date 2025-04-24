@@ -399,6 +399,6 @@ void EnTrap_Update(Actor* thisx, PlayState* play) {
 }
 
 void EnTrap_Draw(Actor* thisx, PlayState* play) {
-    func_8002EBCC(thisx, play, 1);
+    Actor_DrawPlayEnvLookatHighlight_PolyOpa(thisx, play, 1);
     Gfx_DrawDListOpa(play, gSlidingBladeTrapDL);
 }

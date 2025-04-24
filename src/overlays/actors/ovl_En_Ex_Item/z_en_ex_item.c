@@ -149,7 +149,7 @@ void EnExItem_WaitForObject(EnExItem* this, PlayState* play) {
                 onCounter = true;
                 FALLTHROUGH;
             case EXITEM_BOMB_BAG_BOWLING:
-                this->unk_17C = func_8002EBCC;
+                this->unk_17C = Actor_DrawPlayEnvLookatHighlight_PolyOpa;
                 this->giDrawId = GID_BOMB_BAG_30;
                 this->timer = 65;
                 this->prizeRotateTimer = 35;
@@ -165,7 +165,7 @@ void EnExItem_WaitForObject(EnExItem* this, PlayState* play) {
                 onCounter = true;
                 FALLTHROUGH;
             case EXITEM_HEART_PIECE_BOWLING:
-                this->unk_17C = func_8002ED80;
+                this->unk_17C = Actor_DrawPlayEnvLookatHighlight_PolyXlu;
                 this->timer = 65;
                 this->prizeRotateTimer = 35;
                 this->scale = 0.5f;
@@ -181,7 +181,7 @@ void EnExItem_WaitForObject(EnExItem* this, PlayState* play) {
                 onCounter = true;
                 FALLTHROUGH;
             case EXITEM_BOMBCHUS_BOWLING:
-                this->unk_17C = func_8002EBCC;
+                this->unk_17C = Actor_DrawPlayEnvLookatHighlight_PolyOpa;
                 this->giDrawId = GID_BOMBCHU;
                 this->timer = 65;
                 this->prizeRotateTimer = 35;
@@ -194,7 +194,7 @@ void EnExItem_WaitForObject(EnExItem* this, PlayState* play) {
                 break;
             case EXITEM_BOMBS_BOWLING:
             case EXITEM_BOMBS_COUNTER:
-                this->unk_17C = func_8002EBCC;
+                this->unk_17C = Actor_DrawPlayEnvLookatHighlight_PolyOpa;
                 this->giDrawId = GID_BOMB;
                 this->timer = 65;
                 this->prizeRotateTimer = 35;
@@ -209,8 +209,8 @@ void EnExItem_WaitForObject(EnExItem* this, PlayState* play) {
                 break;
             case EXITEM_PURPLE_RUPEE_BOWLING:
             case EXITEM_PURPLE_RUPEE_COUNTER:
-                this->unk_17C = func_8002EBCC;
-                this->unk_180 = func_8002ED80;
+                this->unk_17C = Actor_DrawPlayEnvLookatHighlight_PolyOpa;
+                this->unk_180 = Actor_DrawPlayEnvLookatHighlight_PolyXlu;
                 this->giDrawId = GID_RUPEE_PURPLE;
                 this->timer = 65;
                 this->prizeRotateTimer = 35;
@@ -228,8 +228,8 @@ void EnExItem_WaitForObject(EnExItem* this, PlayState* play) {
             case EXITEM_RED_RUPEE_CHEST:
             case EXITEM_13:
             case EXITEM_14:
-                this->unk_17C = func_8002EBCC;
-                this->unk_180 = func_8002ED80;
+                this->unk_17C = Actor_DrawPlayEnvLookatHighlight_PolyOpa;
+                this->unk_180 = Actor_DrawPlayEnvLookatHighlight_PolyXlu;
                 this->timer = 7;
                 this->scale = 0.5f;
                 this->unkFloat = 0.5f;
@@ -257,7 +257,7 @@ void EnExItem_WaitForObject(EnExItem* this, PlayState* play) {
                 this->actionFunc = EnExItem_FairyMagic;
                 break;
             case EXITEM_BULLET_BAG:
-                this->unk_17C = func_8002EBCC;
+                this->unk_17C = Actor_DrawPlayEnvLookatHighlight_PolyOpa;
                 this->giDrawId = GID_BULLET_BAG;
                 this->scale = 0.1f;
                 this->timer = 80;
@@ -494,19 +494,19 @@ void EnExItem_DrawItems(EnExItem* this, PlayState* play) {
         this->unk_17C(&this->actor, play, 0);
     }
     if (this) {}
-    func_8002ED80(&this->actor, play, 0);
+    Actor_DrawPlayEnvLookatHighlight_PolyXlu(&this->actor, play, 0);
     GetItem_Draw(play, this->giDrawId);
 }
 
 void EnExItem_DrawHeartPiece(EnExItem* this, PlayState* play) {
-    func_8002ED80(&this->actor, play, 0);
+    Actor_DrawPlayEnvLookatHighlight_PolyXlu(&this->actor, play, 0);
     GetItem_Draw(play, GID_HEART_PIECE);
 }
 
 void EnExItem_DrawMagic(EnExItem* this, PlayState* play, s16 magicIndex) {
     static s16 giDrawIds[] = { GID_DINS_FIRE, GID_FARORES_WIND, GID_NAYRUS_LOVE };
 
-    func_8002ED80(&this->actor, play, 0);
+    Actor_DrawPlayEnvLookatHighlight_PolyXlu(&this->actor, play, 0);
     GetItem_Draw(play, giDrawIds[magicIndex]);
 }
 

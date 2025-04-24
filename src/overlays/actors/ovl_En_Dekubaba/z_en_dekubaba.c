@@ -773,7 +773,7 @@ void EnDekubaba_PullBack(EnDekubaba* this, PlayState* play) {
             dustPos = this->actor.home.pos;
 
             for (i = 0; i < 3; i++) {
-                func_800286CC(play, &dustPos, &sZeroVec, &sZeroVec, this->size * 500.0f, this->size * 50.0f);
+                EffectSsDust_SpawnDirt4(play, &dustPos, &sZeroVec, &sZeroVec, this->size * 500.0f, this->size * 50.0f);
                 dustPos.x += xIncr;
                 dustPos.z += zIncr;
             }
@@ -985,13 +985,13 @@ void EnDekubaba_PrunedSomersault(EnDekubaba* this, PlayState* play) {
         deltaZ = -20.0f * Math_CosS(this->actor.shape.rot.x) * Math_CosS(this->actor.shape.rot.y);
 
         for (i = 0; i < 4; i++) {
-            func_800286CC(play, &dustPos, &sZeroVec, &sZeroVec, 500, 50);
+            EffectSsDust_SpawnDirt4(play, &dustPos, &sZeroVec, &sZeroVec, 500, 50);
             dustPos.x += deltaX;
             dustPos.y += deltaY;
             dustPos.z += deltaZ;
         }
 
-        func_800286CC(play, &this->actor.home.pos, &sZeroVec, &sZeroVec, this->size * 500.0f, this->size * 100.0f);
+        EffectSsDust_SpawnDirt4(play, &this->actor.home.pos, &sZeroVec, &sZeroVec, this->size * 500.0f, this->size * 100.0f);
         EnDekubaba_SetupDeadStickDrop(this, play);
     }
 }
@@ -1003,7 +1003,7 @@ void EnDekubaba_ShrinkDie(EnDekubaba* this, PlayState* play) {
     Math_StepToF(&this->actor.world.pos.y, this->actor.home.pos.y, this->size * 5.0f);
 
     if (Math_StepToF(&this->actor.scale.x, this->size * 0.1f * 0.01f, this->size * 0.1f * 0.01f)) {
-        func_800286CC(play, &this->actor.home.pos, &sZeroVec, &sZeroVec, this->size * 500.0f, this->size * 100.0f);
+        EffectSsDust_SpawnDirt4(play, &this->actor.home.pos, &sZeroVec, &sZeroVec, this->size * 500.0f, this->size * 100.0f);
         if (this->actor.dropFlag == 0) {
             Item_DropCollectible(play, &this->actor.world.pos, ITEM00_NUTS);
 
@@ -1265,7 +1265,7 @@ void EnDekubaba_DrawBaseShadow(EnDekubaba* this, PlayState* play) {
 
     gDPSetPrimColor(POLY_XLU_DISP++, 0, 0, 0, 0, 0, 255);
 
-    func_80038A28(this->boundFloor, this->actor.home.pos.x, this->actor.home.pos.y, this->actor.home.pos.z, &mtx);
+    CollisionPoly_GetGroundMtxF(this->boundFloor, this->actor.home.pos.x, this->actor.home.pos.y, this->actor.home.pos.z, &mtx);
     Matrix_Mult(&mtx, MTXMODE_NEW);
 
     horizontalScale = this->size * 0.15f;

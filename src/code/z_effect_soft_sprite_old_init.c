@@ -149,28 +149,28 @@ void func_80028510(PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, C
 static Color_RGBA8 sDustBrownPrim = { 170, 130, 90, 255 };
 static Color_RGBA8 sDustBrownEnv = { 100, 60, 20, 255 };
 
-void func_8002857C(PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel) {
+void EffectSsDust_SpawnDirt1(PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel) {
     EffectSsDust_Spawn(play, 4, pos, velocity, accel, &sDustBrownPrim, &sDustBrownEnv, 100, 5, 10, 0);
 }
 
 // unused
-void func_800285EC(PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel) {
+void EffectSsDust_SpawnDirt2(PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel) {
     EffectSsDust_Spawn(play, 5, pos, velocity, accel, &sDustBrownPrim, &sDustBrownEnv, 100, 5, 10, 0);
 }
 
-void func_8002865C(PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale, s16 scaleStep) {
+void EffectSsDust_SpawnDirt3(PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale, s16 scaleStep) {
     EffectSsDust_Spawn(play, 4, pos, velocity, accel, &sDustBrownPrim, &sDustBrownEnv, scale, scaleStep, 10, 0);
 }
 
-void func_800286CC(PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale, s16 scaleStep) {
+void EffectSsDust_SpawnDirt4(PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale, s16 scaleStep) {
     EffectSsDust_Spawn(play, 5, pos, velocity, accel, &sDustBrownPrim, &sDustBrownEnv, scale, scaleStep, 10, 0);
 }
 
-void func_8002873C(PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale, s16 scaleStep, s16 life) {
+void EffectSsDust_SpawnDirt5(PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale, s16 scaleStep, s16 life) {
     EffectSsDust_Spawn(play, 4, pos, velocity, accel, &sDustBrownPrim, &sDustBrownEnv, scale, scaleStep, life, 0);
 }
 
-void func_800287AC(PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale, s16 scaleStep, s16 life) {
+void EffectSsDust_SpawnDirt6(PlayState* play, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale, s16 scaleStep, s16 life) {
     EffectSsDust_Spawn(play, 5, pos, velocity, accel, &sDustBrownPrim, &sDustBrownEnv, scale, scaleStep, life, 0);
 }
 
@@ -214,7 +214,7 @@ void func_80028990(PlayState* play, f32 randScale, Vec3f* srcPos) {
 
     for (i = 0; i < 20; i++) {
         func_80028894(srcPos, randScale, &pos, &velocity, &accel);
-        func_8002873C(play, &pos, &velocity, &accel, 100, 30, 7);
+        EffectSsDust_SpawnDirt5(play, &pos, &velocity, &accel, 100, 30, 7);
     }
 }
 
@@ -226,7 +226,7 @@ void func_80028A54(PlayState* play, f32 randScale, Vec3f* srcPos) {
 
     for (i = 0; i < 20; i++) {
         func_80028894(srcPos, randScale, &pos, &velocity, &accel);
-        func_800287AC(play, &pos, &velocity, &accel, 100, 30, 7);
+        EffectSsDust_SpawnDirt6(play, &pos, &velocity, &accel, 100, 30, 7);
     }
 }
 

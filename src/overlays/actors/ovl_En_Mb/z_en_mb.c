@@ -885,7 +885,7 @@ void EnMb_ClubAttack(EnMb* this, PlayState* play) {
             Rumble_Request(this->actor.xzDistToPlayer, 255, 20, 150);
             EffectSsBlast_SpawnWhiteShockwave(play, &effSpawnPos, &effWhiteShockwaveDynamics,
                                               &effWhiteShockwaveDynamics);
-            func_80033480(play, &effSpawnPos, 2.0f, 3, 0x12C, 0xB4, 1);
+            Actor_SpawnFloorDustCircle(play, &effSpawnPos, 2.0f, 3, 0x12C, 0xB4, 1);
             Camera_RequestQuake(&play->mainCamera, 2, 25, 5);
             func_800358DC(&this->actor, &effSpawnPos, &this->actor.world.rot, flamesParams, 20, flamesUnused, play, -1,
                           NULL);

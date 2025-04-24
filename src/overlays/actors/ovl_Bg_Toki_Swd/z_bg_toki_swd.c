@@ -180,7 +180,7 @@ void BgTokiSwd_Draw(Actor* thisx, PlayState* play2) {
 
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
 
-    func_8002EBCC(&this->actor, play, 0);
+    Actor_DrawPlayEnvLookatHighlight_PolyOpa(&this->actor, play, 0);
 
     gSPSegment(POLY_OPA_DISP++, 0x08, Gfx_TexScroll(play->state.gfxCtx, 0, -(play->gameplayFrames % 0x80), 32, 32));
     MATRIX_FINALIZE_AND_LOAD(POLY_OPA_DISP++, play->state.gfxCtx, "../z_bg_toki_swd.c", 742);

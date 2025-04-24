@@ -304,7 +304,7 @@ void BgSpot16Bombstone_SpawnDust(BgSpot16Bombstone* this, PlayState* play) {
     world.y = this->actor.world.pos.y + 50.0f;
     world.z = this->actor.world.pos.z;
 
-    func_80033480(play, &world, scaleX1, 2, scaleX2, 0xA0, 1);
+    Actor_SpawnFloorDustCircle(play, &world, scaleX1, 2, scaleX2, 0xA0, 1);
 }
 
 void func_808B5240(BgSpot16Bombstone* this, PlayState* play) {
@@ -330,7 +330,7 @@ void func_808B5240(BgSpot16Bombstone* this, PlayState* play) {
         position.y = D_808B5EB0[index][2] + actorPosition->y;
         position.z = ((this->cosRotation * tempUnk6) - (tempUnk2 * this->sinRotation)) + actorPosition->z;
 
-        func_800287AC(play, &position, &sVelocity, &sAcceleration, D_808B5EB0[index][4], D_808B5EB0[index][5],
+        EffectSsDust_SpawnDirt6(play, &position, &sVelocity, &sAcceleration, D_808B5EB0[index][4], D_808B5EB0[index][5],
                       D_808B5EB0[index][6]);
 
         this->unk_158++;

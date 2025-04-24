@@ -213,7 +213,7 @@ void EnBoom_Fly(EnBoom* this, PlayState* play) {
                 // If the boomerang collides with something and it's is a Jabu Object actor with params equal to 0, then
                 // set collided to 0 so that the boomerang will go through the wall.
                 // Otherwise play a clank sound effect and keep collided set to bounce back.
-                if (func_8002F9EC(play, &this->actor, this->actor.wallPoly, hitDynaID, &hitPoint) != 0 ||
+                if (Actor_HitJabuJabuSurface(play, &this->actor, this->actor.wallPoly, hitDynaID, &hitPoint) != 0 ||
                     (hitDynaID != BGCHECK_SCENE && ((hitActor = DynaPoly_GetActor(&play->colCtx, hitDynaID)) != NULL) &&
                      hitActor->actor.id == ACTOR_BG_BDAN_OBJECTS && hitActor->actor.params == 0)) {
                     collided = false;
@@ -271,7 +271,7 @@ void EnBoom_Draw(Actor* thisx, PlayState* play) {
     Matrix_MultVec3f(&sMultVec1, &vec1);
     Matrix_MultVec3f(&sMultVec2, &vec2);
 
-    if (func_80090480(play, &this->collider, &this->boomerangInfo, &vec1, &vec2)) {
+    if (PlayerLib_IsWeaponColliderUnk_80090480(play, &this->collider, &this->boomerangInfo, &vec1, &vec2)) {
         EffectBlure_AddVertex(Effect_GetByIndex(this->effectIndex), &vec1, &vec2);
     }
 

@@ -355,13 +355,13 @@ void EnKarebaba_Dying(EnKarebaba* this, PlayState* play) {
         rotation.y = -20.0f * Math_CosS(this->actor.shape.rot.x) * Math_CosS(this->actor.shape.rot.y);
 
         for (i = 0; i < 4; i++) {
-            func_800286CC(play, &position, &zeroVec, &zeroVec, 500, 50);
+            EffectSsDust_SpawnDirt4(play, &position, &zeroVec, &zeroVec, 500, 50);
             position.x += rotation.x;
             position.y += rotation.z;
             position.z += rotation.y;
         }
 
-        func_800286CC(play, &this->actor.home.pos, &zeroVec, &zeroVec, 500, 100);
+        EffectSsDust_SpawnDirt4(play, &this->actor.home.pos, &zeroVec, &zeroVec, 500, 100);
         EnKarebaba_SetupDeadItemDrop(this, play);
     }
 }
@@ -459,7 +459,7 @@ void EnKarebaba_DrawBaseShadow(EnKarebaba* this, PlayState* play) {
     Gfx_SetupDL_44Xlu(play->state.gfxCtx);
 
     gDPSetPrimColor(POLY_XLU_DISP++, 0, 0, 0, 0, 0, 255);
-    func_80038A28(this->boundFloor, this->actor.home.pos.x, this->actor.home.pos.y, this->actor.home.pos.z, &mf);
+    CollisionPoly_GetGroundMtxF(this->boundFloor, this->actor.home.pos.x, this->actor.home.pos.y, this->actor.home.pos.z, &mf);
     Matrix_Mult(&mf, MTXMODE_NEW);
     Matrix_Scale(0.15f, 1.0f, 0.15f, MTXMODE_APPLY);
     MATRIX_FINALIZE_AND_LOAD(POLY_XLU_DISP++, play->state.gfxCtx, "../z_en_karebaba.c", 1029);

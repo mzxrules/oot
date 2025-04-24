@@ -455,7 +455,7 @@ void EnPeehat_Ground_StateRise(EnPeehat* this, PlayState* play) {
         if (this->actor.world.pos.y - this->actor.floorHeight < 80.0f) {
             pos = this->actor.world.pos;
             pos.y = this->actor.floorHeight;
-            func_80033480(play, &pos, 90.0f, 1, 0x96, 100, 1);
+            Actor_SpawnFloorDustCircle(play, &pos, 90.0f, 1, 0x96, 100, 1);
         }
     }
     EnPeehat_SpawnDust(play, this, &this->actor.world.pos, 75.0f, 2, 1.05f, 2.0f);
@@ -500,7 +500,7 @@ void EnPeehat_Flying_StateRise(EnPeehat* this, PlayState* play) {
         if (this->actor.world.pos.y - this->actor.floorHeight < 80.0f) {
             pos = this->actor.world.pos;
             pos.y = this->actor.floorHeight;
-            func_80033480(play, &pos, 90.0f, 1, 0x96, 100, 1);
+            Actor_SpawnFloorDustCircle(play, &pos, 90.0f, 1, 0x96, 100, 1);
         }
     }
     EnPeehat_SpawnDust(play, this, &this->actor.world.pos, 75.0f, 2, 1.05f, 2.0f);
@@ -631,7 +631,7 @@ void EnPeehat_Ground_StateLanding(EnPeehat* this, PlayState* play) {
         if (this->actor.world.pos.y - this->actor.floorHeight < 60.0f) {
             Vec3f pos = this->actor.world.pos;
             pos.y = this->actor.floorHeight;
-            func_80033480(play, &pos, 80.0f, 1, 150, 100, 1);
+            Actor_SpawnFloorDustCircle(play, &pos, 80.0f, 1, 150, 100, 1);
             EnPeehat_SpawnDust(play, this, &pos, 75.0f, 2, 1.05f, 2.0f);
         }
     }
@@ -658,7 +658,7 @@ void EnPeehat_Flying_StateLanding(EnPeehat* this, PlayState* play) {
         if (this->actor.world.pos.y - this->actor.floorHeight < 60.0f) {
             Vec3f pos = this->actor.world.pos;
             pos.y = this->actor.floorHeight;
-            func_80033480(play, &pos, 80.0f, 1, 150, 100, 1);
+            Actor_SpawnFloorDustCircle(play, &pos, 80.0f, 1, 150, 100, 1);
             EnPeehat_SpawnDust(play, this, &pos, 75.0f, 2, 1.05f, 2.0f);
         }
     }
@@ -846,7 +846,7 @@ void EnPeehat_Adult_StateDie(EnPeehat* this, PlayState* play) {
             this->actor.world.pos.y - this->actor.floorHeight < 59.0f) {
             Vec3f pos = this->actor.world.pos;
             pos.y = this->actor.floorHeight;
-            func_80033480(play, &pos, 80.0f, 1, 150, 100, 1);
+            Actor_SpawnFloorDustCircle(play, &pos, 80.0f, 1, 150, 100, 1);
             EnPeehat_SpawnDust(play, this, &pos, 75.0f, 2, 1.05f, 2.0f);
         }
         if (this->actor.speed < 0) {
@@ -1008,7 +1008,7 @@ void EnPeehat_Update(Actor* thisx, PlayState* play) {
 
                 if (BgCheck_EntityLineTest1(&play->colCtx, &thisx->world.pos, posB, &posResult, &poly, true, true,
                                             false, true, &bgId) == true) {
-                    func_80033480(play, &posResult, 0.0f, 1, 300, 150, 1);
+                    Actor_SpawnFloorDustCircle(play, &posResult, 0.0f, 1, 300, 150, 1);
                     EnPeehat_SpawnDust(play, this, &posResult, 0.0f, 3, 1.05f, 1.5f);
                 }
             }

@@ -968,7 +968,7 @@ Vec3f Camera_BGCheckCorner(Vec3f* linePointA, Vec3f* linePointB, CamColChk* poin
     Vec3f closestPoint;
     UNUSED_NDEBUG bool result;
 
-    result = func_800427B4(pointAColChk->poly, pointBColChk->poly, linePointA, linePointB, &closestPoint);
+    result = CollisionPoly_PolyVsLineSegClosestPoint(pointAColChk->poly, pointBColChk->poly, linePointA, linePointB, &closestPoint);
 #if DEBUG_FEATURES
     if (!result) {
         PRINTF(VT_COL(YELLOW, BLACK) "camera: corner check no cross point %x %x\n" VT_RST, pointAColChk, pointBColChk);
@@ -8931,7 +8931,7 @@ s32 Camera_QRegInit(void) {
 }
 #endif
 
-s32 func_8005B198(void) {
+s32 Camera_GetTargetActorCategory(void) {
     return D_8011D3AC;
 }
 
