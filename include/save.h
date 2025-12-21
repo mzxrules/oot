@@ -244,12 +244,16 @@ typedef struct SaveInfo {
     /* 0x0000  0x001C */ SavePlayerData playerData; // "S_Private"
     /* 0x004C  0x0068 */ ItemEquips equips;
     /* 0x0058  0x0074 */ Inventory inventory;
-    /* 0x00B8  0x00D4 */ SavedSceneFlags sceneFlags[124];
+
+    // The following variables were originally part of a single array
+    // They have been split into different structs for clarity.
+    /* 0x00B8  0x00D4 */ SavedSceneFlags sceneFlags[124]; // "u32 room_inf[128][7];"
     /* 0x0E48  0x0E64 */ FaroresWindData fw;
-    /* 0x0E70  0x0E8C */ char unk_E8C[0x10];
-    /* 0x0E80  0x0E9C */ s32 gsFlags[6];
-    /* 0x0E98  0x0EB4 */ char unk_EB4[0x4];
+    /* 0x0E70  0x0E8C */ u32 unused_sceneFlags_E8C[4];
+    /* 0x0E80  0x0E9C */ s32 gsFlags[7]; // 6th index unused
     /* 0x0E9C  0x0EB8 */ s32 highScores[7];
+    // End sceneFlags
+
     /* 0x0EB8  0x0ED4 */ u16 eventChkInf[14]; // "event_chk_inf"
     /* 0x0ED4  0x0EF0 */ u16 itemGetInf[4]; // "item_get_inf"
     /* 0x0EDC  0x0EF8 */ u16 infTable[30]; // "inf_table"
