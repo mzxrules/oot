@@ -598,7 +598,7 @@ void EnRd_Grab(EnRd* this, PlayState* play) {
                 play->damagePlayer(play, -8);
                 Rumble_Request(this->actor.xzDistToPlayer, 240, 1, 12);
                 this->grabDamageTimer = 20;
-                Player_PlaySfx(player, NA_SE_VO_LI_DAMAGE_S + player->ageProperties->unk_92);
+                Player_PlaySfx(player, NA_SE_VO_LI_DAMAGE_S + player->ageProperties->linkVoiceOffset);
             }
             break;
 
@@ -614,8 +614,8 @@ void EnRd_Grab(EnRd* this, PlayState* play) {
             }
             this->actor.attentionRangeType = ATTENTION_RANGE_0;
             this->actor.flags |= ACTOR_FLAG_ATTENTION_ENABLED;
-            this->playerStunWaitTimer = 0xA;
-            this->grabWaitTimer = 0xF;
+            this->playerStunWaitTimer = 10;
+            this->grabWaitTimer = 15;
             EnRd_SetupWalkToPlayer(this, play);
             break;
     }
